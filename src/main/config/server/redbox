@@ -1,9 +1,0 @@
-#!/bin/bash
-# chkconfig: 45 95 20
-# description: RedBox
-# Start/Stops the Redbox service
-# processname: redbox
-# Source function library
-. /etc/rc.d/init.d/functions
-daemon --user=redbox /opt/redbox/server/tf.sh $1
-echo

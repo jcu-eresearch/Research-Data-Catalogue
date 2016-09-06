@@ -1,6 +1,0 @@
-{
-	"accesscontrol": {
-        "type": "derby",
-        "derby": {}
-    }
-}
