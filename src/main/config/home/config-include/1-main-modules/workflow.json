@@ -9,7 +9,16 @@
                 "to-workflow-stage": "metadata-review",
                 "to-workflow-page-title": "Metadata Record",
          		"to-workflow-label": "Metadata Review"
-            }           
+            },
+            {
+                "name": "JCU Researcher Record",
+                "from-workflow-id": "jcu-self-submission",
+                "from-workflow-stage": "jcu-self-submission-submitted",
+                "to-workflow-id": "dataset",
+                "to-workflow-stage": "metadata-review",
+                "to-workflow-page-title": "Metadata Record",
+         		"to-workflow-label": "Metadata Review"
+            }
         ]
     }
 }

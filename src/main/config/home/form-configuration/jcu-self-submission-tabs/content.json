@@ -1,0 +1,117 @@
+{
+    "heading":"Content",
+    "fields":[
+        {
+          "component-type":"text-block",
+          "type":"p",
+          "content":"jcu-self-submission.asterisk"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-title",
+            "help":"jcu-self-submission.field.help.dc-title",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type": "textarea",
+            "field-name": "dc:title",
+            "label": "",
+            "validation": {
+                            "save-rules": ["required"],
+                            "validation-id": "dc:title",
+                            "focus-id": "dc:title",
+                            "validation-messages":{"required": "Title is required"}
+                           }
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.rif-description",
+            "help":"jcu-self-submission.field.help.rif-description",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"rif:description",
+            "sub-elements":{"settings":[
+                                {"jaffaDropDown":{"label":"Type",
+                                                  "suffix":"type", 
+                                                  "field":"type", 
+                                                  "label-field":"label",
+                                                  "label-field-suffix":"label",                                                                  
+                                                  "json-data-url":"$portalPath/workflows/forms/data/descriptionTypes.json",
+                                                  "data-id-key":"id",
+                                                  "data-label-key":"label",
+                                                  "data-list-key":"results",                                                                  
+                                                  "mandatory":"true"}},
+                                 {"jaffaText":{"textarea": {"rows":6, "cols":80}, "label":"Description", "class-list":"jaffa-field", "suffix":"value", "placeholder":"eg. This dataset contains observational data and calibration files."}}
+                                ]
+                            },
+            "add-item-text": "Add description",
+            "additional-classes": "containerLayout"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<script type='text/javascript'>
+                            $(document).ready(function(){
+                                v2.Validator.add({
+                                    name: 'Descriptions',
+                                    acceptEmpty: false,
+                                    fn: function(field, value, params) {
+                                        // Get the values from Jaffa
+                                        var descriptionValue = jaffa.form.value(params[0]);
+                                        var descriptionLabel = jaffa.form.value(params[1]);
+                                        var descriptionType = jaffa.form.value(params[2]);
+                                        return (descriptionValue >= ' ' && descriptionLabel >= ' ' && descriptionType >= ' ');
+                                    }
+                                });
+                                jaffa.valid.addNewRule('DescriptionsRule', 'Descriptions', ['rif:description.1.value', 'rif:description.1.label', 'rif:description.1.type']);
+                                jaffa.valid.setSaveRules('rif:description.1.value', ['DescriptionsRule'], null, validationFail);
+                            });                                            
+                            var validation = {};
+                            validationMessages = jQuery.parseJSON('{\"DescriptionsRule\":\"At least one valid Description must be added\"}');
+                            validation['validationMessages'] = validationMessages;
+                            validation['focusId'] = 'rif:description.1.value';
+                            validationFieldMap['rif:description.1.value'] = validation; 
+                       </script>"
+        },
+        {
+            "component-type": "textarea",
+            "field-name": "dc:description",
+            "label": "",
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-type.rdf-PlainLiteral",
+            "help":"jcu-self-submission.field.help.dc-type.rdf-PlainLiteral",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type":"data-source-dropdown",
+            "label":"",
+            "field-name":"dc:type.rdf:PlainLiteral",
+            "field-name-label":"dc:type.skos:prefLabel",
+            "sourceUrl":"workflows/forms/data/types.json",
+            "mandatory":"true",
+            "idKey":"id",
+            "labelKey":"label",
+            "listKey":"results",
+            "validation": {
+                            "save-rules": ["required"],
+                            "validation-id": "dc:type.rdf:PlainLiteral",
+                            "focus-id": "dc:type.rdf:PlainLiteral",
+                            "validation-messages":{"required": "Collection Type is required"}
+                           }
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<button disabled>&lt;&lt; Save and Previous</button> <button transition-name='Save and Exit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button class='nexttab'>Save and Next &gt;&gt;</button>"
+        }
+    ]
+}

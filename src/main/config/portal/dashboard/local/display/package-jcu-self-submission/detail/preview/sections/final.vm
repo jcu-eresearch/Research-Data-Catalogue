@@ -1,0 +1,8 @@
+#sectionHeading("#displayMessage('jcu-self-submission.heading.label.final')")
+<div class="meta">
+    <dl>
+        #displaySelectedCheckbox("redbox:embargo.redbox:isEmbargoed" "#displayMessage('jcu-self-submission.field.label.redbox-embargo.redbox-isEmbargoed')")
+        #display("redbox:embargo.dc:date" "#displayMessage('jcu-self-submission.field.label.redbox-embargo.dc-date')")
+        #display("redbox:embargo.skos:note" "#displayMessage('jcu-self-submission.field.label.redbox-embargo.skos-note')")
+    </dl>
+</div>

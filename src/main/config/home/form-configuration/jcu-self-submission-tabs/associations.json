@@ -1,0 +1,116 @@
+{
+    "heading":"Associations",
+    "fields":[
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.foaf-fundedBy.vivo-Grant"
+            "help":"jcu-self-submission.field.help.foaf-fundedBy.vivo-Grant",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"foaf:fundedBy.vivo:Grant",
+            "sub-elements":{"settings":[
+                                {"jaffaText":{"label":"Internal ?", "type":"checkbox", "class-list":"jaffa-field internal-grant", "default-value":"on", "suffix":"redbox:internalGrant"}},
+                                {"jaffaText":{"label":"Number", "class-list":"jaffa-field autocomplete-grant", "suffix":"redbox:grantNumber", "size":"20"}},
+                                {"jaffaText":{"label":"", "type":"hidden", "class-list":"jaffa-field autocomplete-grant-identifier", "suffix":"dc:identifier"}},
+                                {"jaffaText":{"label":"Title", "class-list":"jaffa-field autocomplete-grant-label", "suffix":"skos:prefLabel", "size":"100"}}
+                           ]},
+            "add-item-text":"Add grant",
+            "additional-classes":"containerLayout"
+        },                        
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-relation.swrc-Publication",
+            "help":"jcu-self-submission.field.help.dc-relation.swrc-Publication",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"dc:relation.swrc:Publication",
+            "sub-elements":{"settings":[
+                                {"jaffaText":{"label":"URL: ", "class-list":"jaffa-field", "suffix":"dc:identifier", "size":"60", "placeholder":"publication url"}},
+                                {"jaffaText":{"label":"Title: ", "class-list":"jaffa-field", "suffix":"dc:title", "size":"60", "placeholder":"title"}},
+                                {"jaffaText":{"label":"Notes: ", "class-list":"jaffa-field", "suffix":"skos:note", "size":"60", "placeholder":"notes"}}
+                                ]
+                           },
+            "add-item-text":"Add publication",
+            "additional-classes":"containerLayout"
+        },           
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-relation.bibo-Website",
+            "help":"jcu-self-submission.field.help.dc-relation.bibo-Website",
+            "additional-class":"jcuFieldLabel"
+        },                
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"dc:relation.bibo:Website",
+            "sub-elements":{"settings":[
+                                {"jaffaText":{"label":"URL: ", "class-list":"jaffa-field", "suffix":"dc:identifier", "size":"60", "placeholder":"website url"}},
+                                {"jaffaText":{"label":"Title: ", "class-list":"jaffa-field", "suffix":"dc:title", "size":"60", "placeholder":"title"}},
+                                {"jaffaText":{"label":"Notes: ", "class-list":"jaffa-field", "suffix":"skos:note", "size":"60", "placeholder":"notes"}}
+                                ]
+                           },
+            "add-item-text":"Add website",
+            "additional-classes":"containerLayout"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-relation.vivo-Dataset",
+            "help":"jcu-self-submission.field.help.dc-relation.vivo-Dataset",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"dc:relation.vivo:Dataset",
+            "sub-elements":{"settings":[
+                                {"jaffaDropDown":{"label":"Relationship:", "suffix":"vivo:Relationship.rdf:PlainLiteral", "field":"vivo:Relationship.rdf:PlainLiteral", "label-field":"vivo:Relationship.skos:prefLabel", 
+                                                  "label-field-suffix":"vivo:Relationship.skos:prefLabel", "json-data-url":"$portalPath/workflows/forms/data/collectionRelationTypes.json", 
+                                                  "data-id-key":"id", "data-label-key":"label", "data-list-key":"results", "mandatory":"true"}},                            
+                                {"jaffaText":{"label":"Title: ", "class-list":"jaffa-field collectionTitleLookup", "suffix":"dc:title", "size":"40", "placeholder":"title"}},
+                                {"jaffaText":{"label":"Identifier: ", "class-list":"jaffa-field", "suffix":"dc:identifier", "size":"40"}},
+                                {"jaffaText":{"label":"Notes: ", "class-list":"jaffa-field", "suffix":"skos:note", "size":"40", "placeholder":"notes"}},
+                                {"jaffaText":{"label":"Local related data", "class-list":"jaffa-field", "type":"checkbox", "checked":"checked", "suffix":"redbox:origin"}},
+                                {"jaffaText":{"label":"publish to RDA", "class-list":"jaffa-field", "type":"checkbox", "checked":"checked", "suffix":"redbox:publish"}}
+                                ]
+                           },
+            "add-item-text":"Add data",
+            "additional-classes":"containerLayout"
+        },           
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-relation.vivo-Service",
+            "help":"jcu-self-submission.field.help.dc-relation.vivo-Service",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"dc:relation.vivo:Service",
+            "sub-elements":{"settings":[
+                                {"jaffaDropDown":{"label":"Relationship:", "suffix":"vivo:Relationship.rdf:PlainLiteral", "field":"vivo:Relationship.rdf:PlainLiteral", "label-field":"vivo:Relationship.skos:prefLabel", 
+                                                  "label-field-suffix":"vivo:Relationship.skos:prefLabel", "json-data-url":"$portalPath/workflows/forms/data/serviceRelationTypes.json", 
+                                                  "data-id-key":"id", "data-label-key":"label", "data-list-key":"results", "mandatory":"true"}},                            
+                                {"jaffaText":{"label":"Title: ", "class-list":"jaffa-field serviceTitleLookup", "suffix":"dc:title", "size":"40", "placeholder":"title"}},
+                                {"jaffaText":{"label":"Identifier: ", "class-list":"jaffa-field", "suffix":"dc:identifier", "size":"40", "placeholder":"service identifier"}},
+                                {"jaffaText":{"label":"Notes: ", "class-list":"jaffa-field", "suffix":"skos:note", "size":"40", "placeholder":"notes"}}
+                                ]
+                           },
+            "add-item-text":"Add service",
+            "additional-classes":"containerLayout"
+        },           
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<button class='prevtab'>&lt;&lt; Save and Previous</button> <button transition-name='Save and Exit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button class='nexttab'>Save and Next &gt;&gt;</button>"
+        }
+    ]
+}

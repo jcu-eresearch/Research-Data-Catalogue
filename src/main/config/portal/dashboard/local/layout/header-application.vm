@@ -1,0 +1,19 @@
+<div class="grid_16">
+    <ul class="nav main">
+        <li><a href="$portalPath/home">Home</a></li>
+        #if($page.authentication.is_admin())
+        <li><a href="$portalPath/search">Browse</a></li>
+        #end
+        <li><a href="${urlBase}default/$page.getRelativePath()">Main Site</a></li>
+        <li><a href="http://tdh-research-data-user-guide.readthedocs.org/">Help</a></li>
+        <li class="secondary">
+            #if($page.authentication.is_logged_in())
+                <span id="user-info" class="status">Welcome <a class="user-data" href="#">$page.escapeHtml($page.authentication.get_name())</a>, <a href="#" id="logout-now">Logout</a></span>
+            #else
+                <span id="user-info" class="status"><a class="login-now" href="#">Login</a></span>
+            #end
+        </li>
+        $!navContent
+    </ul>
+</div>
+

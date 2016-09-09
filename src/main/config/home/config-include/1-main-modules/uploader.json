@@ -1,5 +1,16 @@
 {
 	"uploader": {
+        "attachment-file": {
+            "screen-label": "Attachment Upload",
+            "security": [
+                "librarian",
+                "reviewer",
+                "admin",
+                "researcher"
+            ],
+            "upload-path": "${fascinator.home}/uploads/attachments",
+            "json-config": "${fascinator.home}/harvest/workflows/attachment-file.json"
+        },
         "attachment-upload": {
             "screen-label": "Attachment Upload",
             "security": [

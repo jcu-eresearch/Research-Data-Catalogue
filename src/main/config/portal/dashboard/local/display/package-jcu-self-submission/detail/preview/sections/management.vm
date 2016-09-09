@@ -1,0 +1,70 @@
+#sectionHeading("#displayMessage('jcu-self-submission.heading.label.dataManagement')")
+<div class="meta">
+    <dl>
+        #displayUrlList("bibo:Website" "URL" "dc:identifier" "")
+        #display("vivo:Location.vivo:GeographicLocation.gn:name" "Stored At")
+
+        #set($requestDoi = $metadata.get("jcu:request.doi"))
+        <dt>Request a DOI ?</dt>
+        <dd>#if("$!requestDoi" == "on")<em>Yes</em>#else<em>No</em>#end</dd>
+        
+        <dt>Other Known Identifiers</dt>
+        #set($otherIdList = $self.getList("rif:collection"))
+        #if ($otherIdList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else
+        <dd>
+            <ol>
+            #foreach($key in $otherIdList)
+                #set($plainLiteral = $key.get("identifier"))
+                #if("$!plainLiteral"!="")
+                    <li><b>Identifier: </b>$page.escapeHtml($plainLiteral) <b>Comment: </b>$page.escapeHtml($key.get("jcu:comment"))</li>
+                #end
+            #end
+            </ol>
+        </dd>
+        #end
+        <dt>Attached Files</dt>
+        <dd>
+            #set($attachedFiles = $self.getAttachedFiles($oid))
+            #if($attachedFiles.isEmpty())
+            No files currently attached.
+            #else
+                <ol>
+                #foreach($file in $attachedFiles)
+                    #set($filename = $file.get("filename"))
+                    <li>
+                        <!--Removed '?preview=true' as this is stopping the file from being downloaded-->
+                        <a href="$portalPath/detail/$file.get('oid')/$filename" target="_blank">$filename</a>
+                        ($file.get("fileDescription"))
+                    </li>
+                #end
+                </ol>
+            #end
+        </dd>
+
+        #display("redbox:retentionPeriod" "Retention Period")
+        #display("dc:extent" "Size of Data/Collection")
+
+        <dt>Data Owner (IP)</dt>
+        #set($ownerList = $self.getList("locrel:own.foaf:Agent"))
+        #if ($ownerList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else
+        <dd>
+            <ol>
+            #foreach($entry in $ownerList)
+                #set($owner = $entry.get("foaf:name"))
+                #if("$!owner"!="")
+                    <li>$page.escapeHtml($owner)</li>
+                #end
+            #end
+            </ol>
+        </dd>
+        #end
+    </dl>
+</div>

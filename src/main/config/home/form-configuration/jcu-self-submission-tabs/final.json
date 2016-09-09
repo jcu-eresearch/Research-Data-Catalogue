@@ -1,0 +1,167 @@
+{
+    "heading":"Final",
+    "fields":[
+        {
+          "component-type":"text-block",
+          "type":"p",
+          "content":"jcu-self-submission.asterisk"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.redbox-embargo.heading",
+            "help":"jcu-self-submission.field.help.redbox-embargo",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type": "checkbox2",
+            "box-for": "",
+            "boxes": [
+                {
+                    "label": "jcu-self-submission.field.label.redbox-embargo.redbox-isEmbargoed",
+                    "field-name": "redbox:embargo.redbox:isEmbargoed",
+                    "checkbox-id": "redbox:embargo.redbox:isEmbargoed",
+                    "value": "on",
+                    "additional-classes":""
+                }
+            ]
+		},
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.redbox-embargo.dc-date",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"date-picker",
+            "field-name":"redbox:embargo.dc:date",
+            "label":"",
+            "placeholder":"Date",
+            "additional-classes":"embargo"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.redbox-embargo.skos-note",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"textarea",
+            "field-name":"redbox:embargo.skos:note",
+            "label":"",
+            "additional-classes":"embargo",
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.heading.jcu-data.depositedBy",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<input type='radio' name='depositedBy' id='jcu:data.depositedBy.creator' 
+            				value='<b>For research data being deposited by its creator:</b>
+                             <ul><li>I declare that I am a creator of this research data, as a single or joint creator, and that the information provided is true and correct at time of submission.</li>
+                                 <li>I declare that I have included in the metadata all relevant information relating to legal rights and ethical obligations that apply to the research data.</li>
+                                 <li>In self-archiving this research data and associated metadata, I grant James Cook University an irrevocable, non-exclusive licence to store both the data and metadata and make the metadata information (and research data where applicable) available online on a publicly accessible website, JCU Research Data.</li>
+                                 <li>To the extent that I am the copyright owner, I acknowledge that by depositing my work to Research Data there is no transfer of copyright ownership in the work to James Cook University.</li>
+                                 <li>I understand that the University reserves the right to remove the metadata record from Research Data at any time for any reason.</li>
+                             </ul>' 
+                             class='jaffa-field legalStatement'><b>For research data being deposited by its creator:</b>
+                             <ul><li>I declare that I am a creator of this research data, as a single or joint creator, and that the information provided is true and correct at time of submission.</li>
+                                 <li>I declare that I have included in the metadata all relevant information relating to legal rights and ethical obligations that apply to the research data.</li>
+                                 <li>In self-archiving this research data and associated metadata, I grant James Cook University an irrevocable, non-exclusive licence to store both the data and metadata and make the metadata information (and research data where applicable) available online on a publicly accessible website, JCU Research Data.</li>
+                                 <li>To the extent that I am the copyright owner, I acknowledge that by depositing my work to Research Data there is no transfer of copyright ownership in the work to James Cook University.</li>
+                                 <li>I understand that the University reserves the right to remove the metadata record from Research Data at any time for any reason.</li>
+                             </ul>
+                       <input type='radio' name='depositedBy' id='jcu:data.depositedBy.onBehalf' 
+                             value='<b>For research data being deposited on behalf of the creator:</b>
+                             <ul><li>I am depositing this research data on behalf of the creator(s).</li>
+                                 <li>I declare that I have the creator(s)’s consent to deposit the research data.</li>
+                                 <li>I declare that I have included in the metadata all relevant information relating to legal rights and ethical obligations that apply to the research data.</li>
+                                 <li>I understand that the University reserves the right to remove content from JCU Research Data at any time for any reason.</li>
+                             </ul>' 
+                             class='jaffa-field legalStatement'><b>For research data being deposited on behalf of the creator:</b>
+                             <ul><li>I am depositing this research data on behalf of the creator(s).</li>
+                                 <li>I declare that I have the creator(s)’s consent to deposit the research data.</li>
+                                 <li>I declare that I have included in the metadata all relevant information relating to legal rights and ethical obligations that apply to the research data.</li>
+                                 <li>I understand that the University reserves the right to remove content from JCU Research Data at any time for any reason.</li>
+                             </ul>
+                       <!-- For more information please read the JCU Research Data policy at URL -->
+                      <br>Clicking on the Deposit button indicates your agreement to these terms.<br><br>
+                      <input type='hidden' class='jaffa-field' id='jcu:data.depositedBy.text' />
+                      <input type='hidden' class='jaffa-field' id='jcu:data.depositedBy.userId' />
+                      <input type='hidden' class='jaffa-field' id='jcu:data.depositedBy.name' />
+                      <input type='hidden' class='jaffa-field' id='jcu:data.depositedBy.userSource' />",
+        },
+        {
+            "component-type":"native-html",
+            "content":"<script type='text/javascript'>
+                            $(document).ready(function(){
+                                v2.Validator.add({
+                                    name: 'LegalStatement',
+                                    acceptEmpty: false,
+                                    fn: function(field, value, params) {
+                                        // Get the values from Jaffa
+                                        var statement = jaffa.form.value(params[0]);
+                                        return (statement >= ' ');
+                                    }
+                                });
+                                jaffa.valid.addNewRule('LegalStatementRule', 'LegalStatement', ['jcu:data.depositedBy.text']);
+                                jaffa.valid.setSaveRules('jcu:data.depositedBy.text', ['LegalStatementRule'], null, validationFail);
+                            });                                            
+                            var validation = {};
+                            validationMessages = jQuery.parseJSON('{\"LegalStatementRule\":\"Select the appropriate Legal Statement\"}');
+                            validation['validationMessages'] = validationMessages;
+                            validation['focusId'] = 'jcu:data.depositedBy.creator';
+                            validationFieldMap['jcu:data.depositedBy.text'] = validation; 
+                       </script>"
+        },
+        {
+			"component-type": "checkbox",
+			"field-name": "readyforreview",
+			"box-for": "",
+			"boxes": [
+				{
+					"label": "jcu-self-submission.field.label.readyforreview",
+					"value": "ready"
+				}
+			]
+		},
+        {
+            "component-type":"native-html",
+            "content":"<input type='hidden' class='jaffa-field' id='dc:created' />"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<b><br>Clicking on the Deposit button submits your record for review by a data librarian.<br>If requested, a DOI will be minted during the review process.<br>The record will be made public when the review is complete, unless an embargo has been set.<br></b>"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<button class='prevtab'>&lt;&lt; Save and Previous</button> <button transition-name='SaveAndExit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button transition-name='Deposit' onclick='transition_click(this)' form-action='save-next' close-transition='$portalPath/detail/$oid' class='depositBtn'>Deposit</button>"
+        },
+      {
+            "component-type":"native-html",
+            "content":"<script>$(document).ready(function() {
+                        wizardTabIdentifier='dmptTabs'; 
+                        //The anonymous function below is called when the user clicks on a new tab. It validates all fields on the current tab, if valid, the clicked tab is selected 
+                        jaffa.ui.changeToTabLayout($('#simpleworkflow-form'),
+                                                   'h1',
+                                                   function(){
+                                                               var validationPassed = validateSave();
+                                                               if  (validationPassed){
+                                                                   jaffa.form.save();
+                                                                }
+                                                                else{
+                                                                   event.stopPropagation();
+                                                                   return false;
+                                                                }
+                                                   }, 
+                                                   wizardTabIdentifier);})</script>"
+       }
+    ]
+}

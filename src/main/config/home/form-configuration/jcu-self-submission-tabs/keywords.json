@@ -1,0 +1,147 @@
+{
+    "heading":"Keywords",
+    "fields":[
+        {
+            "component-type":"text-block",
+            "type":"p",
+            "content":"jcu-self-submission.asterisk"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-subject.anzsrc-for",
+            "help":"jcu-self-submission.field.help.dc-subject.anzsrc-for",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type":"repeatable-anzsrc-selection",
+            "fieldName":"dc:subject.anzsrc:for",
+            "sourceUrl":"proxyGet.script?ns=ANZSRC_FOR&qs=count%3D999%26level%3D",
+            "validation": {
+							"save-rules": ["required"],
+							"validation-id": "dc:subject.anzsrc:for.1.rdf:resource",
+							"focus-id": "dc:subject.anzsrc:for.1..top.dropdown",
+							 "validation-messages":{"required": "At least one Field of Research is required"}
+	    				}
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-subject.anzsrc-seo",
+            "help":"jcu-self-submission.field.help.dc-subject.anzsrc-seo",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-anzsrc-selection",
+            "fieldName":"dc:subject.anzsrc:seo",
+            "sourceUrl":"proxyGet.script?ns=ANZSRC_SEO&qs=count%3D999%26level%3D"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.jcu-research.themes",
+            "help":"jcu-self-submission.field.help.jcu-research.themes",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type": "checkbox2",
+            "box-for": "",
+            "multiline": true,
+            "boxes": [
+                {
+                    "label": "Tropical Ecosystems, Conservation and Climate Change",
+                    "field-name": "jcu:research.themes.tropicalEcoSystems",
+                    "checkbox-id": "jcu:research.themes.tropicalEcoSystems",
+                    "value": "on",
+                    "additional-classes":"clearNotAligned"
+                },
+                {
+                    "label": "Industries and Economies in the Tropics",
+                    "field-name": "jcu:research.themes.industriesEconomies",
+                    "checkbox-id": "jcu:research.themes.industriesEconomies",
+                    "value": "on",
+                    "additional-classes":"clearNotAligned"
+                },
+                {
+                    "label": "People and Societies in the Tropics",
+                    "field-name": "jcu:research.themes.peopleSocieties",
+                    "checkbox-id": "jcu:research.themes.peopleSocieties",
+                    "value": "on",
+                    "additional-classes":"clearNotAligned"
+                },
+                {
+                    "label": "Tropical Health, Medicine and Biosecurity",
+                    "field-name": "jcu:research.themes.tropicalHealth",
+                    "checkbox-id": "jcu:research.themes.tropicalHealth",
+                    "value": "on",
+                    "additional-classes":"clearNotAligned"
+                },
+                {
+                    "label": "Not aligned to a University theme",
+                    "field-name": "jcu:research.themes.notAligned",
+                    "checkbox-id": "jcu:research.themes.notAligned",
+                    "value": "on",
+                    "additional-classes":"clearOtherSelections"
+                }
+            ]
+        },
+        {
+            "component-type":"native-html",
+            "content":"<script type='text/javascript'>
+                            $(document).ready(function(){
+                                v2.Validator.add({
+                                    name: 'tropicalThemesOr',
+                                    acceptEmpty: false,
+                                    fn: function(field, value, params) {
+                                        // Get the values from Jaffa
+                                        var orField1 = jaffa.form.value(params[0]);
+                                        var orField2 = jaffa.form.value(params[1]);
+                                        var orField3 = jaffa.form.value(params[2]);
+                                        var orField4 = jaffa.form.value(params[3]);
+                                        var orField5 = jaffa.form.value(params[4]);
+                                        return (orField1 == 'on' || orField2 == 'on'  || orField3 == 'on'  || orField4 == 'on'  || orField5 == 'on' );
+                                    }
+                                });
+                                jaffa.valid.addNewRule('tropicalThemesOrRule', 'tropicalThemesOr', ['jcu:research.themes.tropicalEcoSystems', 'jcu:research.themes.industriesEconomies', 'jcu:research.themes.peopleSocieties', 'jcu:research.themes.tropicalHealth', 'jcu:research.themes.notAligned']);
+                                jaffa.valid.setSaveRules('jcu:research.themes.tropicalEcoSystems', ['tropicalThemesOrRule'], null, validationFail);
+                            });                                            
+                            var validation = {};
+                            validationMessages = jQuery.parseJSON('{\"tropicalThemesOrRule\":\"At least one Research Theme must be selected\"}');
+                            validation['validationMessages'] = validationMessages;
+                            validation['focusId'] = 'jcu:research.themes.tropicalEcoSystems';
+                            validationFieldMap['jcu:research.themes.tropicalEcoSystems'] = validation; 
+                       </script>"
+        },                        
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-subject.vivo-keyword",
+            "help":"jcu-self-submission.field.help.dc-subject.vivo-keyword",
+            "additional-class":"jcuFieldLabel required"
+        },                        
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"dc:subject.vivo:keyword",
+            "sub-elements":{"settings":[
+                                {"jaffaText":{"label":"", "class-list":"jaffa-field", "suffix":"rdf:PlainLiteral", "size":"60", "placeholder":"keyword"}}
+                                ]
+                           },
+            "add-item-text":"Add keyword",
+            "additional-classes":"containerLayout"
+            "validation": {
+							"save-rules": ["required"],
+							"validation-id": "dc:subject.vivo:keyword.1.rdf:PlainLiteral",
+							"focus-id": "dc:subject.vivo:keyword.1.rdf:PlainLiteral",
+							 "validation-messages":{"required": "At least one keyword is required"}
+	    				}
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<button class='prevtab'>&lt;&lt; Save and Previous</button> <button transition-name='Save and Exit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button class='nexttab'>Save and Next &gt;&gt;</button>"
+        }
+    ]
+}

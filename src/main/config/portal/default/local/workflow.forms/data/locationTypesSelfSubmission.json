@@ -1,0 +1,14 @@
+{
+    "results": [
+        {
+            "id":"iso31661",
+            "label":"Country code (iso31661)"
+        },
+        {
+            "id":"text",
+            "label":"Free text"
+        }
+    ]
+}
+
+

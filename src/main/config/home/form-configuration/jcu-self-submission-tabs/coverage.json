@@ -1,0 +1,116 @@
+{
+    "heading":"Coverage",
+    "fields":[
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-coverage.vivo-DateTimeInterval",
+            "help":"jcu-self-submission.field.help.dc-coverage.vivo-DateTimeInterval",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-coverage.vivo-DateTimeInterval.From",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"date-picker",
+            "field-name":"dc:coverage.vivo:DateTimeInterval.vivo:start",
+            "label":"",
+            "placeholder":"eg. 1990"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-coverage.vivo-DateTimeInterval.To",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"date-picker",
+            "field-name":"dc:coverage.vivo:DateTimeInterval.vivo:end",
+            "label":"",
+            "placeholder":"eg. 2010"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-coverage.redbox-timePeriod",
+            "help":"jcu-self-submission.field.help.dc-coverage.redbox-timePeriod",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-input",
+            "field-name":"dc:coverage.redbox:timePeriod",
+            "label":"",
+            "placeholder":"eg. 21st Century, WWII, The Depression, etc.",
+            "size":"60"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-coverage.vivo-GeographicLocation"
+            "help":"jcu-self-submission.field.help.dc-coverage.vivo-GeographicLocation",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"native-html",
+            "content":"
+        		<div class='openLayersHolder'>
+				    <div class='article'>
+				        <div id='polygonHelp' class='hidden'>
+				            <div><span class='ui-button-icon-primary ui-icon ui-icon-lightbulb'></span></div>
+				            Use double-click to 'close' your polygon.
+				        </div>
+				        <div class='mapHolder'>
+				            <div id='panel' class='olControlEditingToolbar'></div>
+				            <div id='map' class='smallmap' style='width:712px; height:456px'></div>
+				        </div>
+				        <div class='lookupHolder'>
+				            <label for='geonamesLookup'>Find location: </label>
+				            <input type='text' size='40' placeholder='Place name' id='geonamesLookup' />
+				        </div>
+				    </div>
+				</div>"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"dc:coverage.vivo:GeographicLocation",
+            "additional-classes":"containerLayout redboxGeoData",
+            "additional-container-classes":"redboxGeoDataRow",
+            "add-item-text":"Add location",
+            "sub-elements":{"settings":[
+                                {"jaffaDropDown":{"label":"Location Type", "suffix":"dc:type", "field":"dc:type", "label-field":"dc:typeLabel", 
+                                                  "label-field-suffix":"dc:typeLabel", "json-data-url":"$portalPath/workflows/forms/data/locationTypesSelfSubmission.json", 
+                                                  "data-id-key":"id", "data-label-key":"label", "data-list-key":"results", "mandatory":"true",
+                                                  "class-list":"locationType"}},
+                                 {"jaffaText":{"label":"","type":"hidden","class-list":"jaffa-field redboxGeoDataFid","suffix": "redbox:Fid"}},
+                                 {"jaffaText":{"label":"","type":"hidden","class-list":"jaffa-field redboxGeoDataWkt","suffix": "redbox:wktRaw"}},                 
+                                 {"jaffaText":{"label":"Value","type":"text","class-list":"jaffa-field redboxGeoDataOutput autocomplete-geonames","suffix":"rdf:PlainLiteral",
+                                               "placeholder":"eg. coordinates or placename","size":"60"}},
+                                 {"jaffaText":{"label":"","type":"hidden","class-list":"jaffa-field","suffix":"dc:identifier"}},
+                                 {"jaffaText":{"label":"","type":"hidden","class-list":"jaffa-field","suffix":"geo:long"}},
+                                 {"jaffaText":{"label":"","type":"hidden","class-list":"jaffa-field","suffix":"geo:lat"}}
+                                ]
+                            }
+        },
+        {
+            "component-type":"native-html",
+            "content":"
+                        <div class='hidden coords' id='dc:coverage.vivo:GeographicLocation.0.coords'>
+                            <a class='map-link' target='_blank' href=''>map</a>
+                            @ longitude: <span class='east'> </span>
+                            , latitude: <span class='north'> </span>
+                            | <a class='clear-link' href='#'>clear</a>
+                        </div>"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<button class='prevtab'>&lt;&lt; Save and Previous</button> <button transition-name='Save and Exit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button class='nexttab'>Save and Next &gt;&gt;</button>"
+        }
+    ]
+}

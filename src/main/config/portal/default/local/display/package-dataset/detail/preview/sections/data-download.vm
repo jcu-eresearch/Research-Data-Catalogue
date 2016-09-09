@@ -1,0 +1,53 @@
+#sectionHeading("Data")
+<div class="meta">
+    <dl>
+        <dt>Data Location</dt>
+        <div class="group">
+            <dt>Online Locations</dt>
+            #set($bibo_website="bibo:Website")
+            #set($hrefField="dc:identifier")
+            #set($urlList = $self.getList($bibo_website))
+            #if ($urlList.isEmpty())
+            #else
+                <dd>
+                    <ol>
+                    #foreach($bibo_website in $urlList.keySet())
+                        #set($url = $urlList.get($bibo_website))
+                        #set($href = $url.get($hrefField))
+                        #set($label = $url.get(""))
+                        #if("$!href"!="")
+                        <li>
+                            #if("$!label"!="")
+                            <a href="$self.escapeHtml($href)">$self.escapeHtml($label)</a>
+                            #else 
+                            <a href="$self.escapeHtml($href)">$self.escapeHtml($href)</a>
+                            #end
+                        </li>
+                        #end
+                    #end
+                </ol>
+            </dd>
+        #end
+
+        #set($attachedFiles = $self.getAttachedFiles($oid))
+        #if($attachedFiles.isEmpty())
+        #else
+        <dt>Attachments</dt>
+            <dd>
+            <ol>
+            #foreach($file in $attachedFiles)
+                #set($filename = $file.get("filename"))
+                <li>
+                    <a href="$portalPath/detail/$file.get('id')/$filename?preview=true" target="_blank">$filename</a>
+                    ($file.get("attachment_type"), $file.get("access_rights"))
+                </li>
+            #end
+            </ol>
+            #end
+            </dd>
+            #displayFirst("vivo:Location.vivo:GeographicLocation.gn:name" "Stored At")
+        </div>
+        
+    </dl>
+</div>
+

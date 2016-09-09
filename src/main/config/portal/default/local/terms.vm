@@ -1,0 +1,37 @@
+#set($pageTitle = "Terms of Use")
+<h2 id="page-heading"><span>JCU Research Data Terms of Use</span></h2>
+<div class="grid_16">
+    #set($contentTitle = "JCU Research Data Terms of Use")
+    #parseTemplate("wrapping/content-block-open.vm")
+    <div class="article first">
+        <p> 
+        JCU supports the principles and practices articulated in the Australian Code for the Responsible Conduct of Research and specifically that the results of publicly
+        funded research activities should be made widely available.</p>
+
+        <p><b>Copyright</b></p>
+        <p>All content contained in JCU Research Data is protected by Australian copyright law and, by virtue of international treaties, equivalent copyright laws in other countries.</p>
+        <p>With the exception of the JCU logo and badging, any material protected by a trade mark, and where otherwise noted, all material presented in JCU Research Data is provided 
+        under a Creative Commons Attribution 3.0 Australia licence. The details of the relevant licence conditions are available on the Creative Commons website 
+        (<a href="www.creativecommons.org.au">www.creativecommons.org.au</a>) as is the full legal code for the CC BY 3 AU licence. </p>
+
+        <p>You may distribute, remix or build upon the works contained within JCU Research Data however you must attribute the copyright holder of the work in accordance with the
+        JCU Copyright/Terms of Use Policy (<a href="http://www.jcu.edu.au/top/JCUPRD_013723">http://www.jcu.edu.au/top/JCUPRD_013723</a>).</p>
+
+        <p><b>Disclaimer</b></p>
+        <p>The materials contained in JCU Research Data are provided "as is" and without warranties of any kind either express or implied. To the fullest extent permissible by law, JCU
+        disclaims all warranties, express or implied, including, but not limited to, an implied warranty that the information contained in JCU Research Data is fit for a particular 
+        purpose. JCU does not warrant that the functions contained in those materials will be uninterrupted or error-free, that defects will be corrected, or that JCU Research Data
+        or the server that makes it available are free of viruses or other harmful components. JCU does not warrant or make any representations regarding the use or the results of
+        the use of the content or materials in JCU Research Data in terms of their correctness, accuracy, reliability, or otherwise.</p>
+        
+        <p><b>Limitation of Liability</b></p>
+        <p>Under no circumstances, including, but not limited to, negligence, will JCU be liable for any loss or  damage arising from the reliance, use, or the inability to use or 
+        access, the materials and content in the CMS.</p>
+        
+        <p>JCU reserves the right to remove, change or amend content or material in JCU Research Data at any time and without notice.</p>
+        
+        <p>Web links from JCU Research Data to external, non-University websites should not be construed as implying any relationship with and/or endorsement of the external 
+        site or its content by JCU, nor any commercial or other relationship with the owners of such site.</p>
+    </div>
+    <p/>
+</div>

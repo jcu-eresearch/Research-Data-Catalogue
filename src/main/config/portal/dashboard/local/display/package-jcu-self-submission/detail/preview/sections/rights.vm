@@ -1,0 +1,9 @@
+#sectionHeading("#displayMessage('jcu-self-submission.heading.label.rights')")
+<div class="meta">
+    <dl>
+        #displayUrl("#displayMessage('jcu-self-submission.field.label.dc-accessRights.skos-prefLabel')" "dc:accessRights.dc:identifier" "dc:accessRights.skos:prefLabel" "true")
+        #displayUrl("#displayMessage('jcu-self-submission.field.label.dc-accessRights.dc-RightsStatement.skos-prefLabel')" "dc:accessRights.dc:RightsStatement.dc:identifier" "dc:accessRights.dc:RightsStatement.skos:prefLabel" "true")
+        #displayUrl("#displayMessage('jcu-self-submission.field.label.dc-license.skos-prefLabel')" "dc:license.dc:identifier" "dc:license.skos:prefLabel")
+        #displayUrl("#displayMessage('jcu-self-submission.field.label.dc-license.rdf-Alt.heading')" "dc:license.rdf:Alt.dc:identifier" "dc:license.rdf:Alt.skos:prefLabel" "true")
+    </dl>
+</div>

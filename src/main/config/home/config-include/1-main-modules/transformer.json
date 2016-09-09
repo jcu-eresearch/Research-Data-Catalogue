@@ -19,20 +19,20 @@
             "clearPropertyOnTransform": "true",
             "versioning": "true"
         },
-        "dmpToSelfSub": {
+        "dmpToJCUSelfSub": {
             "id": "jsonVelocity",
             "sourcePayload": ".tfpackage",
-            "templatesPath": "${fascinator.home}/templates/self-submission/selfSub.vm",
+            "templatesPath": "${fascinator.home}/templates/jcu-self-submission/JCUselfSub.vm",
             "checkForTFMETAProperty": "true",
             "TFMETAPropertyName": "copyTFPackage",
-            "TFMETAPropertyValue": "dmpToSelfSub",
+            "TFMETAPropertyValue": "dmpToJCUSelfSub",
             "clearPropertyOnTransform": "true",
             "transformSource": "true"
         },
         "selfSubtoDataset": {
             "id": "jsonVelocity",
             "sourcePayload": ".tfpackage",
-            "templatesPath": "${fascinator.home}/templates/selfsub-dataset/selfSubToDataset.vm",
+            "templatesPath": "${fascinator.home}/templates/jcu-selfsub-dataset/JCUselfSubToDataset.vm",
             "checkForTFMETAProperty": "true",
             "TFMETAPropertyName": "workflowTransitioned",
             "TFMETAPropertyValue": "true",

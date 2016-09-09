@@ -1,0 +1,615 @@
+body {
+    font-size: 75%;
+}
+
+#notifications h2 {
+    color: white;
+}
+
+/** JCU Red colour palette **/
+.menu .selected,
+.facet-list .selected {
+    background-color: #e31f26;
+}
+
+.sorting, .paging {
+    font-size: 100%;
+}
+
+
+/** Banner styling **/
+#jcu-logo {
+    float: left;
+    padding-top: 10px;
+    padding-right: 1em;
+}
+#tdh-logo {
+    float: right;
+}
+
+h1#branding,
+.branding {
+    background: white;
+    padding-top: 1.5em;
+}
+
+h1#branding a, .branding {
+    color: black;
+}
+
+.branding .subtitle {
+    font-size: larger;
+    padding-left: 0.85em;
+    padding-bottom: 0.5em;
+}
+
+.box {
+    background: #dedbc3;
+}
+
+ul.nav, ul.main li a, .box h2 {
+    background: #e31f26;
+}
+
+ul.nav li.secondary, 
+ul.nav li.secondary span.status a {
+    color: #DEDBC3;
+}
+
+ul.main li:hover a {
+    background-color: #9d1619;
+}
+
+ul.main li:hover ul li a {
+    background-color: #9d1619 !important;
+}
+
+ul.main li:hover ul li a:hover {
+    background-color: #610000 !important;
+}
+
+ul.main li ul li a {
+    background-color: #610000;
+    border-top: none;
+}
+
+ul.main li ul li.selected-view a {
+    font-style: italic;
+}
+
+#content .accordion {
+    font-family: Arial,Helvetica,sans-serif;
+}
+
+.accordion table {
+    margin-bottom: 4px;
+}
+.accordion-header {
+    background: #610000;
+    color: white;
+    display: block;
+    font-size: 1.025em;
+    font-weight: normal;
+    margin: 0px;
+    padding-bottom: 2px;
+    padding-left: 1.75em;
+    padding-top: 2px;
+}
+
+.accordion-header.ui-state-active, .accordion-header:hover {
+    background: #9d1619;
+    border: 1px solid #dedbc3;
+}
+
+#content .ui-accordion-content {
+    background: #EEEEEE;
+    font-size: 0.909em;
+    padding: 0;
+}
+
+.ui-accordion .ui-accordion-content {
+    margin-bottom: 0;
+}
+
+table.meta, table.meta tbody {
+    margin-top: 0;
+    width: 100%;
+}
+
+table.meta th {
+    width: 20%;
+    word-wrap: break-word;
+}
+
+th.header {
+    background: #FFF5D2;
+    margin: 0;
+    padding: 0;
+}
+
+th.header h3 {
+    font-size: 1.1em;
+    margin-top: 0;
+    padding-left: 0.8em;
+}
+
+.box h2 a, .box h2 a.visible {
+    background-color: #610000;
+}
+
+.box h2 a:hover, .box h2 a.visible:hover {
+    background-color: #9d1619;
+}
+
+.toggle-accordion {
+    cursor: pointer;
+    margin-bottom: 4px;
+    margin-top: 4px;
+}
+
+#toggle-accordion-icon {
+    float: left;
+}
+
+.accordion-reset {
+    border: 1px solid #610000;
+    font-size: 1.15em;
+    padding-bottom: 0;
+    padding-left: 1em;
+}
+
+.accordion-reset:hover {
+    background-color: #610000;
+    border: 1px solid #610000;
+}
+
+#delete-record-error {
+    color: red;
+}
+
+.actions {
+    text-align: right;
+}
+
+.delete-record:hover, .accept-record:hover {
+    cursor: pointer;
+}
+
+.deleted {
+    font-style: italic;
+    text-decoration: line-through;
+}
+
+.actions.deleted {
+    color: red;
+    text-decoration: none;
+}
+
+.accepted {
+    font-style: italic;
+}
+
+.actions.accepted {
+    color: green;
+}
+
+.pId {
+    margin: 3px 0px;
+    padding: 4px;
+    border: 1px solid black;
+    background: #FFFFCC;
+    font-size: 120%;
+}
+
+/* input forms */
+.loading-data {
+    color: green;
+    font-size: 1.2em;
+}
+
+#form-heading {
+    font-size: 1.1em;
+    margin-bottom: 6px;
+}
+
+#form-heading span {
+    font-size: 1.1em;
+}
+
+#inputForms h2 {
+    background: none;
+    color: black;
+    margin-top: 0;
+    font-size: 1.05em;
+    text-transform: none;
+}
+
+#inputForms img {
+    vertical-align: text-bottom;
+}
+
+.navigation {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.form-fields-save-close, .form-fields-save {
+    vertical-align: super;
+}
+
+span.required {
+    font-size: 75%;
+    font-weight: normal;
+    padding-left: 0.5em;
+    vertical-align: top;
+}
+
+.help-content {
+    background: #FFFFCC;
+    border: 1px gray dotted;
+    color: #002020;
+    display: none;
+    margin: 4px 2em;
+    padding: 4px;
+    font-weight: normal;
+}
+
+.help-content dl {
+    margin-bottom: 0;
+}
+
+.help-content dt {
+    font-weight: bold;
+}
+
+.help-content dd {
+    padding-left: 2em;
+}
+
+.validation-err-msg {
+    color: red;
+    cursor: pointer;
+    vertical-align: top;
+}
+
+h3 div.help-content {
+    font-size: 63%;
+}
+
+#validation-summary .validation-err-msg {
+    background-image: url(../images/icons/pencil.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    padding-right: 20px;
+}
+
+.valign-middle {
+    vertical-align: middle;
+}
+
+table table, table table td {
+    border: none;
+    margin: 0;
+    padding: 1px;
+}
+
+table.lookup td {
+    border: none;
+}
+
+.group {
+    border: 1px solid #dedbc3;
+    padding: 0.4em;
+    margin-bottom: 10px;
+}
+
+.group-title {
+    font-size: 110%;
+}
+
+fieldset p textarea {
+    display: block;
+    width: 98%;
+}
+
+.input-list a.advanced {
+    cursor: pointer;
+}
+
+.strike {
+    text-decoration: line-through;
+}
+
+/** hyperlinks are hard to see - changing style to more traditional **/
+.accordion a {
+    color: blue ! important;
+    text-decoration: underline;
+}
+.accordion a:visited {
+    color: #9d1619;
+}
+
+/** login theming**/
+
+.ui-widget-header {
+    border-color: #610000;
+    background-color: #610000;
+}
+.ui-widget-content {
+    background: white;
+}
+
+fieldset {
+    border: 1px solid #dedbc3;
+    background: transparent;
+}
+
+legend {
+    font-size: inherit;
+    border: none;
+}
+
+#login legend {
+    text-align: center;
+}
+
+fieldset.no-border {
+    border: none;
+}
+
+.ssoLogin img {
+    border: 1px solid white;
+}
+
+div.or {
+    padding-bottom: 0.8em;
+}
+
+.ssoLogin img:hover {
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border: 1px solid #610000;
+}
+/* login button */
+.login-button {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border: 1px solid #dedbc3;
+    background: #dedbc3;
+}
+.login-button:hover {
+    background-color: white;
+    cursor: hand; cursor: pointer;
+}
+
+/*
+input.button, .inputscreens button {
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    background-color: #EEE;
+    border: 1px solid #666;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+input.button:hover, .inputscreens button:hover {
+    background-color: #dedbc3;
+}
+*/
+
+.box .article {
+    margin-bottom: 19px;
+}
+
+.mapView {
+    margin-bottom: 0px;
+}
+
+/* Details accordian color scheme */
+.accordion-header {
+    background: white;
+    color: black;
+    font-size: 1.5em;
+    font-weight: bold;
+    border: 1px solid #eee;
+    border-width: 0 0 1px 0;
+    padding: .3em 0 .2em 26px;
+}
+.accordion-header.ui-state-active,
+.accordion-header:hover {
+    background: white;
+}
+.accordion-reset:hover {
+    border-color: #dedbc3;
+    border-width: 0 0 1px 0;
+}
+#content .ui-accordion-content {
+    background: white;
+    font-size: 1em;
+}
+.ui-widget-content {
+    border-color: #dedbc3;
+}
+.ui-state-active .ui-icon {
+    background-image: none;
+}
+.ui-accordion-header.ui-state-active {
+    cursor: default;
+}
+div.meta {
+    background: white;
+    padding-left: 26px ! important;
+    padding-bottom: 3em ! important;
+}
+
+div.meta dl {
+    margin-bottom: 0;
+    padding: 8px;
+}
+
+div.meta dt {
+    font-weight: bold;
+}
+
+div.meta dd {
+    margin-bottom: 4px;
+    padding-left: 20px;
+}
+
+div.meta ol, div.meta ul {
+    margin-bottom: 4px;
+    padding: 0;
+}
+
+.ticked {
+    background-image: url(../images/icons/tick.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    padding-right: 20px;
+}
+
+.waiting {
+    background-image: url(../images/icons/hourglass.png);
+    background-repeat: no-repeat;
+    background-position: right top;
+    padding-right: 20px;
+}
+.selection-add-more-info {
+    font-style: italic;
+}
+.citation-block blockquote {
+    margin-bottom: 10px;
+}
+.citation-block .rdaLabel {
+    font-size: 80%;
+    font-style: italic;
+}
+.citation-block .citationString {
+    margin-left: 10px;
+}
+.citation-block .ui-icon {
+    float: left;
+}
+
+.citation-block .doiNote {
+	border: 2px solid red;
+}
+
+.vrights {
+	float:left;
+	margin-right:0.5em;
+}
+
+.footer {
+    text-align: center;
+    border-top: 1px solid #cccc99;
+    padding-top: 1em;
+    	
+}
+
+.footer a {
+    color: blue ! important;
+    text-decoration: underline;
+    padding: 0 1em;
+}
+.footer a:visited {
+    color: #9d1619;
+}
+
+.component-wrapper > label {
+	 display:block;
+}
+
+.component-wrapper .widgetLabel {
+	display:block;
+}
+
+.component-wrapper .peopleWidgetLabel{
+	display:inline;
+	padding-right:0.3em;
+	padding-left:0.3em;
+}
+
+.component-wrapper .grant-description{
+	width:400px;
+}
+
+.simple-workflow.component-wrapper > label {
+    font-size: 105%;
+    font-weight: bold;
+}
+
+.component-wrapper > hr {
+	padding-bottom:0;
+}
+.component-wrapper{
+	padding-bottom:0.5em;
+}
+
+button.anzsrcSelection {
+    margin-top:1.5em
+}
+
+.reportImages { 
+	width:1220px;
+ }
+
+.report-img { 
+  display:inline-block; 
+  border: solid 1px; 
+  margin:5px; 
+  padding:10px 
+}
+
+.errorbox{
+   display:none;
+   background-color:#FFDDDD;
+   padding: 10px;
+}
+
+#reportCriteria input {
+	margin:5px;
+}
+
+#reportCriteria select {
+	margin:5px;
+	/*display:none;*/
+}
+
+/* padding around lookup and clear buttons */
+a.mintNlaLookup, a.clearMintNlaLookup {
+	padding: 0.5ex;
+	margin: 0 0.5ex;
+	border: 1px solid silver;
+	border-radius: 5px;
+	color: #1c94c4;
+	font-weight: bold;
+	background-color: rgb(246, 246, 246)
+	
+}
+
+a.mintNlaLookup:hover, a.clearMintNlaLookup:hover {
+    padding: 0.5ex;
+    margin: 0 0.5ex;
+    border: 1px solid silver;
+    border-radius: 5px;
+    color: rgb(199, 116, 5);
+    font-weight: bold;
+    background-color: rgb(253, 245, 206);
+    
+}
+
+
+.printDetailLink{
+   font-family: Arial,Helvetica,sans-serif;
+   font-size: 1.02em;
+   font-weight: normal;
+}
+.jaffa2Loading{
+	color:green;
+}
+
+.HiddenWidget {
+	display:none;
+}

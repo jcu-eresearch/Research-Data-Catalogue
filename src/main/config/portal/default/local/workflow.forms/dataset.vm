@@ -1,0 +1,500 @@
+#set($languageService = $Services.getService("languageService"))
+#macro(fieldTitle $id $label $required)
+    <h2>
+        <label for="$id">$label#if($required)<span class="required">(*)</span>#end</label>
+        <span class="helpWidget" data-help-content-id="help-$id">
+            <img src="$portalPath/images/icons/help.png"/>
+        </span>
+    </h2>
+#end
+
+#macro(requiredValidation $id $message)
+    <label class="validation-err-msg" for="$id"
+        data-validation-rule="when(blur,change,submit);test(notEmpty)">
+        $message
+    </label>
+#end
+
+#macro(dateValidation $id)
+    <label class="validation-err-msg" for="dc:created"
+        data-validation-rule="when(blur,change,submit);test(yyyy_mm_dd or empty);">
+        A valid date created must be entered (yyyy-mm-dd else leave blank)!
+    </label>
+#end
+
+
+#macro(mintSelectField $id $labelId $sourceUrl $idKey $labelKey $listKey $defaultValue)
+    <span class="data-source-drop-down"
+          data-json-source-url="$sourceUrl"
+          data-id-key="$idKey"
+          data-label-key="$labelKey"
+          data-list-key="$listKey"
+          #if("$!defaultValue"!="")data-default-value="$!defaultValue"#end>
+        <span class="selection-added">
+            <input type="hidden" class="selection-added-id" id="$id" name="$id" />
+            <input type="text" class="selection-added-label" readonly="readonly" id="$labelId" name="$labelId" />
+            <a href="#" class="clear-item">change</a>
+        </span>
+        <span class="drop-down-location">
+            <button class="selection-add add-unique-only" data-add-on-click="1">
+                Select
+            </button>
+        </span>
+    </span>
+#end
+
+#macro(mintMultiSelectField $id $labelId $sourceUrl $idKey $labelKey $listKey $childrenKey)
+    <table class="input-list">
+        <tfoot>
+            <tr class="item-input">
+                <td>
+                    <span class="data-source-drop-down"
+                          data-json-source-url="$sourceUrl"
+                          data-top-level-id="top"
+                          data-id-key="$idKey"
+                          data-label-key="$labelKey"
+                          data-list-key="$listKey"
+                          data-children-key="$childrenKey">
+                        <input type="text" class="selection-added-label" id="$labelId" />
+                        <input type="text" class="selection-added-id" id="$id" />
+                    </span>
+                    <button class="item-add selection-add add-unique-only reset-on-add">
+                        Select
+                    </button>
+                </td>
+            </tr>
+        </tfoot>
+        <tbody>
+            <tr class="item-display">
+                <td>
+                    <span class="item-display-item"></span>
+                    <span class="item-display-item hidden"></span>
+                    <a class="delete-item" href="#">delete</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+#end
+
+#macro(inputList $id $placeholder $addLabel $requiredLabel)
+    #set($vid = $self.getCleanId($id))
+    <table class="input-list">
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <input type="text" size="60" placeholder="$placeholder" id="${id}.0" class="v${vid}" />
+                </td>
+                <td class="delete-item"><a href="#">delete</a></td>
+                <td style="width: 100%;">
+                    #if("$!requiredLabel" != "")
+                    <label for="${id}.0" class="validation-err-msg"
+                        data-validation-rule="test(notEmpty);when(blur,change,submit);liveFor(.v${vid});">
+                        $requiredLabel
+                    </label>
+                    #end
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="$addLabel" /></td>
+                <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+#end
+
+#set($noLayout = true)
+#set($oid = $self.getFormData("oid"))
+#set($portalPath = $self.getFormData("portalPath"))
+#set($stage = $self.getFormData("stage"))
+#set($stageLabel = $self.getFormData("stageLabel"))
+#set($nextStageMessage = $self.getFormData("nextStageMessage"))
+
+<div class="widget-form" id="main-form"
+    data-pre-save-func="preSave"
+    data-save-result-func="saveSuccess"
+    data-save-url="$portalPath/actions/workflow.ajax?func=update-package-meta&oid=$oid"
+    data-submit-result-func="submitSuccess"
+    data-submit-url="$portalPath/actions/workflow.ajax?func=update-package-meta-deposit&oid=$oid">
+    <input type="hidden" class="form-fields" value="
+        ## general
+        dc:title,
+        dc:type.rdf:PlainLiteral,
+        dc:type.skos:prefLabel,
+        dc:created,
+        dc:modified,
+        dc:language.dc:identifier,
+        dc:language.skos:prefLabel,
+        redbox:formVersion,
+        redbox:newForm,
+        ## coverage
+        dc:coverage.vivo:DateTimeInterval.vivo:start,
+        dc:coverage.vivo:DateTimeInterval.vivo:end,
+        dc:coverage.redbox:timePeriod,
+        dc:coverage.vivo:GeographicLocation.0.dc:type,
+        dc:coverage.vivo:GeographicLocation.0.dc:typeLabel,
+        dc:coverage.vivo:GeographicLocation.0.redbox:wktRaw,
+        dc:coverage.vivo:GeographicLocation.0.rdf:PlainLiteral,
+        dc:coverage.vivo:GeographicLocation.0.geo:long,
+        dc:coverage.vivo:GeographicLocation.0.geo:lat,
+        dc:coverage.vivo:GeographicLocation.0.dc:identifier,
+        ## description
+        dc:description,
+        rif:description.0.type,
+        rif:description.0.value,
+        rif:description.0.label,
+        dc:relation.swrc:Publication.0.dc:identifier,
+        dc:relation.swrc:Publication.0.dc:title,
+        dc:relation.swrc:Publication.0.skos:note,
+        dc:relation.bibo:Website.0.dc:identifier,
+        dc:relation.bibo:Website.0.dc:title,
+        dc:relation.bibo:Website.0.skos:note,
+        dc:relation.vivo:Dataset.0.dc:identifier,
+        dc:relation.vivo:Dataset.0.vivo:Relationship.rdf:PlainLiteral,
+        dc:relation.vivo:Dataset.0.vivo:Relationship.skos:prefLabel,
+        dc:relation.vivo:Dataset.0.dc:title,
+        dc:relation.vivo:Dataset.0.skos:note,
+        dc:relation.vivo:Dataset.0.redbox:origin,
+        dc:relation.vivo:Dataset.0.redbox:publish,
+        dc:relation.vivo:Service.0.dc:identifier,
+        dc:relation.vivo:Service.0.vivo:Relationship.rdf:PlainLiteral,
+        dc:relation.vivo:Service.0.vivo:Relationship.skos:prefLabel,
+        dc:relation.vivo:Service.0.dc:title,
+        dc:relation.vivo:Service.0.skos:note,
+        ## people
+        dc:creator.foaf:Person.0.dc:identifier,
+        dc:creator.foaf:Person.0.foaf:name,
+        dc:creator.foaf:Person.0.foaf:title,
+        dc:creator.foaf:Person.0.redbox:isCoPrimaryInvestigator,
+        dc:creator.foaf:Person.0.redbox:isPrimaryInvestigator,
+        dc:creator.foaf:Person.0.jcu:relationshipType,
+        dc:creator.foaf:Person.0.jcu:relationshipLabel,
+        dc:creator.foaf:Person.0.foaf:givenName,
+        dc:creator.foaf:Person.0.foaf:familyName,
+        dc:creator.foaf:Person.0.foaf:email,
+        dc:creator.foaf:Person.0.foaf:Organization.dc:identifier,
+        dc:creator.foaf:Person.0.foaf:Organization.skos:prefLabel,
+        dc:creator.foaf:Person.0.foaf:Organization.B.dc:identifier,
+        dc:creator.foaf:Person.0.foaf:Organization.B.skos:prefLabel,
+        dc:creator.foaf:Person.0.foaf:Organization.C.dc:identifier,
+        dc:creator.foaf:Person.0.foaf:Organization.C.skos:prefLabel,
+        locrel:prc.foaf:Person.dc:identifier,
+        locrel:prc.foaf:Person.foaf:name,
+        locrel:prc.foaf:Person.foaf:title,
+        locrel:prc.foaf:Person.foaf:givenName,
+        locrel:prc.foaf:Person.foaf:familyName,
+        locrel:prc.foaf:Person.foaf:email,
+        swrc:supervisor.foaf:Person.0.dc:identifier,
+        swrc:supervisor.foaf:Person.0.foaf:name,
+        swrc:supervisor.foaf:Person.0.foaf:title,
+        swrc:supervisor.foaf:Person.0.foaf:givenName,
+        swrc:supervisor.foaf:Person.0.foaf:familyName,
+        swrc:supervisor.foaf:Person.0.foaf:email,
+        dc:contributor.locrel:clb.0.foaf:Agent,
+        ## subject
+        dc:subject.anzsrc:seo.0.skos:prefLabel,
+        dc:subject.anzsrc:seo.0.rdf:resource,
+        dc:subject.anzsrc:for.0.skos:prefLabel,
+        dc:subject.anzsrc:for.0.rdf:resource,
+        dc:subject.vivo:keyword.0.rdf:PlainLiteral,
+        dc:subject.anzsrc:toa.rdf:resource,
+        dc:subject.anzsrc:toa.skos:prefLabel,
+        jcu:research.themes.tropicalEcoSystems,
+        jcu:research.themes.industriesEconomies,
+        jcu:research.themes.peopleSocieties,
+        jcu:research.themes.tropicalHealth,
+        jcu:research.themes.notAligned,
+        ## rights
+        dc:accessRights.skos:prefLabel,
+        dc:accessRights.dc:identifier,
+        dc:accessRights.dc:RightsStatement.skos:prefLabel,
+        dc:accessRights.dc:RightsStatement.dc:identifier,
+        dc:license.skos:prefLabel,
+        dc:license.dc:identifier,
+        dc:license.rdf:Alt.skos:prefLabel,
+        dc:license.rdf:Alt.dc:identifier,
+        ## management
+        dc:identifier.rdf:PlainLiteral,
+        dc:identifier.dc:type.rdf:PlainLiteral,
+        dc:identifier.dc:type.skos:prefLabel,
+        dc:identifier.redbox:origin,
+        rif:collection.0.identifier,
+        rif:collection.0.jcu:comment,
+        rif:collection.0.type,
+        rif:collection.0.label,
+        bibo:Website.0.dc:identifier,
+        vivo:Location.vivo:GeographicLocation.gn:name,
+        vivo:Location.vivo:GeographicLocation.skos:note,
+        redbox:retentionPeriod,
+        dc:extent,
+        redbox:disposalDate,
+        locrel:own.foaf:Agent.0.foaf:name,
+        locrel:dtm.foaf:Agent.foaf:name,
+        foaf:Organization.dc:identifier,
+        foaf:Organization.skos:prefLabel,
+        foaf:fundedBy.foaf:Agent.0.skos:prefLabel,
+        foaf:fundedBy.foaf:Agent.0.dc:identifier,
+        foaf:fundedBy.vivo:Grant.0.redbox:internalGrant,
+        foaf:fundedBy.vivo:Grant.0.redbox:grantNumber,
+        foaf:fundedBy.vivo:Grant.0.dc:identifier,
+        foaf:fundedBy.vivo:Grant.0.skos:prefLabel,
+        swrc:ResearchProject.dc:title,
+        locrel:dpt.foaf:Person.foaf:name,
+        dc:SizeOrDuration,
+        dc:Policy,
+        redbox:ManagementPlan.redbox:hasPlan,
+        redbox:ManagementPlan.skos:note,
+        ## Attachements
+        jcu:attachment.0.Notes,
+        ## notes
+        skos:note.0.dc:created,
+        skos:note.0.foaf:name,
+        skos:note.0.dc:description,
+        ## citations
+        dc:biblioGraphicCitation.skos:prefLabel,
+        ##dc:biblioGraphicCitation.dc:type.rdf:PlainLiteral,
+        ##dc:biblioGraphicCitation.dc:type.skos:prefLabel,
+        dc:biblioGraphicCitation.redbox:sendCitation,
+        dc:biblioGraphicCitation.dc:hasPart.dc:identifier.skos:note,
+        ##dc:biblioGraphicCitation.dc:hasPart.dc:identifier.rdf:PlainLiteral,
+        ##dc:biblioGraphicCitation.dc:hasPart.dc:identifier.dc:type.rdf:PlainLiteral,
+        ##dc:biblioGraphicCitation.dc:hasPart.dc:identifier.dc:type.skos:prefLabel,
+        dc:biblioGraphicCitation.dc:hasPart.locrel:ctb.0.foaf:title,
+        dc:biblioGraphicCitation.dc:hasPart.locrel:ctb.0.foaf:givenName,
+        dc:biblioGraphicCitation.dc:hasPart.locrel:ctb.0.foaf:familyName,
+        dc:biblioGraphicCitation.dc:hasPart.dc:title,
+        dc:biblioGraphicCitation.dc:hasPart.dc:hasVersion.rdf:PlainLiteral,
+        dc:biblioGraphicCitation.dc:hasPart.dc:publisher.rdf:PlainLiteral,
+        dc:biblioGraphicCitation.dc:hasPart.vivo:Publisher.vivo:Location,
+        dc:biblioGraphicCitation.dc:hasPart.dc:date.0.rdf:PlainLiteral,
+        dc:biblioGraphicCitation.dc:hasPart.dc:date.0.dc:type.rdf:PlainLiteral,
+        dc:biblioGraphicCitation.dc:hasPart.dc:date.0.dc:type.skos:prefLabel,
+        dc:biblioGraphicCitation.dc:hasPart.bibo:Website.dc:identifier,
+        dc:biblioGraphicCitation.dc:hasPart.skos:scopeNote,
+        dc:biblioGraphicCitation.dc:hasPart.jcu:dataType,
+        jcu:request.doi
+        ## submission request
+        redbox:submissionProcess.redbox:submitted,
+        redbox:submissionProcess.dc:date,
+        redbox:submissionProcess.dc:description,
+        redbox:submissionProcess.locrel:prc.foaf:Person.foaf:name,
+        redbox:submissionProcess.locrel:prc.foaf:Person.foaf:phone,
+        redbox:submissionProcess.locrel:prc.foaf:Person.foaf:mbox,
+        redbox:submissionProcess.dc:title,
+        redbox:submissionProcess.skos:note,
+        redbox:embargo.redbox:isEmbargoed,
+        redbox:embargo.dc:date,
+        redbox:embargo.skos:note,
+        dc:relation.redbox:TechnicalMetadata.0.dc:identifier,
+        dc:relation.redbox:TechnicalMetadata.0.dc:title,
+        dc:relation.redbox:TechnicalMetadata.0.dc:type,
+        dc:relation.redbox:TechnicalMetadata.0.dc:conformsTo,
+        jcu:data.depositedBy.text,
+        jcu:data.depositedBy.userId,
+        jcu:data.depositedBy.name,
+        jcu:data.depositedBy.userSource
+    " />
+    <input type="hidden" class="form-fields-readonly" value="xmlns:dc, xmlns:foaf, xmlns:anzsrc, metaList" />
+    <input type="hidden" id="metaList" value="[]" />
+    <input type="hidden" id="xmlns:anzsrc" value="http://purl.org/anzsrc/" />
+    <input type="hidden" id="xmlns:dc" value="http://dublincore.org/documents/2008/01/14/dcmi-terms/" />
+    <input type="hidden" id="xmlns:foaf" value="http://xmlns.com/foaf/spec/" />
+    <input type="hidden" id="xmlns:geo" value="http://www.w3.org/2003/01/geo/wgs84_pos#" />
+    <input type="hidden" id="xmlns:gn" value="http://www.geonames.org/ontology#" />
+    <input type="hidden" id="xmlns:locrel" value="http://id.loc.gov/vocabulary/relators" />
+    <input type="hidden" id="xmlns:rdf" value="http://www.w3.org/1999/02/22-rdf-syntax-ns#" />
+    <input type="hidden" id="xmlns:skos" value="http://www.w3.org/2004/02/skos/core#" />
+    <input type="hidden" id="xmlns:swrc" value="http://swrc.ontoware.org/ontology#" />
+    <input type="hidden" id="xmlns:vivo" value="http://vivoweb.org/ontology/core#" />
+    <input type="hidden" id="submitted" value="$self.getFormData('submitted')"/>
+    <div class="clear"></div>
+
+    #set($updateLinkMsg = $languageService.displayMessage("dataset.dsupdates.linkmsg"))
+    #set($updateNotifyMsg= $languageService.displayMessage("dataset.dsupdates.updatenotifymsg"))
+    #set($updateLinkMsg2 = $languageService.displayMessage("dataset.dsupdates.linkmsg2"))
+    #set($updateDlgTitle= $languageService.displayMessage("dataset.dsupdates.dlgtitle"))
+    #set($updatePendingHdr= $languageService.displayMessage("dataset.dsupdates.pendingHdr"))
+    #set($updatePendingVersionLbl= $languageService.displayMessage("dataset.dsupdates.pendingVersionLbl"))
+    #set($updatePendingVersionNoneLbl= $languageService.displayMessage("dataset.dsupdates.pendingVersionNoneLbl"))
+    #set($updateAllVersionHdr= $languageService.displayMessage("dataset.dsupdates.allVersionHdr"))
+    #set($updateAllVersionLbl= $languageService.displayMessage("dataset.dsupdates.allVersionLbl"))
+    #set($updateAllVersionNoneLbl= $languageService.displayMessage("dataset.dsupdates.allVersionNoneLbl"))
+        
+    <div id="form-heading" >
+		<span class="right">
+			<a id="view-record-link" href="$portalPath/detail/$oid">View record</a>
+			##&nbsp;&nbsp;&nbsp;<a class="updateDlgLink" href="#">$updateLinkMsg</a>
+		</span>
+        <span><img src="${portalPath}/images/icons/wf_${stage}.png" />$stageLabel</span>
+		##set($updateList = $self.getPendingUpdates($oid))
+		##if ($self.pendingUpdateSize > 0)
+	##		<span><br/>
+	##		$self.pendingUpdateSize $updateNotifyMsg <a class="updateDlgLink" href="#">$updateLinkMsg2</a>
+	##		</span>
+	##end
+        <script type="text/javascript">
+			$(function(){
+				$(".updateDlgLink").click(function() {
+                     $("[id='parked-updates-list']").dialog({
+                        title: "$updateDlgTitle",
+                        autoOpen: false,
+                        hide: "blind",
+                        modal: true,
+                        width: "auto",
+                        height: "auto"
+                    });
+					$("[id='parked-updates-list']").dialog('open');
+				});
+                $(".updateLink").click(function() {
+                    $("[id='parked-updates-list']").dialog('close');                    
+                });    
+			});
+		</script>
+		<div id="parked-updates-list" style="display:none">
+			<span>$updatePendingHdr</span>
+			#if ($self.pendingUpdateSize > 0)
+    			#foreach($update in $updateList)
+    			    <span>
+        		      <br /> <a target="_blank" class="updateLink" href="$portalPath/detail/$oid/?payloadId=version_parked_$update">$updatePendingVersionLbl $self.formatDate($update)</a>
+					</span>
+				#end
+			#else
+				<span>$updatePendingVersionNoneLbl</span>
+			#end
+			<span><br/> <br/>
+			$updateAllVersionHdr
+			</span>
+			#if ($self.allUpdateSize > 0)
+    			#foreach ($update in $self.allUpdates)
+    				<span>
+    				    <br /> <a target="_blank" class="updateLink" href="$portalPath/detail/$oid/?payloadId=version_parked_$update">$updateAllVersionLbl $self.formatDate($update)</a>
+					</span>
+				#end
+			#else
+				<span>$updateAllVersionNoneLbl</span>
+			#end
+		</div>
+		
+    </div>
+
+    <script type="text/javascript">
+    function cleanRdfToJs(input) {
+        var output = input.replace(/\./g, "\\.");
+        return output.replace(/\:/g, "\\:");
+    }
+
+    function getReDBoxById(redboxId) {
+        var cleanId = cleanRdfToJs(redboxId);
+        return $("#" + cleanId);
+    }
+
+    function getReDBoxByClass(redboxClass) {
+        var cleanClass = cleanRdfToJs(redboxClass);
+        return $("." + cleanClass);
+    }
+    </script>
+
+    <div class="inputscreens">
+        #parseTemplate("workflows/forms/sections/general.vm")
+        #parseTemplate("workflows/forms/sections/coverage.vm")
+        #parseTemplate("workflows/forms/sections/description.vm")
+        #parseTemplate("workflows/forms/sections/people.vm")
+        #parseTemplate("workflows/forms/sections/subject.vm")
+        #parseTemplate("workflows/forms/sections/rights.vm")
+        #parseTemplate("workflows/forms/sections/management.vm")
+        #parseTemplate("workflows/forms/sections/attach.vm")
+        #parseTemplate("workflows/forms/sections/notes.vm")
+        #parseTemplate("workflows/forms/sections/citations.vm")
+        #parseTemplate("workflows/forms/sections/request.vm")
+        #parseTemplate("workflows/forms/sections/submit.vm")
+    </div>
+    <div class="navigation">
+        <span class="go-prev-tab">
+            <img src="../images/icons/arrow_left.png" height="30" alt="Go to the previous section of the form" />
+        </span>
+        <span class="go-next-tab">
+            <img src="../images/icons/arrow_right.png" height="30" alt="Go to the next section of the form" />
+        </span>
+        <input type="button" class="button form-fields-save" value="Save" />
+        <input type="button" class="button form-fields-save-close" value="Save and close" />
+        <span class="saved-result"></span>
+    </div>
+</div>
+<script type="text/javascript">
+var saveAndClose = false;
+$(function(){
+    $("#view-record-link").click(function() {
+        if (widgets.forms[0].hasChanges()) {
+            return confirm("The record has been modified.\nAre you sure you want to leave this page?");
+        }
+    });
+
+    $(".go-prev-tab").click(function() {
+        var selected = widgetTabs.tabs("option", "selected");
+        var last = widgetTabs.tabs("length");
+        if (selected == 0) {
+            widgetTabs.tabs("select", last - 1);
+        } else {
+            widgetTabs.tabs("select", selected - 1);
+        }
+    });
+
+    $(".go-next-tab").click(function() {
+        var selected = widgetTabs.tabs("option", "selected");
+        var last = widgetTabs.tabs("length");
+        if (selected == last - 1) {
+            widgetTabs.tabs("select", 0);
+        } else {
+            widgetTabs.tabs("select", selected+1);
+        }
+    });
+
+    $(".form-fields-save-close").click(function() {
+        saveAndClose = true;
+		$(".save-note").each(function(idx){ 
+			this.click();
+		});
+        $(".form-fields-save").click();
+    });
+
+    $(".form-fields-save").click(function(){
+        var t, id, title, v = widgets.forms[0].validator;
+        try {
+            if (v.isOkToSave() == false){
+                t = jQ("textarea[id=dc:title]");
+                title = jQ.trim(t.val());
+                if (title == "" || title == "[Untitled]") {
+                    widgets.messageBox("A 'Title' is required!",
+                        function() {
+                            id = t.parents(".ui-tabs-panel").attr("id");
+                            jQ("a[href=#"+id+"]").click();
+                            t.focus();
+                        });
+                    t.focus();
+                } else {
+                    widgets.messageBox("Cannot save! Please check and fill in required fields!");
+                }
+            }
+        } catch(e) {
+            alert("Error in save-click - "+e.message);
+        }
+    });
+});
+
+function preSave(widgetForm, data) {
+    $(".saved-result").html('<img src="$portalPath/images/icons/loading.gif" />').show();
+}
+
+function saveSuccess() {
+    if (saveAndClose) {
+        window.location.href = "$portalPath/home";
+    }
+}
+
+function submitSuccess() {
+    setTimeout(function() { window.location.href = "$portalPath/detail/$oid"; }, 500);
+}
+</script>

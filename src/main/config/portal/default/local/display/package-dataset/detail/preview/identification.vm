@@ -1,6 +1,4 @@
 #if($page.authentication.is_logged_in())
-    #set ($pidProperty = $systemConfig.getString("error", "curation", "pidProperty"))
-    #set ($pId = $parent.getProperty($pidProperty))
     #if ($pId != $nullValue)
     <div class="pId">
         This object has a persistent ID: '<a href="$pId">$pId</a>'.

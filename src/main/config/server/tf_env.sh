@@ -12,6 +12,7 @@ export SMTP_HOST="${smtp.host}"
 export ADMIN_EMAIL="${admin.email}"
 export MINT_SERVER="${mint.proxy.server}"
 export MINT_AMQ="${mint.amq.broker}"
+export MINT_CONTEXT="${mint.context}"
 export NON_PROXY_HOSTS="${non.proxy.hosts}"
 
 # set fascinator home directory
@@ -19,13 +20,14 @@ if [ -z "$TF_HOME" ]; then
 	export TF_HOME="$PROJECT_HOME/home"
 fi
 export REDBOX_VERSION="${redbox.version}"
-export FASCINATOR_HOME="$TF_HOME"
+export FASCINATOR_HOME="$PROJECT_HOME/home"
 
 # java class path
 export CLASSPATH="plugins/*:lib/*"
 
 # jvm memory settings
-JVM_OPTS="-XX:MaxPermSize=512m -Xmx512m"
+JVM_OPTS="-XX:MaxPermSize=2048m -Xmx2048m"
+# JVM_OPTS="-XX:MaxPermSize=1024m -Xmx1024m -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=4000,suspend=n"
 
 # logging directories
 export SOLR_LOGS=$TF_HOME/logs/solr
@@ -66,7 +68,7 @@ SOLR_OPTS="-Dsolr.solr.home=$PROJECT_HOME/solr"
 CONFIG_DIRS="-Dfascinator.home=$TF_HOME -Dportal.home=$PROJECT_HOME/portal -Dstorage.home=$PROJECT_HOME/storage"
 
 # mint integration
-MINT_OPTS="-Dmint.proxy.server=$MINT_SERVER -Dmint.proxy.url=$MINT_SERVER/mint -Dmint.amq.broker=$MINT_AMQ"
+MINT_OPTS="-Dmint.proxy.server=$MINT_SERVER -Dmint.proxy.url=$MINT_SERVER/$MINT_CONTEXT -Dmint.amq.broker=$MINT_AMQ"
 
 # additional settings
 EXTRA_OPTS="-Dserver.url.base=$SERVER_URL -Damq.port=$AMQ_PORT -Damq.stomp.port=$AMQ_STOMP_PORT -Dsmtp.host=$SMTP_HOST -Dadmin.email=$ADMIN_EMAIL -Dredbox.version=$REDBOX_VERSION"

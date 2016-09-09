@@ -1,0 +1,510 @@
+<h3><a href="#people">People</a></h3>
+<div id="people" class="inputscreen nameLookup-section">
+    <input type="hidden" class="nameLookup-url" value="$portalPath/proxyGet.script?ns=Parties_People&qs=searchTerms%3D{searchTerms}" />
+    <input type="hidden" class="nlaLookup-url" value="$portalPath/proxyGet.script?ns=NLA_SRU&qs={searchTerms}" />
+    <input type="hidden" class="nameLookup-value-ns" value="nl" />
+
+    #fieldTitle("dc:creator" "Creators" true)
+    <div class="help-content" id="help-dc:creator">
+        <p>Record names of the creators.</p>
+        <ul>
+            <li>
+                Enter the given name and/or family name of persons who created
+                the research dataset/collection, registry/repository, catalogue
+                or index. Click 'lookup' to search and select the name authority
+                record.
+            </li>
+            <li>Select the persons' appropriate affiliation.</li>
+            <li>
+                Indicate persons with roles of 'Chief Investigator' or 'Partner
+                Investigator' by checking the boxes provided.
+            </li>
+        </ul>
+    </div>
+    <table class="input-list sortable">
+        <thead>
+            <tr class="header-row">
+                <th></th>
+                <th>Relationship Types</th>
+                <th>Display Name</th>
+                <th>Primary Contact</th>
+                <th>Name Authority</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="valign-middle">
+                    <img class="facets-grip" src="$portalPath/images/icons/grippy.png" />
+                </td>
+                <td class="valign-middle">
+                    <span class="data-source-drop-down"
+                          data-delay="1"
+                          data-json-source-url="$portalPath/workflows/forms/data/relationshipTypes.json"
+                          data-id-key="id"
+                          data-label-key="label"
+                          data-list-key="results"
+                          data-default-value="Full">
+                        <span class="selection-added">
+                            <input type="hidden" class="selection-added-id" id="dc:creator.foaf:Person.0.jcu:relationshipType" />
+                            <input type="text" class="selection-added-label" readonly="readonly" id="dc:creator.foaf:Person.0.jcu:relationshipLabel" />
+                            <a href="#" class="clear-item">change</a>
+                        </span>
+                        <span class="drop-down-location">
+                            <button class="selection-add add-unique-only" data-add-on-click="1">
+                                Select
+                            </button>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <table class="lookup">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="dc:creator.foaf:Person.0.foaf:title">Title:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="title" size="5"
+                                           id="dc:creator.foaf:Person.0.foaf:title" />
+                                </td>
+                                <td>
+                                    <label for="dc:creator.foaf:Person.0.foaf:givenName">Given name:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="given name" size="25"
+                                           class="nameLookup-name creatorGivenName creatorName givenName focusAfterClone"
+                                           id="dc:creator.foaf:Person.0.foaf:givenName" />
+                                </td>
+                                <td>
+                                    <label for="dc:creator.foaf:Person.0.foaf:familyName">Family name:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="family name" size="25"
+                                           class="nameLookup-name creatorFamilyName creatorName familyName"
+                                           id="dc:creator.foaf:Person.0.foaf:familyName" />
+                                    <input type="hidden" id="dc:creator.foaf:Person.0.redbox:isCoPrimaryInvestigator" />
+                                    <input type="hidden" id="dc:creator.foaf:Person.0.redbox:isPrimaryInvestigator" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="dc:creator.foaf:Person.0.foaf:email">Email:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="email" size="40"
+                                        class="nameLookup-name creatorEmail"
+                                        id="dc:creator.foaf:Person.0.foaf:email" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="6">
+                                    <label class="validation-err-msg"				
+										id="dc:creator.foaf:Person.0.foaf:givenNameErrMsg"
+                                        for="dc:creator.foaf:Person.0.foaf:givenName"
+                                        data-validation-rule="test(notEmpty);when(blur,change,submit);
+                                                                jsTest(
+                                                                    var fid, gid, f, g, lid;
+                                                                    fid=id.replace('given', 'family');
+                                                                    gid=id.replace('family', 'given');
+                                                                    f=ctx.find('input[id='+fid+']').val();
+                                                                    g=ctx.find('input[id='+gid+']').val();
+                                                                    f=jQ.trim(f); g=jQ.trim(g);
+                                                                    r=(g=='')&&(f=='');
+                                                                    id=gid;
+																	lid=id+'ErrMsg';																	                                                                   
+                                                                    label=$('.'+lid);
+                                                                );
+                                                                liveFor(.creatorName);">
+                                        A creator's given name or family name is required!
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <label for="dc:creator.foaf:Person.0.foaf:Organization.dc:identifier">Affiliation:</label>
+                                </td>
+                                <td colspan="3">
+                                    <div>
+                                    <span class="data-source-drop-down"
+                                          data-delay="1"
+                                          data-json-source-url="$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999"
+                                          data-id-key="dc:identifier"
+                                          data-label-key="rdfs:label"
+                                          data-list-key="results">
+                                        <span class="selection-added">
+                                            <input type="hidden" class="selection-added-id"
+                                                   id="dc:creator.foaf:Person.0.foaf:Organization.dc:identifier" value="" />
+                                            <input type="text" class="selection-added-label" readonly="readonly" size="60"
+                                                   id="dc:creator.foaf:Person.0.foaf:Organization.skos:prefLabel" value="" />
+                                            <a href="#" class="clear-item">change</a>
+                                        </span>
+                                        <span class="drop-down-location">
+                                            <button class="selection-add add-unique-only" data-add-on-click="1">
+                                                Select
+                                            </button>
+                                        </span>
+                                    </span>
+                                    </div>
+                                    <div>
+                                    <span class="data-source-drop-down"
+                                          data-delay="1"
+                                          data-json-source-url="$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999"
+                                          data-id-key="dc:identifier"
+                                          data-label-key="rdfs:label"
+                                          data-list-key="results">
+                                        <span class="selection-added">
+                                            <input type="hidden" class="selection-added-id"
+                                                   id="dc:creator.foaf:Person.0.foaf:Organization.B.dc:identifier" value="" />
+                                            <input type="text" class="selection-added-label" readonly="readonly" size="60"
+                                                   id="dc:creator.foaf:Person.0.foaf:Organization.B.skos:prefLabel" value="" />
+                                            <a href="#" class="clear-item">change</a>
+                                        </span>
+                                        <span class="drop-down-location">
+                                            <button class="selection-add add-unique-only" data-add-on-click="1">
+                                                Select
+                                            </button>
+                                        </span>
+                                    </span>
+                                    </div>
+                                    <div>
+                                    <span class="data-source-drop-down"
+                                          data-delay="1"
+                                          data-json-source-url="$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999"
+                                          data-id-key="dc:identifier"
+                                          data-label-key="rdfs:label"
+                                          data-list-key="results">
+                                        <span class="selection-added">
+                                            <input type="hidden" class="selection-added-id"
+                                                   id="dc:creator.foaf:Person.0.foaf:Organization.C.dc:identifier" value="" />
+                                            <input type="text" class="selection-added-label" readonly="readonly" size="60"
+                                                   id="dc:creator.foaf:Person.0.foaf:Organization.C.skos:prefLabel" value="" />
+                                            <a href="#" class="clear-item">change</a>
+                                        </span>
+                                        <span class="drop-down-location">
+                                            <button class="selection-add add-unique-only" data-add-on-click="1">
+                                                Select
+                                            </button>
+                                        </span>
+                                    </span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <input type="button" value="Make Primary Contact" onClick="copyToPrimaryContact(this)" />
+                </td>
+                <td>
+                    <span class="lookup-show">
+                        <span class="identified-as-name"></span>
+                        <a href="#" class="nameLookup-lookup" data-selected-func="lookupDone"
+                            data-cleared-func="lookupCleared">lookup</a>
+                        <span class="nameLookup-progress hidden">
+                            <img src="$portalPath/images/icons/loading.gif" />
+                        </span>
+                        <input id="dc:creator.foaf:Person.0.foaf:name"
+                               type="hidden"
+                               class="nl nl-rdfs:label nlLabel" readonly="readonly"/>
+                        <input type="hidden" id="dc:creator.foaf:Person.0.dc:identifier"
+                               class="nl nl-dc:identifier nlId" />
+                    </span>
+                </td>
+                <td class="valign-middle"><a class="delete-item" href="#">delete</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="2">
+                    <input type="button" class="button add-another-item" value="Add person" />                
+                </td>
+                <td colspan="6"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    #fieldTitle("locrel:prc.foaf:Person" "Primary Contact" false)
+    <div class="help-content" id="help-locrel:prc.foaf:Person">
+        Record the details of person nominated as 'primary contact' for the
+        research dataset/collection, registry/repository, catalogue or index.
+        Enter a given name and/or family name and click 'lookup' to search and
+        select the name authority record.
+    </div>
+    <table class="lookup">
+        <thead>
+            <tr>
+                <th colspan="6">Display Name</th>
+                <th>Name Authority</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <label for="locrel:prc.foaf:Person.foaf:title">Title:</label>
+                </td>
+                <td>
+                    <input type="text" placeholder="title" size="5"
+                           id="locrel:prc.foaf:Person.foaf:title" />
+                </td>
+                <td>
+                    <label for="locrel:prc.foaf:Person.foaf:givenName">Given name:</label>
+                </td>
+                <td>
+                    <input type="text" placeholder="given name" size="25"
+                           class="nameLookup-name pcGivenName pcName givenName"
+                           id="locrel:prc.foaf:Person.foaf:givenName" />
+                </td>
+                <td>
+                    <label for="locrel:prc.foaf:Person.foaf:familyName">Family name:</label>
+                </td>
+                <td>
+                    <input type="text" placeholder="family name" size="25"
+                           class="nameLookup-name pcFamilyName pcName familyName"
+                           id="locrel:prc.foaf:Person.foaf:familyName" />
+                </td>
+                <td>
+                    <span class="lookup-show">
+                        <span class="identified-as-name"></span>
+                        <a href="#" class="nameLookup-lookup" data-selected-func="pcLookupDone"
+                            data-cleared-func="pcLookupCleared">lookup</a>
+                        <span class="nameLookup-progress hidden">
+                            <img src="$portalPath/images/icons/loading.gif" />
+                        </span>
+                        <input id="locrel:prc.foaf:Person.foaf:name"
+                               type="hidden"
+                               class="nl nl-rdfs:label nlLabel" readonly="readonly"/>
+                        <input type="hidden" id="locrel:prc.foaf:Person.dc:identifier"
+                               class="nl nl-dc:identifier nlId" value="" />
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="locrel:prc.foaf:Person.foaf:email">Email address:</label>
+                </td>
+                <td colspan="6">
+                    <input type="text" id="locrel:prc.foaf:Person.foaf:email" size="60"
+                        placeholder="eg. primary.contact@example.edu.au" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    #fieldTitle("swrc:supervisor.foaf:Person" "Supervisors" false)
+    <div class="help-content" id="help-swrc:supervisor.foaf:Person">
+        Record name of supervisor associated with the data creation if
+        applicable. Enter a given name and/or family name and click 'lookup' to
+        search and select the name authority record.
+    </div>
+    <table class="input-list">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Display Name</th>
+                <th>Name Authority</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <table class="lookup">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <label for="swrc:supervisor.foaf:Person.0.foaf:title">Title:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="title" size="5"
+                                           id="swrc:supervisor.foaf:Person.0.foaf:title" />
+                                </td>
+                                <td>
+                                    <label for="swrc:supervisor.foaf:Person.0.foaf:givenName">Given name:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="given name" size="25"
+                                           class="nameLookup-name supGivenName supName givenName"
+                                           id="swrc:supervisor.foaf:Person.0.foaf:givenName" />
+                                </td>
+                                <td>
+                                    <label for="swrc:supervisor.foaf:Person.0.foaf:familyName">Family name:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="family name" size="25"
+                                           class="nameLookup-name supFamilyName supName familyName"
+                                           id="swrc:supervisor.foaf:Person.0.foaf:familyName" />
+                                </td>
+                                <td>
+                                    <label for="swrc:supervisor.foaf:Person.0.foaf:email">Email:</label>
+                                </td>
+                                <td>
+                                    <input type="text" placeholder="email" size="40"
+                                           class="nameLookup-name supEmail"
+                                           id="swrc:supervisor.foaf:Person.0.foaf:email" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <td>
+                    <span class="lookup-show">
+                        <span class="identified-as-name"></span>
+                        <a href="#" class="nameLookup-lookup" data-selected-func="lookupDone"
+                            data-cleared-func="lookupCleared">lookup</a>
+                        <span class="nameLookup-progress hidden">
+                            <img src="$portalPath/images/icons/loading.gif" />
+                        </span>
+                        <input id="swrc:supervisor.foaf:Person.0.foaf:name"
+                               type="hidden"
+                               class="nl nl-rdfs:label nlLabel" readonly="readonly"/>
+                        <input type="hidden" id="swrc:supervisor.foaf:Person.0.dc:identifier"
+                               class="nl nl-dc:identifier nlId" value="" />
+                    </span>
+                </td>
+                <td class="valign-middle"><a class="delete-item" href="#">delete</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="3">
+                    <input type="button" class="button add-another-item" value="Add supervisor" />
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    #fieldTitle("dc:contributor.locrel:clb" "Collaborators" false)
+    <div class="help-content" id="help-dc:contributor.locrel:clb">
+        Names of other collaborators in the research project, if applicable,
+        eg. CSIRO, University of X, Prof. Jim Bloggs, etc.
+    </div>
+    <table class="input-list">
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <input type="text" size="60" placeholder="eg. CSIRO, University of X, Prof. Jim Bloggs, etc." id="dc:contributor.locrel:clb.0.foaf:Agent" />
+                </td>
+                <td class="delete-item"><a href="#">delete</a></td>
+                <td style="width: 100%;"> </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="Add collaborator" /></td>
+                <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+function lookupDone(target,data){
+    var p=target.parent();
+    target.text(" | change");
+    var displayName = p.find(".identified-as-name");
+    displayName.text(p.find("input.nl").val());
+
+    // fill in the fields
+    // National Library of Australia
+    var nlaId = data["nlaId"];
+    if (nlaId != null) {
+        displayName.append(" (<a href=\""+nlaId+"\" target=\"_blank\">NLA</a>)");
+        var baseId = p.find("input[id$=\\.foaf\\:name]").attr("id").replace(".foaf:name", "");
+        $("input[id='"+baseId+".foaf:title']").val("");
+        $("input[id='"+baseId+".foaf:givenName']").val(data["firstName"]);
+        $("input[id='"+baseId+".foaf:familyName']").val(data["surname"]);
+
+    // Mint Identity
+    } else {
+        var lookupData=data["result-metadata"].all;
+        var baseId=p.find("input[id$=\\.foaf\\:name]").attr("id").replace(".foaf:name", "");
+        $("input[id='"+baseId+".foaf:title']").val(lookupData["Honorific"]);
+        $("input[id='"+baseId+".foaf:givenName']").val(lookupData["Given_Name"]);
+        $("input[id='"+baseId+".foaf:familyName']").val(lookupData["Family_Name"]);
+        $("input[id='"+baseId+".foaf:email']").val(lookupData["Email"]);
+        $("input[id='"+baseId+".foaf:Organization.dc:identifier']").parents("td").find("option").each(function(c,e){
+            var groupID_1 = "jcu.edu.au/parties/group/" + lookupData["GroupID_1"];
+            var option=$(e);
+            if (jQuery.trim(option.val()) == groupID_1){
+                $("input[id='"+baseId+".foaf:Organization.dc:identifier']")
+                    .val(option.val()).trigger("onDataChanged");
+                $("input[id='"+baseId+".foaf:Organization.skos:prefLabel']")
+                    .val(option.text()).trigger("onDataChanged");
+                return;
+            }
+        });
+        $("input[id='"+baseId+".foaf:Organization.B.dc:identifier']").parents("td").find("option").each(function(c,e){
+            var groupID_2 = "jcu.edu.au/parties/group/" + lookupData["GroupID_2"];
+            var option=$(e);
+            if (jQuery.trim(option.val()) == groupID_2){
+                $("input[id='"+baseId+".foaf:Organization.B.dc:identifier']")
+                    .val(option.val()).trigger("onDataChanged");
+                $("input[id='"+baseId+".foaf:Organization.B.skos:prefLabel']")
+                    .val(option.text()).trigger("onDataChanged");
+                return;
+            }
+        });
+        $("input[id='"+baseId+".foaf:Organization.C.dc:identifier']").parents("td").find("option").each(function(c,e){
+            var groupID_3 = "jcu.edu.au/parties/group/" + lookupData["GroupID_3"];
+            var option=$(e);
+            if (jQuery.trim(option.val()) == groupID_3){
+                $("input[id='"+baseId+".foaf:Organization.C.dc:identifier']")
+                    .val(option.val()).trigger("onDataChanged");
+                $("input[id='"+baseId+".foaf:Organization.C.skos:prefLabel']")
+                    .val(option.text()).trigger("onDataChanged");
+                return;
+            }
+        });
+    }
+}
+
+function lookupCleared(target,data){
+    var p = target.parent();
+    target.text("lookup");
+    p.find(".identified-as-name").text("");
+    p.find("input.nl").val("");
+}
+
+function pcLookupDone(target,data){
+    lookupDone(target,data);
+    var metadata = data["result-metadata"];
+    if (metadata != null) {
+        $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:email").val(metadata.all["Email"]);
+    }
+}
+
+function pcLookupCleared(target,data){
+    lookupCleared(target,data);
+    $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:email").val("");
+}
+
+$(function(){    
+    $("#people")[0].onActivate = function() {
+        setTimeout(function(){$(".creatorGivenName")[$(".creatorGivenName").length -1].focus();}, 200);        
+    };    
+});
+
+function copyToPrimaryContact(obj){
+    var par=obj.parentNode; 
+    while(par.nodeName.toLowerCase()!='tr'){ 
+        par=par.parentNode; 
+    } 
+
+    index = (par.rowIndex - 1);
+
+    titleId = '#dc\\:creator\\.foaf\\:Person\\.' + index + '\\.foaf\\:title';
+    givenNameId = '#dc\\:creator\\.foaf\\:Person\\.' + index + '\\.foaf\\:givenName';
+    familyNameId = '#dc\\:creator\\.foaf\\:Person\\.' + index + '\\.foaf\\:familyName';
+    emailId = '#dc\\:creator\\.foaf\\:Person\\.' + index + '\\.foaf\\:email';
+
+    $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:title").val($(titleId).val());
+    $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:givenName").val($(givenNameId).val());
+    $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:familyName").val($(familyNameId).val());
+    $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:email").val($(emailId).val());
+}
+</script>

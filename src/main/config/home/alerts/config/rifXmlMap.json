@@ -1,0 +1,104 @@
+{
+    "comment": "This James Cook University's RIF-CS mapping. It relies on some pre-processing of the raw RIF-CS (other than rifsplit.py) to ensure it contained everything we wanted, in a form that was easy to use with the following mappings.",
+    "mappings": {
+        "/rif:registryObjects/rif:registryObject/rif:key":
+        {
+            ".":["rif:identifier.0.value", "known_ids", "dc:identifier.rdf:PlainLiteral"],
+            "@type":["rif:identifier.0.type","dc:identifier.dc:type.rdf:PlainLiteral"],
+            "@label":"dc:identifier.dc:type.skos:prefLabel",
+            "@origin":"dc:identifier.redbox:origin"
+        },
+        "/rif:registryObjects/rif:registryObject/rif:collection":{
+            "@type":["dc:type.rdf:PlainLiteral", "dc:type.skos:prefLabel"],
+            "@dateModified":["dc:modified"],
+            "@dateAccessioned":"dc:created"
+        },
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:name[@type='primary']/rif:namePart":["title", "dc:title", "redbox:submissionProcess.dc:title"],
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:description[@type='full' or @type='brief' or @type='note' or @type='logo']":{
+            ".":["description.0.value", "dc:description.0.value", "redbox:submissionProcess.dc:description.0.value", "rif:description.0.value"],
+            "@type":["description.0.type", "dc:description.0.type", "redbox:submissionProcess.dc:description.0.type", "rif:description.0.type"],
+            "@label":"rif:description.0.label"
+        },
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:description[@type='rights']":{
+            ".":["dc:accessRights.dc:RightsStatement.skos:prefLabel"]
+        },
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:description[@type='accessRights']":{
+            ".":["dc:accessRights.skos:prefLabel"]
+        },
+
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:subject[@type='local']":"dc:subject.vivo:keyword.0.rdf:PlainLiteral",
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:subject[@type='anzsrc-for']":{
+            ".":"dc:subject.anzsrc:for.0.rdf:resource",
+            "@title":"dc:subject.anzsrc:for.0.skos:prefLabel"
+        },
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:subject[@type='anzsrc-seo']":{
+            ".":"dc:subject.anzsrc:seo.0.rdf:resource",
+            "@title":"dc:subject.anzsrc:seo.0.skos:prefLabel"
+        },
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:relatedObject/rif:relation[@type='hasAssociationWith' or @type='isEnrichedBy' or @type='isOwnedBy' or @type='isManagedBy' or @type='hasCollector']/..":{
+            "rif:relation/@type":"dc:creator.foaf:Person.0.jcu:relationshipType",
+            "rif:relation/@label":"dc:creator.foaf:Person.0.jcu:relationshipLabel",
+            "rif:key":"dc:creator.foaf:Person.0.dc:identifier",
+            "@Family_Name":"dc:creator.foaf:Person.0.foaf:familyName",
+            "@Given_Name":"dc:creator.foaf:Person.0.foaf:givenName",
+            "@Honorific":"dc:creator.foaf:Person.0.foaf:title",
+            "@dc_title":"dc:creator.foaf:Person.0.foaf:name",
+            "@primary_group_id":"dc:creator.foaf:Person.0.foaf:Organization.dc:identifier",
+            "@primary_group_name":"dc:creator.foaf:Person.0.foaf:Organization.skos:prefLabel"
+        },
+
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:relatedObject/rif:relation[@type='isOutputOf']/..":{
+            "@grantNumber":"foaf:fundedBy.vivo:Grant.0.redbox:grantNumber",
+            "@title":"foaf:fundedBy.vivo:Grant.0.skos:prefLabel",
+            "rif:key":"foaf:fundedBy.vivo:Grant.0.dc:identifier"
+        },
+
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:relatedInfo/rif:identifier[@type='uri' and @uritype='license']/..":{
+            "rif:identifier":"dc:license.dc:identifier",
+            "rif:notes":"dc:license.skos:prefLabel"
+        },
+
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:relatedInfo/rif:identifier[@type='uri' and @uritype='url']/..":{
+            "rif:identifier":"dc:relation.bibo:Website.0.dc:identifier",
+            "rif:title":"dc:relation.bibo:Website.0.dc:title",
+            "rif:notes":"dc:relation.bibo:Website.0.skos:note"
+        },
+
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:relatedInfo/rif:identifier[@type='doi']/..":{
+            "rif:identifier":"dc:relation.swrc:Publication.0.dc:identifier",
+            "rif:title":"dc:relation.swrc:Publication.0.dc:title",
+            "rif:note":"dc:relation.swrc:Publication.0.skos:note"
+        },
+
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:coverage/rif:spatial":{
+
+            "@type":"dc:coverage.vivo:GeographicLocation.0.dc:type",
+            ".": "dc:coverage.vivo:GeographicLocation.0.rdf:PlainLiteral",
+            "rif:wtk":"dc:coverage.vivo:GeographicLocation.0.redbox:wktRaw"
+        },
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:location/rif:address/rif:physical/rif:addressPart[@type='combined']":"vivo:Location.vivo:GeographicLocation.gn:name",
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:coverage/rif:temporal/rif:date[@type='dateFrom']":"dc:coverage.vivo:DateTimeInterval.vivo:start",
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:coverage/rif:temporal/rif:date[@type='dateTo']":"dc:coverage.vivo:DateTimeInterval.vivo:end",
+        "/rif:registryObjects/rif:registryObject/rif:collection/rif:location/rif:address/rif:electronic[@type='email']":{
+            "@hon":"locrel:prc.foaf:Person.foaf:title",
+            "@givenName":"locrel:prc.foaf:Person.foaf:givenName",
+            "@familyName":"locrel:prc.foaf:Person.foaf:familyName",
+            "rif:value":"locrel:prc.foaf:Person.foaf:email"
+        },
+        "/rif:registryObjects/rif:registryObject/rif:DATA_MANAGEMENT":
+        {
+            "@size":"dc:extent",
+            "@period":"redbox:retentionPeriod"
+
+        },
+        "/rif:registryObjects/rif:registryObject/rif:LANGUAGE":"dc:language.skos:prefLabel",
+        "/rif:registryObjects/rif:registryObject/rif:RETENTION":"redbox:retentionPeriod"
+
+    },
+    "exceptions": {
+        "output": "skos:note.0.dc:description",
+        "fields": {
+        }
+    },
+    "defaultNamespace": {"rif": "http://ands.org.au/standards/rif-cs/registryObjects"}
+}

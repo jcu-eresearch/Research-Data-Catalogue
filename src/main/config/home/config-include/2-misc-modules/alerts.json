@@ -9,6 +9,33 @@
 	"new-alerts": {
         "alertSet": [
             {
+				"name": "EnMaSSe Provisioning",
+				"path": "${fascinator.home}/harvest/enmasse-alerts",
+				"harvestConfig": "${fascinator.home}/harvest/enmasse-alerts/config/enmasse-dataset.json",
+				"handlers": {"xml": "XMLAlertHandler"},
+				"baseline": {
+				    "workflow_source": "EnMaSSe Alert"
+				    "viewId": "default",
+				    "packageType": "dataset",
+		    		"redbox:formVersion": "1.7",
+				    "redbox:newForm": "true",
+  				    "redbox:submissionProcess.redbox:submitted": "true",
+				    "xmlns:dc": "http://dublincore.org/documents/2008/01/14/dcmi-terms/",
+		    		"xmlns:foaf": "http://xmlns.com/foaf/spec/",
+			    	"xmlns:anzsrc": "http://purl.org/anzsrc/",
+				    "dc:type.rdf:PlainLiteral": "dataset",
+				    "dc:type.skos:prefLabel": "Dataset",
+			    	"dc:language.dc:identifier": "http://id.loc.gov/vocabulary/iso639-2/eng",
+				    "dc:language.skos:prefLabel": "English"
+				},
+				"timestampFields": ["redbox:submissionProcess.dc:date"],
+				"XMLAlertHandlerParams": {
+			    	"configMap": {
+						"xml": {"xmlMap": "${fascinator.home}/harvest/enmasse-alerts/config/enmasseXmlMap.json"}
+					}
+				}
+	    	},
+            {
                 "name": "Data plans",
                 "path": "${fascinator.home}/test-alerts/dataplan1",
                 "harvestConfig": "${fascinator.home}/harvest/workflows/dmpt.json",

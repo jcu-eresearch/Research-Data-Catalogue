@@ -1,0 +1,14 @@
+#sectionHeading("#displayMessage('jcu-self-submission.heading.label.keywords')")
+<div class="meta">
+    <dl>        
+		#displayArrayList("#displayMessage('jcu-self-submission.field.label.dc-subject.anzsrc-for')" "dc:subject.anzsrc:for" "skos:prefLabel")
+        #displayArrayList("#displayMessage('jcu-self-submission.field.label.dc-subject.anzsrc-seo')" "dc:subject.anzsrc:seo" "skos:prefLabel")
+        <dt>#displayMessage('jcu-self-submission.field.label.jcu-research.themes')</dt>
+        #displaySelectedCheckbox("jcu:research.themes.tropicalEcoSystems" "#displayMessage('jcu-self-submission.field.label.jcu-research.themes.tropicalEcoSystems')")
+        #displaySelectedCheckbox("jcu:research.themes.industriesEconomies" "#displayMessage('jcu-self-submission.field.label.jcu-research.themes.industriesEconomies')")
+        #displaySelectedCheckbox("jcu:research.themes.peopleSocieties" "#displayMessage('jcu-self-submission.field.label.jcu-research.themes.peopleSocieties')")
+        #displaySelectedCheckbox("jcu:research.themes.tropicalHealth" "#displayMessage('jcu-self-submission.field.label.jcu-research.themes.tropicalHealth')")
+        #displaySelectedCheckbox("jcu:research.themes.notAligned" "#displayMessage('jcu-self-submission.field.label.jcu-research.themes.notAligned')")
+        #displayArrayList("#displayMessage('jcu-self-submission.field.label.dc-subject.vivo-keyword')" "dc:subject.vivo:keyword" "rdf:PlainLiteral")
+    </dl>
+</div>

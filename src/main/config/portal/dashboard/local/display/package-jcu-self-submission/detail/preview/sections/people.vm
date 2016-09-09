@@ -1,0 +1,106 @@
+#macro(displayPerson $key $name)
+    <dt>$name</dt>
+    <dd>
+    	#set($title = $metadata.get("$key:title"))
+		#set($givenName = $metadata.get("$key:givenName"))
+		#set($familyName = $metadata.get("$key:familyName"))
+		#set($email = $metadata.get("$key:email"))
+    #if ($familyName || $givenName)
+    	$page.escapeHtml($!title) $page.escapeHtml($!givenName) $page.escapeHtml($!familyName) $page.escapeHtml($!email)
+    #else	
+        #noInformation()
+    </dd>
+    #end
+#end
+
+#macro(missing $value)
+<i>{missing: "$value" }</i>
+#end
+
+#macro(displayKey $map $key $required)
+#set ($value = $map.get($key))
+#if ("$!value" != "")
+$page.escapeHtml($value)
+#else
+    #if ($required)
+#missing($key)
+    #end
+#end
+#end
+
+#macro(displayOptionalKey $map $key)
+#displayKey($map $key false)
+#end
+
+#macro(displayRequiredKey $map $key)
+#displayKey($map $key true)
+#end
+
+#macro(displayAffiliation $map $key)
+#set ($value = $map.get($key))
+#if ("$!value" != "")
+"$value"
+#end
+#end
+
+#sectionHeading("#displayMessage('jcu-self-submission.heading.lable.people')")
+<div class="meta">
+    <dl>
+
+    <dt>#displayMessage('jcu-self-submission.field.label.dc-creator.foaf-person')</dt>
+    #set($personList = $self.getList("dc:creator.foaf:Person"))
+    #if ($personList.isEmpty())
+    <dd>
+    #noInformation()
+    </dd>
+    #else
+    <dd>
+        <ol>
+        #foreach($key in $personList.keySet())
+            #set($person = $personList.get($key))
+            <li>
+                #displayOptionalKey($person "jcu:relationshipLabel")
+                #displayOptionalKey($person "foaf:title")
+                #displayRequiredKey($person "foaf:givenName")
+                #displayRequiredKey($person "foaf:familyName")
+                #displayOptionalKey($person "foaf:email")
+                #displayAffiliation($person "foaf:Organization.skos:prefLabel")
+                #displayAffiliation($person "foaf:Organization.B.skos:prefLabel")
+                #displayAffiliation($person "foaf:Organization.C.skos:prefLabel")
+            </li>
+        #end
+        </ol>
+    </dd>
+    #end
+    
+    #displayPerson("locrel:prc.foaf:Person.foaf" "#displayMessage('jcu-self-submission.field.label.locrel-prc.foaf-person')")
+    
+    <dt>#displayMessage('jcu-self-submission.field.label.swrc-supervisor.foaf-person')</dt>
+    #set($supervisorList = $self.getList("swrc:supervisor.foaf:Person"))
+    #if($supervisorList.isEmpty())
+    <dd>
+    #noInformation()
+    </dd>
+    #else
+    <dd>
+        <ol>
+        #foreach($key in $supervisorList.keySet())
+            #set($supervisor = $supervisorList.get($key))
+            #set($givenName = $supervisor.get("foaf:givenName"))
+            #set($familyName = $supervisor.get("foaf:familyName"))
+            #if ($givenName != '' && $familyName != '')
+            <li>
+                #displayOptionalKey($supervisor "foaf:title")
+                #displayRequiredKey($supervisor "foaf:givenName")
+                #displayRequiredKey($supervisor "foaf:familyName")
+                #displayOptionalKey($supervisor "foaf:email")
+            </li>
+            #end
+        #end
+        </ol>
+    </dd>
+    #end
+    
+    #displayArrayList("#displayMessage('jcu-self-submission.field.label.dc-contributor.locrel-clb.foaf-Agent')" "dc:contributor.locrel:clb" "foaf:Agent")
+    </dl>
+</div>
