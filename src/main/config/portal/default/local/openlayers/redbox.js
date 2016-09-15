@@ -13,8 +13,8 @@ function loadOpenLayers() {
     var osmLayer, gLayer, vLayer;
     // To turn on google, you also need to provide your API key and
     // uncomment the javascript call in /redbox/workflows/dataset.vm
-    //var layers = "osm"; // "osm", "google", "both"
-    var layers = "mapquest";
+    var layers = "osm"; // "osm", "google", "both"
+    //var layers = "mapquest";
     // Controls
     var grippy, drawPoint, drawPath, drawRect, drawCircle, drawPoly, modify;
 
