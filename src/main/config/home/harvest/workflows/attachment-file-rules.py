@@ -151,13 +151,13 @@ class IndexData:
 
     # TODO: get accesscontrol from system-config.json
     def __grantAccess(self, newRole):
-        schema = self.utils.getAccessSchema("hibernateAccessControl");
+        schema = self.utils.getAccessSchema("derby");
         schema.setRecordId(self.oid)
         schema.set("role", newRole)
-        self.utils.setAccessSchema(schema, "hibernateAccessControl")
+        self.utils.setAccessSchema(schema, "derby")
 
     def __revokeAccess(self, oldRole):
-        schema = self.utils.getAccessSchema("hibernateAccessControl");
+        schema = self.utils.getAccessSchema("derby");
         schema.setRecordId(self.oid)
         schema.set("role", oldRole)
-        self.utils.removeAccessSchema(schema, "hibernateAccessControl")
+        self.utils.removeAccessSchema(schema, "derby")
