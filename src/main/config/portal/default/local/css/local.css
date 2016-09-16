@@ -54,6 +54,7 @@ ul.nav, ul.main li a, .box h2 {
 ul.nav li.secondary, 
 ul.nav li.secondary span.status a {
     color: #DEDBC3;
+    line-height: 2.5em;
 }
 
 ul.main li:hover a {
