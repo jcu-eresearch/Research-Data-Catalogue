@@ -23,13 +23,13 @@
                                       "data-id-key":"id", "data-label-key":"label", "data-list-key":"results"}},
                     {"jaffaPeople": {"source":"nla,mint", "label":"", "class-list":"jaffa-field", "suffix":"", "lookup-only":"true"}},
                     {"jaffaDropDown":{"label":"Affiliations:", "suffix":"foaf:Organization.dc:identifier", "field":"foaf:Organization.dc:identifier", "label-field":"foaf:Organization.skos:prefLabel",
-                                      "label-field-suffix":"foaf:Organization.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999", 
+                                      "label-field-suffix":"foaf:Organization.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999%26searchTerms%3DcurrentGroups",
                                       "data-id-key":"dc:identifier", "data-label-key":"rdfs:label", "data-list-key":"results", "data-sort-field":"rdfs:label"}},
                     {"jaffaDropDown":{"label":"", "suffix":"foaf:Organization.B.dc:identifier", "field":"foaf:Organization.B.dc:identifier", "label-field":"foaf:Organization.B.skos:prefLabel",
-                                      "label-field-suffix":"foaf:Organization.B.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999", 
+                                      "label-field-suffix":"foaf:Organization.B.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999%26searchTerms%3DcurrentGroups",
                                       "data-id-key":"dc:identifier", "data-label-key":"rdfs:label", "data-list-key":"results", "data-sort-field":"rdfs:label"}},
                     {"jaffaDropDown":{"label":"", "suffix":"foaf:Organization.C.dc:identifier", "field":"foaf:Organization.C.dc:identifier", "label-field":"foaf:Organization.C.skos:prefLabel",
-                                      "label-field-suffix":"foaf:Organization.C.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999", 
+                                      "label-field-suffix":"foaf:Organization.C.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999%26searchTerms%3DcurrentGroups",
                                       "data-id-key":"dc:identifier", "data-label-key":"rdfs:label", "data-list-key":"results", "data-sort-field":"rdfs:label"}}
                 ]
             }
