@@ -542,7 +542,7 @@ The preferred licence for JCU research data is the Creative Commons - Attributio
  * `Creative Commons AU licences <http://creativecommons.org.au/learn/licences>`_
  * `Open Data Commons Attribution licence <http://opendatacommons.org/licenses/by/summary/>`_
  * `Open Data Commons Open Database Licence <http://opendatacommons.org/licenses/odbl/summary/>`_
- * `Open Data Commons Public Domain Dedication and Licence <http://opendatacommons.org/licenses/odbl/summary/>`_
+ * `Open Data Commons Public Domain Dedication and Licence <http://opendatacommons.org/licenses/pddl/summary/>`_
 
 All these licences are open data licences. The Creative Commons licences are recommended for use by the `Australian Governments Open Access and Licensing Framework (AusGOAL) <http://www.ausgoal.gov.au>`_ but the others are provided for completeness. For more information about data licencing, see:
  * `Copyright, Data and Licensing <http://ands.org.au/guides/copyright-and-data-awareness.html>`_
