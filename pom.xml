@@ -443,6 +443,7 @@
                         </configuration>
                     </execution>
                 </executions>
+				<!--
                 <dependencies>
                     <dependency>
                         <groupId>org.codehaus.groovy</groupId>
@@ -451,6 +452,7 @@
                         <scope>runtime</scope>
                     </dependency>
                 </dependencies>
+                -->
             </plugin>
 
 			<!-- 1st - Unpack Generic Mint setup -->
