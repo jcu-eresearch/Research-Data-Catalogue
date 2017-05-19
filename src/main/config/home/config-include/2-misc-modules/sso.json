@@ -1,13 +1,14 @@
 {
 	"sso": {
-        "plugins": [],
+        "plugins": ["Shibboleth"],
         "urlExclusions": {
             "startsWith": [
                 "css/",
                 "feed/",
                 "images/",
                 "js/",
-                "flowplayer/"
+                "flowplayer/",
+                "jaffa/"
             ],
             "endsWith": [
                 ".ico"
