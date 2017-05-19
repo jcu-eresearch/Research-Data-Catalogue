@@ -1,0 +1,464 @@
+#macro(showElementRifCS $tag $field $attr $label $anzsrc)
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
+        #set($value = $valueMap.get($key))
+            #if ($label != "" && $value.get($label)!= "")				
+                #set($labelVal = $value.get($label))				
+                #if ($anzsrc == "anzsrc")
+                    #set($lastIndex = $labelVal.lastIndexOf('/') + 1 )
+                    #set($labelVal = $labelVal.substring($lastIndex) )
+            #end
+            <$tag$attr>$util.encodeXml($labelVal)</$tag> 
+        #end
+    #end
+#end
+
+#macro(showRelatedInfo $field $relatedInfoType $identifierType)
+
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
+        #set ($row = $valueMap.get($key))
+        #set ($value = $row.get("dc:identifier"))
+        #if ("$!value" != "")
+            <rif:relatedInfo type="$relatedInfoType">
+                <rif:identifier type="$identifierType">$util.encodeXml($value)</rif:identifier>
+            #set ($title = $row.get("dc:title"))
+            #if ("$!title" != "")
+                <rif:title>$util.encodeXml($title)</rif:title>
+            #end
+## Uncomment to map Notes as well
+##            #set ($notes = $row.get("skos:note"))
+##            #if ("$!notes" != "")
+##            <rif:notes>$util.encodeXml($notes)</rif:notes>
+##            #end
+            </rif:relatedInfo>
+        #end
+    #end
+#end
+
+#macro(geoSpatialMacro $field)
+    #set($valueMap = $util.getList($item, $field))
+    #foreach($key in $valueMap.keySet())
+        #set($geoMap = $valueMap.get($key))
+        #set($wkt = $geoMap.get("redbox:wktRaw"))
+        #set($literal = $geoMap.get("rdf:PlainLiteral"))
+        #set($type = $geoMap.get("dc:type"))
+
+        #if($literal != "")
+            #### Non - OpenLayers data
+            #if($wkt == "")
+            <rif:coverage>
+                <rif:spatial type="$type" $lang>$util.encodeXml($literal)</rif:spatial>
+                #if($type == "text")
+                    #set($east = $geoMap.get("geo:long"))
+                    #set($north = $geoMap.get("geo:lat"))
+                    #if ("$!east" != "" &&"$!north" != "")
+                <rif:spatial type="dcmiPoint" $lang>name=$util.encodeXml($literal); east=$east; north=$north; projection=WGS84</rif:spatial>
+                    #end
+                #end
+            </rif:coverage>
+            #else
+                #### Non - OpenLayers data
+                #if($type != "")
+
+            <rif:coverage>
+                        #set($literal = $literal.replace("POLYGON((", ""))
+                        #set($literal = $literal.replace("))", ""))
+                        #set($literal = $literal.replace(",", " "))
+                        #set($literalArray = $literal.split(" "))
+                        #set($i = 0)
+                        #set($kml = "")
+                        #set($last_loop = $literalArray.size() - 1)
+                        #foreach($literal in $literalArray)
+                            #if($i % 2 != 0)
+                            	#if($i == $last_loop)
+                                #set($kml = $kml + $literal)
+                                #else
+                                #set($kml = $kml + $literal + " ")
+                                #end
+                            #else
+                                #set($kml = $kml + $literal + ",")
+                            #end
+                            #set($i = $i + 1)
+                        #end
+                        
+                <rif:spatial type="kmlPolyCoords" $lang>$util.encodeXml($kml)</rif:spatial>
+            </rif:coverage>
+                #end
+            #end
+        #end
+    #end
+#end
+#end
+
+#set($quote='"')
+
+#set($defaultOnError = "&Invalid XML placeholder... prevents ANDS Harvesting records in error&")
+#set($group = $systemConfig.getString($defaultOnError, "identity", "RIF_CSGroup"))
+
+### Resolve the identifier
+#set ($formId = $util.get($item, 'dc:identifier.rdf:PlainLiteral'))
+#set ($formOrigin = $util.get($item, 'dc:identifier.redbox:origin'))
+#set ($formType = $util.get($item, 'dc:identifier.dc:type.rdf:PlainLiteral'))
+
+#set($pidType = $systemConfig.getString($defaultOnError, "curation", "pidType"))
+#set($pidProperty = $systemConfig.getString($defaultOnError, "curation", "pidProperty"))
+#set ($pid = $util.getMetadata($object, $pidProperty))
+#if ("$!pid" == "")
+    #set ($pid = $util.get($item, "metadata", "rdf:resource"))
+    #if ("$!pid" == "")
+        #set ($pid = $util.get($item, "metadata", "dc.identifier"))
+    #end
+#end
+
+#set ($identifier = "")
+#set ($identifierType = "")
+#if ($formOrigin == "internal")
+    #if ($pid != "")
+        #set ($identifier = $util.encodeXml($pid))
+        #set ($identifierType = $util.encodeXml($pidType))
+    #else
+        #set ($identifier = $util.encodeXml("$urlBase/detail/$oid"))
+        #set ($identifierType = "uri")
+    #end
+#else
+    #set ($identifier = $util.encodeXml($formId))
+    #set ($identifierType = $util.encodeXml($formType))
+#end
+#if ("$!identifier" == "")
+    ## We want invalid XML here so the record is never harvested without the correct ID
+    #set($identifier = "&Invalid ID: Not curated yet&")
+    #set ($identifierType = "invalid")
+#end
+
+####set($lang = "xml:lang=${quote}$util.get($item, 'dc:language.dc:identifier')${quote}")
+#set($lang = "xml:lang=${quote}en${quote}")
+
+##DOI Identifier
+#set($doiProperty = $systemConfig.getString("", "andsDoi", "doiProperty"))
+#set($doi = $util.getMetadata($object, $doiProperty))
+
+<rif:registryObjects xmlns:rif="http://ands.org.au/standards/rif-cs/registryObjects"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://ands.org.au/standards/rif-cs/registryObjects http://services.ands.org.au/documentation/rifcs/1.6/schema/registryObjects.xsd">
+    <rif:registryObject group="$util.encodeXml($group)">
+
+        <rif:key>$identifier</rif:key>
+        <rif:originatingSource>$urlBase</rif:originatingSource>
+
+        #set($dateModified = "")
+        #if ($util.get($item, 'dc:modified') != "")
+            #set($rawModified = "$util.getW3CDateTime($util.get($item, 'dc:modified'))")
+            #set($dateModified = "dateModified=${quote}${rawModified}${quote}")
+        #end
+
+        #set($dateAccessioned = "")
+        #if ($util.get($item, "dc:created") != "")
+            #set($rawAccessioned = "$util.getW3CDateTime($util.get($item, 'dc:created'))")
+            #set($dateAccessioned = "dateAccessioned=${quote}${rawAccessioned}${quote}")
+        #end
+
+        #################
+        ## The order of child codes under <collection> is important, don't
+        ## change the order or the XML will not validate:
+        ##  1)  <rif:identifier>
+        ##  2)  <rif:name>
+        ##  3)  <rif:location>
+        ##  4)  <rif:coverage>
+        ##  5)  <rif:relatedObject>
+        ##  6)  <rif:subject>
+        ##  7)  <rif:description>
+        ##  8)  <rif:rights>
+        ##  9)  <rif:relatedInfo>
+        ##  10) <rif:citationInfo>
+        ##
+        ##  http://services.ands.org.au/documentation/rifcs/1.6/schemadocs/registryObjects.html
+        #################
+        <rif:collection type="$util.get($item, "dc:type.rdf:PlainLiteral")" $dateModified $dateAccessioned>
+            <rif:identifier type="$identifierType">$identifier</rif:identifier>
+
+        #set($additionalIds = $util.getList($item, "rif:collection"))
+        #foreach($key in $additionalIds.keySet())
+            #set($additionalId = $util.encodeXml($additionalIds.get($key).get('identifier')))
+            #set($additionalIdType = $util.encodeXml($additionalIds.get($key).get('type')))
+            #if($!additionalId != "")
+            <rif:identifier type="$additionalIdType">$additionalId</rif:identifier>
+            #end
+        #end
+        #if("$!doi" != "")
+            <rif:identifier type="doi">$doi</rif:identifier>
+        #end
+
+            <rif:name type="primary" $lang>
+                <rif:namePart>$util.encodeXml($util.get($item, "dc:title"))</rif:namePart>
+            </rif:name>
+
+        ## Dates
+        ## Just date created for now to reach ANDS Quality Level 3
+        #set($dateCreated = "")
+        #if ($util.get($item, "dc:created") != "")
+            #set($dateCreated = "$util.getW3CDateTime($util.get($item, 'dc:created'))")
+            <rif:dates type="dc.created">
+                <rif:date type="dateFrom" dateFormat="W3CDTF">$dateCreated</rif:date>
+            </rif:dates>
+        #end
+
+
+        ## Location
+        #set($valueMap = $util.getList($item, "bibo:Website"))
+        #set($firstValue = "")
+        #if ($valueMap.size() > 0)
+            #set($firstValue = $valueMap.get("1").get("dc:identifier"))
+        #end
+        #set ($physicalLocation = $util.get($item, "vivo:Location.vivo:GeographicLocation.gn:name"))
+        #if ("$!physicalLocation" != "" || "$!firstValue" != "")
+            <rif:location>
+            #foreach($key in $valueMap.keySet())
+                #set ($value = $valueMap.get($key).get("dc:identifier"))
+                #if ("$!value" != "")
+                <rif:address>
+                    <rif:electronic type="url">
+                        <rif:value>$util.encodeXml($value)</rif:value>
+                    </rif:electronic>
+                </rif:address>
+                #end
+            #end
+
+            #### Physical location
+            #if ("$!physicalLocation" != "")
+                <rif:address>
+                    <rif:physical>
+                        <rif:addressPart type="text">$util.encodeXml($physicalLocation)</rif:addressPart>
+                    </rif:physical>
+                </rif:address>
+            #end
+            #set ($value = $util.get($item, "locrel:prc.foaf:Person.foaf:email"))
+            #if ("$!value" != "")
+                 <rif:address>
+                    <rif:electronic type="email">
+                        <rif:value>$util.encodeXml($value)</rif:value>
+                    </rif:electronic>
+                </rif:address>
+            #end
+
+            </rif:location>
+        #end
+        #set ($recordAsLocation = $util.get($item, "recordAsLocationDefault"))
+        #if ("$!$recordAsLocation" != "")
+            <rif:location>
+                <rif:address>
+                    <rif:electronic type="url">
+                        <rif:value>$util.encodeXml($recordAsLocation)</rif:value>
+                    </rif:electronic>
+                </rif:address>
+            </rif:location>
+        #end
+        #set ($covFrom = $util.get($item, "dc:coverage.vivo:DateTimeInterval.vivo:start"))
+        #set ($covTo = $util.get($item, "dc:coverage.vivo:DateTimeInterval.vivo:end"))
+        #set ($covPeriod = $util.get($item, "dc:coverage.redbox:timePeriod"))
+        #if ("$!covFrom" != "" || "$!covTo" != "" || "$!covPeriod" != "")
+            <rif:coverage>
+                <rif:temporal>
+                    #if ("$!covFrom" != "")
+                        <rif:date type="dateFrom" dateFormat="W3CDTF">$util.getW3CDateTime($covFrom)</rif:date>
+                    #end
+                    #if ("$!covTo" != "")
+                        <rif:date type="dateTo" dateFormat="W3CDTF">$util.getW3CDateTime($covTo)</rif:date>
+                    #end
+                    #if ("$!covPeriod" != "")
+                    <rif:text>$util.encodeXml($covPeriod)</rif:text>
+                    #end
+                </rif:temporal>
+            </rif:coverage>
+        #end
+
+        #geoSpatialMacro("dc:coverage.vivo:GeographicLocation")
+
+        ### Relations
+        #set($valueList = $item.getJsonSimpleList("relationships"))
+        #set($relationshipKeys = [])
+        #if($valueList)
+            #foreach($value in $valueList)
+                #if ($value.getBoolean(false, "isCurated"))
+                    #set($key = $value.getString("empty", "curatedPid"))
+                    #set($rel = $value.getString("hasAssociationWith", "relationship"))
+                    #set($desc = $value.getString("empty", "description"))
+                    #if ($key != "empty")
+                        #set($dummy = $relationshipKeys.add($key))
+                        <rif:relatedObject>
+                            <rif:key>$util.encodeXml($key)</rif:key>
+                            #if ($desc != "empty")
+                                <rif:relation type="$util.encodeXml($rel)">
+                                    <rif:description>$util.encodeXml($desc)</rif:description>
+                                </rif:relation>
+                            #else
+                                <rif:relation type="$util.encodeXml($rel)"/>
+                            #end
+                        </rif:relatedObject>
+                    #end
+                #end
+            #end
+        #end
+
+        ### National Library Creators - Non-curated
+        #set($valueMap = $util.getList($item, "dc:creator.foaf:Person"))
+        #foreach($key in $valueMap.keySet())
+            #set ($value = $valueMap.get($key).get("dc:identifier"))
+                #if ("$!value" != "" && ( $value.startsWith("http://nla.gov.au/nla.party-") || $value.startsWith("http://orcid.org/")))
+        <rif:relatedObject>
+            <rif:key>$util.encodeXml($value)</rif:key>
+            <rif:relation type="hasCollector"></rif:relation>
+        </rif:relatedObject>
+            #end
+        #end
+
+
+
+       	#showElementRifCS ("rif:subject"  "dc:subject.vivo:keyword"  " type=${quote}local${quote} $lang"  "rdf:PlainLiteral"  "")
+         #showElementRifCS ("rif:subject"  "dc:subject.anzsrc:for"  " type=${quote}anzsrc-for${quote} $lang"  "rdf:resource"  "anzsrc")
+         #showElementRifCS ("rif:subject"  "dc:subject.anzsrc:seo"  " type=${quote}anzsrc-seo${quote} $lang"  "rdf:resource"  "anzsrc")
+
+
+
+
+        #set ($value = $util.get($item, "dc:subject.anzsrc:toa.skos:prefLabel"))
+        #if ("$!value" != "")
+            <rif:subject type="anzsrc-toa">$util.encodeXml($value)</rif:subject>
+        #end
+
+        ################
+        ## Description
+
+        #set($valueMap = $util.getList($item, "dc:description"))
+        #foreach($key in $valueMap.keySet())
+            #set($description =  $valueMap.get($key))
+            #set($descText = $description.get("shadow"))
+            #set($descType = $description.get("type"))
+            #if("$!descText" != "")
+                <rif:description type="$descType" $lang>$util.encodeXml($descText)</rif:description>
+            #end
+        #end
+
+
+        #################
+        ## Rights
+        #set ($accessRights = $util.get($item, "dc:accessRights.skos:prefLabel"))
+        #set ($accessRightsUri = $util.get($item, "dc:accessRights.dc:identifier"))
+        #set ($accessRightsUriStr = "")
+        #if ("$!accessRightsUri" != "")
+            #set ($accessRightsUriStr = " rightsUri=${quote}${accessRightsUri}${quote}")
+        #end
+        #set ($accessRightsType = $util.get($item, "dc:accessRightsType"))
+        #set ($accessRightsTypeStr = "")
+        #if ("$!accessRightsType" != "")
+            #set ($accessRightsTypeStr = " type=${quote}${accessRightsType}${quote}")
+        #end
+        #set ($rights = $util.get($item, "dc:accessRights.dc:RightsStatement.skos:prefLabel"))
+        #set ($rightsUri = $util.get($item, "dc:accessRights.dc:RightsStatement.dc:identifier"))
+        #set ($rightsUriStr = "")
+        #if ("$!rightsUri" != "")
+            #set ($rightsUriStr = " rightsUri=${quote}${rightsUri}${quote}")
+        #end
+        #set ($licence = $util.get($item, "dc:license.skos:prefLabel"))
+        #set ($licenceUri = $util.get($item, "dc:license.dc:identifier"))
+        #set ($licenceUriStr = "")
+        #if ("$!licenceUri" != "")
+            #set ($licenceUriStr = " rightsUri=${quote}${licenceUri}${quote}")
+        #else
+            #set ($licence = $util.get($item, "dc:license.rdf:Alt.skos:prefLabel"))
+            #set ($licenceUri = $util.get($item, "dc:license.rdf:Alt.dc:identifier"))
+            #if ("$!licenceUri" != "")
+                #set ($licenceUriStr = " rightsUri=${quote}${licenceUri}${quote}")
+            #end
+        #end
+        #set($licenceTypes = {"CC BY: Attribution 3.0 AU": "CC-BY",
+        "CC BY-SA: Attribution-Share Alike 3.0 AU": "CC-BY-SA",
+        "CC BY-ND: Attribution-No Derivative Works 3.0 AU": "CC-BY-ND",
+        "CC BY-NC: Attribution-Noncommercial 3.0 AU": "CC-BY-NC",
+        "CC BY-NC-SA: Attribution-Noncommercial-Share Alike 3.0 AU": "CC-BY-NC-SA",
+        "CC BY-NC-ND: Attribution-Noncommercial-No Derivatives 3.0 AU": "CC-BY-NC-ND",
+        "CC BY 4.0: Attribution 4.0 International": "CC-BY",
+        "CC BY-SA 4.0: Attribution-Share Alike 4.0 International": "CC-BY-SA",
+        "CC BY-ND 4.0: Attribution-No Derivative Works 4.0 International": "CC-BY-ND",
+        "CC BY-NC 4.0: Attribution-Noncommercial 4.0 International": "CC-BY-NC",
+        "CC BY-NC-SA 4.0: Attribution-Noncommercial-Share Alike 4.0 International": "CC-BY-NC-SA",
+        "CC BY-NC-ND 4.0: Attribution-Noncommercial-No Derivatives 4.0 International": "CC-BY-NC-ND",
+        "PDDL - Public Domain Dedication and License 1.0": "Unknown/Other",
+        "ODC-By - Attribution License 1.0": "Unknown/Other",
+        "ODC-ODbL - Attribution Share-Alike for data/databases 1.0": "Unknown/Other"
+        })
+        #set ($licenceType = "")
+        #if ("$!licence" != "")
+            #set ($licenceType = $licenceTypes.get($licence))
+             #if ("$!licenceType" == "")
+                #set($licenceType = "Unknown/Other")
+             #end
+        #end
+        #set ($licenceTypeStr = "")
+        #if ("$!licenceType" != "")
+            #set ($licenceTypeStr = " type=${quote}${licenceType}${quote}")
+        #end
+
+        #if ("$!accessRights" != "" || "$!rights" != "" || "$!licence" != "")
+            <rif:rights>
+            #if ("$!rights" != "")
+                <rif:rightsStatement${rightsUriStr}>$util.encodeXml($rights)</rif:rightsStatement>
+            #end
+            #if ("$!accessRights" != "")
+                <rif:accessRights${accessRightsTypeStr}${accessRightsUriStr}>$util.encodeXml($accessRights)</rif:accessRights>
+            #end
+            #if ("$!licence" != "")
+                <rif:licence${licenceTypeStr}${licenceUriStr}>$util.encodeXml($licence)</rif:licence>
+            #end
+            </rif:rights>
+        #end
+        #################
+
+        #showRelatedInfo("dc:relation.swrc:Publication", "publication", "uri")
+        #showRelatedInfo("dc:relation.bibo:Website", "website", "uri")
+        #showRelatedInfo("dc:relation.vivo:Service", "service", "uri")
+
+        #set($valueMap = $util.getList($item, "dc:relation.vivo:Service"))
+        #foreach($key in $valueMap.keySet())
+            #set ($row = $valueMap.get($key))
+            #set ($value = $row.get("dc:identifier"))
+            ### Do not add related object if already listed in objects from curated relationships
+            #if ("$!relationshipKeys" == "")
+                #set ($relationshipKeys = [])
+            #end
+            #if ("$!value" != "" && !$relationshipKeys.contains($value))
+                <rif:relatedObject>
+                    <rif:key>$util.encodeXml($value)</rif:key>
+                    #set ($relationship = $row.get("vivo:Relationship.rdf:PlainLiteral"))
+                    #if ("$relationship" != "")
+                    <rif:relation type="$relationship"/>
+                    #end
+                </rif:relatedObject>
+            #end
+        #end
+
+
+        #set($showCitation = $util.get($item, "dc:biblioGraphicCitation.redbox:sendCitation"))
+        #if ("$!showCitation" != "" && $showCitation == "on")
+            #set($doiProperty = $systemConfig.getString($defaultOnError, "andsDoi", "doiProperty"))
+            #set ($doi = $util.getMetadata($object, $doiProperty))
+            ## Use the DOI by preference for a citation
+            #if ("$!doi" == "")
+                    #set ($citeId = $identifier)
+                #set ($citeIdType = $identifierType)
+            #else
+                #set ($citeId = "http://dx.doi.org/${doi}")
+                #set ($citeIdType = "doi")
+            #end
+            <rif:citationInfo>
+            #set($citationString = $util.get($item, "dc:biblioGraphicCitation.skos:prefLabel"))
+            #if ("$!citationString" != "")
+                <rif:fullCitation style="Datacite">$util.encodeXml($citationString.replaceAll("\{ID_WILL_BE_HERE\}", $citeId))</rif:fullCitation>
+            #end
+            ## <rif:citationMetadata/> has now been removed.
+            ## See http://code.google.com/p/redbox-mint/issues/detail?id=77
+            </rif:citationInfo>
+        #end
+        </rif:collection>
+    </rif:registryObject>
+</rif:registryObjects>

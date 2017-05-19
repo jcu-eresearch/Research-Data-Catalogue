@@ -1,0 +1,20 @@
+{
+    "results": [
+        {
+            "id": "brief",
+            "label": "Brief:"
+        },
+        {
+            "id": "full",
+            "label": "Full:"
+        },
+        {
+            "id": "note",
+            "label": "Note:"
+        },
+	{
+            "id": "logo",
+            "label": "Logo:"
+	}
+    ]
+}

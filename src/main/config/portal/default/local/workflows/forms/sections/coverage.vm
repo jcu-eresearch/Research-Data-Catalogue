@@ -1,0 +1,354 @@
+<h3><a href="#coverage">Coverage</a></h3>
+<div id="coverage" class="inputscreen">
+    #fieldTitle("dc:coverage.vivo:DateTimeInterval" "Date Coverage" false)
+    <div class="help-content" id="help-dc:coverage.vivo:DateTimeInterval">
+        Use this to indicate a date range relevant to the research
+        dataset/collection, registry/repository, catalogue or index. Year format
+        requires manual entry, eg. 1990 to 2010
+    </div>
+    <p>
+        <input type="text" placeholder="eg. 1990" class="dateYMD" id="dc:coverage.vivo:DateTimeInterval.vivo:start" />
+        <label for="dc:coverage.vivo:DateTimeInterval.vivo:end">to</label>
+        <input type="text" placeholder="eg. 2010" class="dateYMD" id="dc:coverage.vivo:DateTimeInterval.vivo:end" />
+        <label class="validation-err-msg" for="dc:coverage.vivo:DateTimeInterval.vivo:start"
+            data-validation-rule="when(blur,change,submit);name(testCoverageFrom);
+                    test(/^[012]\d{3}([-\/]+(10|11|12|0?\d)([-\/]+(30|31|[012]?\d))?)?$/ or empty);">
+            A valid from date or year is required!
+        </label>
+        <label class="validation-err-msg" for="dc:coverage.vivo:DateTimeInterval.vivo:end"
+            data-validation-rule="when(blur,change,submit);name(testCoverageTo);
+                    test(/^[012]\d{3}([-\/]+(10|11|12|0?\d)([-\/]+(30|31|[012]?\d))?)?$/ or empty);">
+            A valid to date or year is required!
+        </label>
+    </p>
+    <p>&nbsp;</p>
+
+    #fieldTitle("dc:coverage.redbox:timePeriod" "Time Period" false)
+    <div class="help-content" id="help-dc:coverage.redbox:timePeriod">
+        A text description of a time period relating to the coverage of the
+        research dataset/collection, registry/repository, catalogue or index, if
+        applicable, eg. 21st Century, WWII, The Depression, etc.
+    </div>
+    <p>
+        <input type="text" id="dc:coverage.redbox:timePeriod" size="60"
+            placeholder="eg. 21st Century, WWII, The Depression, etc." />
+    </p>
+    <p>&nbsp;</p>
+
+    #fieldTitle("dc:coverage.vivo:GeographicLocation" "Geospatial Location" false)
+    <div class="help-content" id="help-dc:coverage.vivo:GeographicLocation">
+        <p>
+            Geospatial location relevant to the research dataset/collection,
+            registry/repository, catalogue or index. This may describe a
+            geographical area where data was collected, a place which is the
+            subject of a collection, or a location which is the focus of an
+            activity, eg. coordinates or placename.
+        </p>
+        <p>
+            You may use the map to select an area, or manually enter a correctly
+            formatted set of coordinates or a value supported by a standard such
+            as a country code, a URL pointing to an XML based description of
+            spatial coverage or free text describing a location.
+        </p>
+        <p>
+            If you wish to generate a map display in Research Data Australia,
+            it is strongly advised that you use <b>DCMI Box</b> for shapes, or
+            <b>DCMI Point</b> for points.
+        </p>
+        <p>
+            Formats supported by the map widget:
+        </p>
+        <ul>
+            <li>
+                <a href="http://www.opengeospatial.org/standards/gml" target="_blank">GML</a>
+                - OpenGIS Geography Markup Language (GML) Encoding Standard
+            </li>
+            <li>
+                <a href="http://code.google.com/apis/kml/" target="_blank">KML</a>
+                - Keyhole Markup Language developed for use with Google Earth
+            </li>
+            <li>
+                <a href="http://dublincore.org/documents/dcmi-box" target="_blank">ISO19319dcmiBox</a>
+                - DCMI Box notation derived from bounding box metadata
+                conformant with the iso19139 schema
+            </li>
+            <li>
+                <a href="http://dublincore.org/documents/dcmi-point" target="_blank">DCMIPoint</a>
+                - spatial location information specified in DCMI Point notation
+            </li>
+        </ul>
+        <p>
+            When using the map to input shapes/points, only the above formats are
+            supported. You can use the 'Find location' feature to pan the map to
+            an area you are interested in, but you still need to select a map
+            region to store geospatial data.
+        </p>
+        <p>
+            Formats available for manual data entry:
+        </p>
+        <ul>
+            <li>
+                <a href="http://www.topografix.com/gpx.asp" target="_blank">GPX</a>
+                - the GPS Exchange Format
+            </li>
+            <li>
+                <a href="http://www.iso.org/iso/country_codes/iso_3166_code_lists.htm" target="_blank">ISO3166</a>
+                - ISO 3166-1 Codes for the representation of names of countries
+                and their subdivisions - Part 1: Country codes
+            </li>
+            <li>
+                <a href="http://www.iso.org/iso/country-codes/background_on_iso_3166/iso_3166-2.htm" target="_blank">ISO31662</a>
+                - Codes for the representation of names of countries and their
+                subdivisions - Part 2: Country subdivision codes
+            </li>
+            <li>
+                <a href="http://code.google.com/apis/kml/" target="_blank">kmlPolyCoords</a>
+                - A set of KML long/lat co-ordinates defining a polygon as
+                described by the KML coordinates element
+            </li>
+            <li>
+                <a href="http://code.google.com/apis/kml/" target="_blank">gmlKmlPolyCoords</a>
+                - A set of KML long/lat co-ordinates derived from GML defining a
+                polygon as described by the KML coordinates element but without
+                the altitude component
+            </li>
+            <li>
+                <strong>Text</strong> - free-text representation of spatial
+                location. Use this to record place or region names where
+                geospatial notation is not available. In ReDBox this will
+                search against the Geonames database and return a latitude and
+                longitude value if selected. This will store as a DCMIPoint
+                which in future will display as a point on a Google Map in
+                Research Data Australia.
+            </li>
+        </ul>
+    </div>
+
+    <div class="openLayersHolder">
+        <div class="article">
+            <div id="polygonHelp" class="hidden">
+                <div><span class="ui-button-icon-primary ui-icon ui-icon-lightbulb"></span></div>
+                Use double-click to 'close' your polygon.
+            </div>
+            <div class="mapHolder">
+                <div id="panel" class="olControlEditingToolbar"></div>
+                <div id="map" class="smallmap"></div>
+            </div>
+            <div class="lookupHolder">
+                <label for="geonamesLookup">Find location: </label>
+                <input type="text" size="40" placeholder="Place name" id="geonamesLookup" />
+            </div>
+        </div>
+    </div>
+
+    <table class="input-list redboxGeoData">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Type</th>
+                <th>Value</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="item-input-display redboxGeoDataRow">
+                <td class="sort-number"></td>
+                <td>
+                    <select class="locationType" id="dc:coverage.vivo:GeographicLocation.0.dc:type">
+                        <option value="" selected="selected">Please select one...</option>
+                        <option value="gml">OpenGIS Geography Markup Language</option>
+                        <option value="kml">Keyhole Markup Language</option>
+                        <option value="iso19139dcmiBox">DCMI Box notation (iso19139)</option>
+                        <option value="dcmiPoint">DCMI Point notation</option>
+                        <option value="gpx">GPS Exchange Format</option>
+                        <option value="iso31661">Country code (iso31661)</option>
+                        <option value="iso31662">Country subdivision code (iso31662)</option>
+                        <option value="kmlPolyCoords">KML long/lat co-ordinates</option>
+                        <option value="gmlKmlPolyCoords">KML long/lat co-ordinates derived from GML</option>
+                        <option value="text">Free text</option>
+                    </select>
+                    <input type="hidden" id="dc:coverage.vivo:GeographicLocation.0.dc:typeLabel" />
+                </td>
+                <td>
+                    <input type="hidden" class="redboxGeoDataFid" />
+                    <input type="hidden" class="redboxGeoDataWkt" id="dc:coverage.vivo:GeographicLocation.0.redbox:wktRaw" />
+                    <input type="text" class="redboxGeoDataOutput autocomplete-geonames" placeholder="eg. coordinates or placename"
+                        id="dc:coverage.vivo:GeographicLocation.0.rdf:PlainLiteral" size="60" />
+                    <input type="hidden" id="dc:coverage.vivo:GeographicLocation.0.dc:identifier" />
+                    <input type="hidden" id="dc:coverage.vivo:GeographicLocation.0.geo:long" />
+                    <input type="hidden" id="dc:coverage.vivo:GeographicLocation.0.geo:lat" />
+                    <div class="hidden coords" id="dc:coverage.vivo:GeographicLocation.0.coords">
+                        <a class="map-link" target="_blank" href="">map</a>
+                        @ longitude: <span class="east"> </span>
+                        , latitude: <span class="north"> </span>
+                        | <a class="clear-link" href="#">clear</a>
+                    </div>
+                </td>
+                <td class="delete-item"><a href="#">delete</a></td>
+                <td style="width: 100%;" />
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" id="add-location" value="Add location" /></td>
+                <td colspan="3"></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+<script type="text/javascript">
+$(function(){
+    function splitGeonamesData(row) {
+        var items = row[0].split("::");
+        return {
+            id: items[0],
+            uri: items[1],
+            display: items[2],
+            north: items[3],
+            east: items[4]
+        };
+    }
+
+    $("#add-location").click(function(){
+        getReDBoxById("dc:coverage.vivo:GeographicLocation.0.coords").hide();
+    });
+
+    $("#geonamesLookup").live("focus", function(){
+        var elem = $(this);
+        elem.unautocomplete();
+            elem.autocomplete(
+                "$portalPath/proxyGet.script?ns=Geonames&autocomplete=true&fields=id,geonames_uri,display,latitude,longitude",
+                {
+                    extraParams: {
+                        qs: function() {
+                            var userInput = elem.val();
+                            var commaPos = userInput.indexOf(",");
+                            if(commaPos!=-1){
+                                userInput = userInput.substring(0,commaPos);
+                            }
+                            return "func=search&format=json&rows=25&q=" + escape(userInput);
+                        }
+                    },
+                    formatItem: function(row) { return splitGeonamesData(row).display; },
+                    formatResult: function(row) { return splitGeonamesData(row).display; },
+                    width: "40em"
+                }).result(function(event, row) {
+                    if (row) {
+                        var data = splitGeonamesData(row);
+                        // Pan OpenLayers Map
+                        if (window["openLayersMap"] != null) {
+                            window["openLayersMap"].panTo(data.east, data.north, 10);
+                        }
+                    }
+                })
+        }).live("blur", function(){
+            $(this).search();
+        });
+
+    $(".autocomplete-geonames").live("focus", function(){
+        var elem = $(this);
+        var baseId = elem.attr("id").replace(".rdf:PlainLiteral", "");
+        var wktElem = getReDBoxById(baseId+".redbox:wktRaw");
+        elem.unautocomplete();
+        if(getReDBoxById(baseId+".dc:type").val() == "text" && wktElem.val() == ""){
+            elem.autocomplete(
+                "$portalPath/proxyGet.script?ns=Geonames&autocomplete=true&fields=id,geonames_uri,display,latitude,longitude",
+                {
+                    extraParams: {
+                        qs: function() {
+                            var userInput = elem.val();
+                            var commaPos = userInput.indexOf(",");
+                            if(commaPos!=-1){
+                                userInput = userInput.substring(0,commaPos);
+                            }
+                            return "func=search&format=json&rows=25&q=" + escape(userInput);
+                        }
+                    },
+                    formatItem: function(row) { return splitGeonamesData(row).display; },
+                    formatResult: function(row) { return splitGeonamesData(row).display; },
+                    width: "40em"
+                }).result(function(event, row) {
+                    if (row) {
+                        var data = splitGeonamesData(row);
+                        var coordsElem = getReDBoxById(baseId+".coords");
+                        getReDBoxById(baseId+".dc:identifier").val(data.uri);
+                        getReDBoxById(baseId+".geo:long").val(data.east);
+                        getReDBoxById(baseId+".geo:lat").val(data.north);
+                        coordsElem.find(".east").text(data.east);
+                        coordsElem.find(".north").text(data.north);
+                        coordsElem.show();
+                    }
+                })
+            }
+        }).live("blur", function(){
+            $(this).search();
+        });
+
+    $(".map-link").live("click", function(){
+        var p = $(this).parent();
+        var baseId = p.attr("id").replace(".coords", "");
+        var long = getReDBoxById(baseId+".geo:long").val();
+        var lat = getReDBoxById(baseId+".geo:lat").val();
+        window["openLayersMap"].panTo(long, lat, 10);
+        return false;
+    });
+
+    $(".clear-link").live("click", function(){
+        var p = $(this).parent();
+        var baseId = p.attr("id").replace(".coords", "");
+        getReDBoxById(baseId+".dc:identifier").removeAttr("value");
+        getReDBoxById(baseId+".geo:long").removeAttr("value");
+        getReDBoxById(baseId+".geo:lat").removeAttr("value");
+        p.hide();
+    });
+
+    var lastTypeValue;
+    $(".locationType").live("focus", function() {
+        // This is only really useful on the first use of the drop-down
+        lastTypeValue = $(this).val();
+        lastTypeText = $("option:selected", this).text();
+        //populating "dc:coverage.vivo:GeographicLocation.?.dc:typeLabel" for display of Map details.
+        var elem = $(this);
+        var baseId = elem.attr("id").replace(".dc:type", "");
+        getReDBoxById(baseId+".dc:typeLabel").val(lastTypeText);
+    }).live("change", function(e){
+        var elem = $(this);
+        var baseId = elem.attr("id").replace(".dc:type", "");
+        lastTypeText = $("option:selected", this).text();
+        getReDBoxById(baseId+".dc:typeLabel").val(lastTypeText);
+        var wktElem = getReDBoxById(baseId+".redbox:wktRaw");
+        var wktString = wktElem.val();
+        // OpenLayers Row
+        if (wktString != "") {
+            var outElem = getReDBoxById(baseId+".rdf:PlainLiteral");
+            var type = elem.val();
+            // The alert window causes focus changes... use this temp variable instead
+            var lastType = lastTypeValue;
+            var output = window["openLayersMap"].mapWktData(wktString, type);
+            if (output != null) {
+                outElem.val(output);
+                // Fix the focus loss from the alert
+                lastTypeValue = type;
+            } else {
+                elem.val(lastType);
+                // Fix the focus loss from the alert
+                lastTypeValue = lastType;
+                return;
+            }
+
+        // Legacy input
+        } else {
+            var uriElem = getReDBoxById(baseId+".dc:identifier");
+            if(elem.val() != "text" && uriElem.val() != ""){
+                if (confirm("Are you sure you want to clear the Geonames linked location?")) {
+                    getReDBoxById(baseId+".rdf:PlainLiteral").val("");
+                    $("div[id='"+baseId+".coords'] .clear-link").click();
+                } else {
+                    $(this).val("text");
+                }
+            }
+        }
+    });
+});
+</script>

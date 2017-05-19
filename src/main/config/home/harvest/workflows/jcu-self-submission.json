@@ -1,0 +1,59 @@
+{
+    "presentation-settings": {
+       "hide-funding-body-label" : "false"
+     },
+    "harvester": {
+        "type": "workflow-harvester",
+        "workflow-harvester": {
+            "force-storage": "true"
+        }
+    },
+    "workflow-id":"jcu-self-submission",
+    "page-title": "New Research Data",
+    "default-owner":"admin",    
+    "transformer": {
+        "curation": ["local"],
+        "metadata": ["dmpToJCUSelfSub"]
+    },
+    "curation": {
+        "neverPublish": false,
+        "alreadyCurated": false
+    },
+	"display-type":"package-jcu-self-submission",
+    "transformerOverrides": {
+        "local": {
+            "template": "${server.url.base}published/detail/[[OID]]"
+        }
+    },
+    "indexer": {
+        "script": {
+            "type": "python",
+            "rules": "simpleworkflow-rules.py"
+        },
+        "params": {
+            "repository.name": "ReDBox",
+            "repository.type": "Data Management Portal"
+        }
+    },
+	"form-configuration": "form-configuration/jcu-self-submissionform.json",
+    "stages": [
+        {
+            "name": "jcu-self-submission-draft",
+            "label": "JCU Researcher dataset - Draft",
+            "description": "Potential records for investigation.",
+            "owner_edit_allowed": "true",	
+            "security": ["admin"],
+            "visibility": ["admin"],
+            "actions" :[ { "action-name" : "next",
+                           "target-step" : "jcu-self-submission-submitted" }]
+        },
+        {
+            "name": "jcu-self-submission-submitted",
+            "label": "JCU Researcher dataset - Submitted",
+            "description": "Records for review",
+            "security": ["admin"],
+            "visibility": ["admin"],
+            "template": "workflows/simpleworkflow"
+        }
+    ]
+}

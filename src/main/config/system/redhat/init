@@ -1,0 +1,72 @@
+#!/bin/sh
+#
+# redbox        This shell script takes care of starting and stopping
+#               the ReDBoX server.
+#
+# chkconfig: - 30 60
+# description: ReDBox is a metadata registry application \
+#              for describing research data.
+# probe: true
+# config: /etc/sysconfig/redbox
+
+### BEGIN INIT INFO
+# Provides: redbox
+# Required-Start: $local_fs $network $httpd
+# Required-Stop: $local_fs $network
+# Default-Stop: 0 1 6
+# Short-Description: Start up the ReDBoX Server
+# Description: ReDBox is a metadata registry application \
+#              for describing research data.
+### END INIT INFO
+
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# Source networking configuration.
+if [ -f /etc/sysconfig/redbox ]
+
+then
+  . /etc/sysconfig/redbox
+  if [ -z $USER ]
+  then
+    echo "Please set the USER paremiter in /etc/sysconfig/redbox"
+    exit 4
+  fi
+else
+    echo "the config file: /etc/sysconfig/redbox does not exist. Ensure to symlink it to it apprioate location."
+    exit 4
+fi
+
+RETVAL=0
+
+uid=`id | cut -d\( -f1 | cut -d= -f2`
+
+# Only root can start the service
+[ $uid -ne 0 ] && exit 4
+
+case "$1" in
+  start)
+        su - $USER  -c ${REDBOX_HOME}/server/tf.sh\ start
+        echo ""
+        echo -n "Waiting for service to become available"
+        while [ -z `netstat -tpln | grep ${LOCAL_PORT} | cut -f 1 -d " "` ]; do echo -n "."; sleep 1; done
+        nohup ${REDBOX_HOME}/server/initserver.sh ${REDBOX_HOSTNAME} ${LOCAL_PORT} ${REDBOX_CONTEXT} &> /dev/null &
+        ;;
+  stop)
+        su - $USER  -c ${REDBOX_HOME}/server/tf.sh\ stop
+        ;;
+  restart)
+        stop
+        stop
+        ;;
+  status)
+        su - $USER  -c ${REDBOX_HOME}/server/tf.sh\ status
+        ;;
+   *)
+        echo $"Usage: redbox {start|stop|status|restart}"
+        RETVAL=2
+        ;;
+esac
+
+exit $RETVAL

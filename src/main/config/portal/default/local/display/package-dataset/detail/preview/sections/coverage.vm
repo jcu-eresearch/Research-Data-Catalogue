@@ -1,0 +1,89 @@
+#sectionHeading("Coverage")
+<div class="meta">
+    <dl>
+        <dt>Date Coverage</dt>
+        #set($dcCoverageFrom = $self.getFirst("dc:coverage.vivo:DateTimeInterval.vivo:start"))
+        #set($dcCoverageTo = $self.getFirst("dc:coverage.vivo:DateTimeInterval.vivo:end"))
+        #if ("$!dcCoverageFrom" != "" || "$!dcCoverageTo" != "")
+        <dd>$!dcCoverageFrom#if("$!dcCoverageTo"!="") to $dcCoverageTo#end</dd>
+        #else
+        <dd>
+        #noInformation()
+        </dd>
+        #end
+        #displayFirst("dc:coverage.redbox:timePeriod" "Time Period")
+
+        #######################################
+        <dt>Geospatial Location</dt>
+        <div class='openLayersHolder'>
+            <div class='mapView'>
+                <div id='polygonHelp' class='hidden'>
+                    <div><span class='ui-button-icon-primary ui-icon ui-icon-lightbulb'></span></div>
+                    Use double-click to 'close' your polygon.
+                </div>
+                <div class='mapHolder' style='width:716px; height:456px'>
+                    <div id='map' class='smallmap'></div>
+                </div>
+            </div>
+        </div>
+
+        #set($geoSubkeys = ["dc:type", "dc:typeLabel", "dc:identifier", "rdf:PlainLiteral", "redbox:Fid", "redbox:wktRaw", "geo:lat", "geo:long", "coords"])
+        #set($forList = $self.getList("dc:coverage.vivo:GeographicLocation"))
+        #if ($forList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else       
+            <ul>
+            #foreach($key in $forList.keySet())
+                #set($item = $forList.get($key))
+                #set($checkValue = $item.get("rdf:PlainLiteral"))
+                #if($!checkValue.contains("POLYGON") or $!checkValue.contains("POINT") or $!checkValue.contains("LINESTRING"))
+                <li class="redboxGeoData" style="visibility: hidden; height: 0px">
+                #else
+                <li class="redboxGeoData">
+                #end
+                #foreach($subKey in $geoSubkeys)
+                #set($subv = $item.get("$subKey"))
+                #if ($subKey == "dc:typeLabel")<input type="hidden" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" readonly="readonly" value="$!subv"  />
+                #elseif ($subKey == "dc:type")<input type="hidden" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" />
+                #elseif ($subKey == "redbox:Fid")<input type="hidden" class="redboxGeoDataFid" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" />
+                #elseif ($subKey == "redbox:wktRaw")<input type="hidden" class="redboxGeoDataWkt" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" />
+                #elseif ($subKey == "rdf:PlainLiteral")<input type="hidden" class="redboxGeoDataOutput" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" readonly="readonly"/>$!subv
+                #elseif ($subKey == "coords")
+                <div class='hidden coords' id='dc:coverage.vivo:GeographicLocation.$key.$subKey'>
+                    <a target='_blank' href=''>map</a>
+                    @ longitude: <span class='east'> </span>
+                    , latitude: <span class='north'> </span>
+                    | <a href='#'>clear</a>
+                </div>
+                #else
+                <input type="hidden" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" size="60" />
+                #end
+                #end
+                </li>
+            #end
+            </ul>
+        #end
+    </dl>
+</div>
+<script type="text/javascript" src="$portalPath/openlayers/OpenLayers.js"></script>
+<script type="text/javascript" src="$portalPath/openlayers/redbox.js"></script>    
+<script type="text/javascript">
+(function($){
+    // OpenLayers stylesheets
+    $('head').append('<link rel="stylesheet" type="text/css" id="openLayersCss1">');
+    $('#openLayersCss1').attr('href', '$portalPath/openlayers/theme/default/style.css');
+    $('head').append('<link rel="stylesheet" type="text/css" id="openLayersCss2">');
+    $('#openLayersCss2').attr('href', '$portalPath/openlayers/redbox.css');
+
+    $(function(){
+            // OpenLayers init, store it globally so the Geonames lookup can hit it later
+            window["openLayersMap"] = loadOpenLayers();
+            
+            // Form data is ready, load features on the map
+            window["openLayersMap"].loadData();
+    });
+})(jQuery);
+
+</script>

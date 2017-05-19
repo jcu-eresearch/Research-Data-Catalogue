@@ -1,0 +1,24 @@
+{
+    "results": [
+        {
+            "id": "isManagedBy",
+            "label": "Managed by:"
+        },
+        {
+            "id": "isOwnedBy",
+            "label": "Owned by:"
+        },
+        {
+            "id": "hasCollector",
+            "label": "Aggregated by:"
+        },
+	{
+            "id": "isEnrichedBy",
+            "label": "Enriched by:"
+	},
+	{
+            "id": "hasAssociationWith",
+            "label": "Associated with:"
+	}
+    ]
+}

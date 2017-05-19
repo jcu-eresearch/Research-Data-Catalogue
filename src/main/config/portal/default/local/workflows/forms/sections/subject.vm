@@ -1,0 +1,150 @@
+<h3><a href="#subject">Subject</a></h3>
+<div id="subject" class="inputscreen">
+    #fieldTitle("dc:subject.anzsrc:for" "Fields of Research" false)
+    <div class="help-content" id="help-dc:subject.anzsrc:for">
+        Select relevant FOR code/s.
+    </div>
+    #mintMultiSelectField("dc:subject.anzsrc:for.0.rdf:resource"
+                          "dc:subject.anzsrc:for.0.skos:prefLabel"
+                          "$portalPath/proxyGet.script?ns=ANZSRC_FOR&qs=count%3D999%26level%3D"
+                          "rdf:about"
+                          "skos:prefLabel"
+                          "results"
+                          "skos:narrower")
+
+    #fieldTitle("dc:subject.anzsrc:seo" "Socio-Economic Objective" false)
+    <div class="help-content" id="help-dc:subject.anzsrc:seo">
+        Select relevant SEO code/s.
+    </div>
+    #mintMultiSelectField("dc:subject.anzsrc:seo.0.rdf:resource"
+                          "dc:subject.anzsrc:seo.0.skos:prefLabel"
+                          "$portalPath/proxyGet.script?ns=ANZSRC_SEO&qs=count%3D999%26level%3D"
+                          "rdf:about"
+                          "skos:prefLabel"
+                          "results"
+                          "skos:narrower")
+
+    #fieldTitle("dc:subject.vivo:keyword" "Keywords" true)
+    <div class="help-content" id="help-dc:subject.vivo:keyword">
+        Enter descriptive keywords as required.
+    </div>
+    <label for="dc:subject.vivo:keyword" class="validation-err-msg"
+        data-validation-rule="test(notEmpty);when(blur, change, submit);
+                                jsTest(
+                                    var value = getReDBoxById('dc:subject.vivo:keyword.1.rdf:PlainLiteral').val();
+                                    value = jQ.trim(value); r = (value == '');
+                                );
+                                liveFor(.vkeyword);">
+        A keyword is required!
+    </label>
+    <table class="input-list">
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <input type="text" size="60" placeholder="keyword" id="dc:subject.vivo:keyword.0.rdf:PlainLiteral" class="vkeyword" />
+                </td>
+                <td class="delete-item"><a href="#">delete</a></td>
+                <td style="width: 100%;"> </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="Add keyword" /></td>
+                <td colspan="2"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    #fieldTitle("dc:subject.anzsrc:toa.rdf:resource" "Type of Research Activity" false)
+    <div class="help-content" id="help-dc:subject.anzsrc:toa.rdf:resource">
+        <p>
+            1297.0 Australian Standard Research Classification (ANZSRC) 2008.
+        </p>
+        <p>
+            <strong>Pure basic research</strong> is experimental and theoretical
+            work undertaken to acquire new knowledge without looking for long
+            term benefits other than the advancement of knowledge.
+        </p>
+        <p>
+            <strong>Strategic basic research</strong> is experimental and
+            theoretical work undertaken to acquire new knowledge directed
+            into specified broad areas in the expectation of useful
+            discoveries. It provides the broad base of knowledge
+            necessary for the solution of recognised practical problems.
+        </p>
+        <p>
+            <strong>Applied research</strong> is original work undertaken
+            primarily to acquire new knowledge with a specific application in
+            view. It is undertaken either to determine possible
+            uses for the findings of basic research or to determine
+            new ways of achieving some specific and predetermined objectives.
+        </p>
+        <p>
+            <strong>Experimental development</strong> is systematic work, using
+            existing knowledge gained from research or practical
+            experience, that is directed to producing new
+            materials, products or devices, to installing new
+            processes, systems and services, or to improving
+            substantially those already produced or installed.
+        </p>
+    </div>
+    <p>
+        #mintSelectField("dc:subject.anzsrc:toa.rdf:resource"
+                         "dc:subject.anzsrc:toa.skos:prefLabel"
+                         "$portalPath/workflows/forms/data/researchTypes.json"
+                         "id"
+                         "label"
+                         "results"
+                         "")
+    </p>
+
+    #fieldTitle("jcu:research.themes" "Research Themes" true)
+    <div class="help-content" id="help-jcu:research.themes">
+        <p>
+            Select one or more of the themes, or 'Not Aligned'
+        </p>
+    </div>
+    <p>
+        <input type="checkbox" id="jcu:research.themes.tropicalEcoSystems" onClick="clearNotAligned() "/>
+        <label>Tropical Ecosystems, Conservation and Climate Change</label>
+    </p>
+    <p>
+        <input type="checkbox" id="jcu:research.themes.industriesEconomies" onClick="clearNotAligned() "/>
+        <label>Industries and Economies in the Tropics</label>
+    </p>
+    <p>
+        <input type="checkbox" id="jcu:research.themes.peopleSocieties" onClick="clearNotAligned() "/>
+        <label>People and Societies in the Tropics</label>
+    </p>
+    <p>
+        <input type="checkbox" id="jcu:research.themes.tropicalHealth" onClick="clearNotAligned() "/>
+        <label>Tropical Health, Medicine and Biosecurity</label>
+    </p>
+    <p>
+        <input type="checkbox" id="jcu:research.themes.notAligned" onClick="clearOtherSelections()" />
+        <label>Not aligned to a University theme</label>
+    </p>
+
+</div>
+<script type="text/javascript">
+$(function(){
+    $(".vkeyword").live("focus", function(){
+        var elem=$(this);
+        elem.unautocomplete();
+        elem.autocomplete("$portalPath/actions/keywords.ajax", { width: "32em" });
+    });
+});
+
+function clearOtherSelections(){
+    $("#jcu\\:research\\.themes\\.tropicalEcoSystems").attr('checked', false);
+    $("#jcu\\:research\\.themes\\.industriesEconomies").attr('checked', false);
+    $("#jcu\\:research\\.themes\\.peopleSocieties").attr('checked', false);
+    $("#jcu\\:research\\.themes\\.tropicalHealth").attr('checked', false);
+}
+
+function clearNotAligned(){
+    $("#jcu\\:research\\.themes\\.notAligned").attr('checked', false);
+}
+</script>

@@ -1,0 +1,665 @@
+<h3><a href="#management">Data Management</a></h3>
+<div id="management" class="inputscreen">
+    #fieldTitle("dc:identifier.rdf:PlainLiteral" "Primary Identifier" true)
+    <label class="validation-err-msg"
+        for="dc:identifier.rdf:PlainLiteral"
+        data-validation-rule="test(notEmpty); when(blur, change, submit);
+                                jsTest(
+                                    var value = ctx.find('input[id=dc:identifier.rdf:PlainLiteral]').val();
+                                    var type = ctx.find('input[id=dc:identifier.dc:type.rdf:PlainLiteral]').val();
+                                    var checked = ctx.find('input[id=dc:identifier.checkbox]').is(':checked');
+                                    value = jQ.trim(value);
+                                    type = jQ.trim(type);
+                                    if (checked) {
+                                        r = false;
+                                    } else {
+                                        r = (value == '') || (type == '');
+                                    }
+                                );
+                                liveFor(.videntifier);">
+        An identifier is required!
+    </label>
+    <div class="help-content" id="help-dc:identifier.rdf:PlainLiteral">
+        <p>The identifier for this collection. You have two options:</p>
+        <ul>
+            <li>(Default) Select "Use this record's ID" and the system's configured curation method will determine the best identifier to use for you.</li>
+            <li>Otherwise you can provide your own explicit identifier that fits into the <a href="http://services.ands.org.au/documentation/rifcs/1.3/vocabs/vocabularies.html#Identifier_Type" target="_blank">ANDS Controlled Vocabulary</a>.</li>
+        </ul>
+    </div>
+    <div class="group">
+        <p>
+            <input type="checkbox" id="dc:identifier.checkbox" class="videntifier" />
+            <label for="dc:identifier.checkbox">Use this record's ID</label>
+        </p>
+        <p>
+            <label for="dc:identifier.dc:type.rdf:PlainLiteral">Type of identifier:</label>
+            #mintSelectField("dc:identifier.dc:type.rdf:PlainLiteral"
+                             "dc:identifier.dc:type.skos:prefLabel"
+                             "$portalPath/workflows/forms/data/identifierTypes.json"
+                             "id"
+                             "label"
+                             "results"
+                             "")
+        </p>
+        <p>
+            <label for="dc:identifier.rdf:PlainLiteral">Identifier:</label>
+            <input type="text" size="60" placeholder="persistent identifier" id="dc:identifier.rdf:PlainLiteral" class="videntifier" />
+            <input type="hidden" id="dc:identifier.redbox:origin" />
+        </p>
+        <p>
+            <h2>
+            <label for="dc:identifier.rdf">Additional Identifiers:</label>
+            </h2>
+            <div class="input-list additionalidentifiers">
+                <input type="input" id="isAdditionalIdentifiersComplete" class="isAdditionalIdentifiersComplete" style="display:none;"/>
+                    <label class="validation-err-msg"
+                        id="isAdditionalIdentifiersCompleteErrMsg"
+                        for="isAdditionalIdentifiersComplete"
+                        data-validation-rule="test(notEmpty); when(submit);
+                        jsTest(r = isAdditionalIdentifiersComplete(id););liveFor(.isAdditionalIdentifiersComplete);">
+                        There is at least 1 empty additional identifier. Each must have an identifier value and a 'selected' type!
+                    </label>
+                <div class="item-input-display">
+                    <label for="dc:additionalidentifier.0.type.rdf:PlainLiteral">Type of identifier:</label>
+                    <span class="data-source-drop-down"
+                          data-json-source-url="$portalPath/workflows/forms/data/identifierTypes.json"
+                          data-id-key="id"
+                          data-label-key="label"
+                          data-list-key="results"
+                          data-delay="1"
+                    >
+                        <span class="selection-added">
+                        <input type="hidden" class="selection-added-id additionalidentifier-type" id="dc:additionalidentifier.0.type.rdf:PlainLiteral" />
+                        <input type="text" class="selection-added-label" readonly="readonly" id="dc:additionalidentifier.0.type.rdf.skos:prefLabel" />
+                            <a href="#" class="clear-item">change</a>
+                        </span>
+                        <span class="drop-down-location">
+                        <button class="selection-add" data-add-on-click="1">
+                                Select
+                            </button>
+                        </span>
+                    <label for="dc:additionalidentifier.0.rdf:PlainLiteral">Identifier:</label>
+                    <input type="text" size="60" placeholder="persistent identifier" id="dc:additionalidentifier.0.rdf:PlainLiteral" class="additionalidentifier"/>
+                    <span class="delete-item deleteAdditionalIdentifier"><a href="#">delete</a></span>
+                </div>
+                <div>
+                    <input type="button" class="button add-another-item" value="Add identifier" />
+                </div>
+            </div>
+        </p>
+    </div>
+
+    #fieldTitle("location_group" "Location" false)
+    <div class="help-content" id="help-location_group">
+        Record the location of the research data. At least one of the
+        'URL' or 'Stored At' fields must be entered. The 'Notes'
+        field is optional.
+    </div>
+    <div class="group">
+        <!--
+        <label class="validation-err-msg"
+            for="url"
+            data-validation-rule="test(notEmpty);when(blur,change,submit);
+                                    jsTest(
+                                        var url = ctx.find('input[id=bibo:Website.1.dc:identifier]').val();
+                                        var stored = ctx.find('input[id=vivo:Location.vivo:GeographicLocation.gn:name]').val();
+                                        url = jQ.trim(url); stored = jQ.trim(stored);
+                                        r = (url == '') && (stored == '');
+                                    );
+                                    liveFor(.vlocation);">
+            At least one 'URL' or 'Stored At' value is required!
+        </label>
+        -->
+        #fieldTitle("url" "URL(s)" false)
+        <div class="help-content" id="help-url">
+            <p>
+                A web address(es) where the research dataset/collection,
+                registry/repository, catalogue or index can be found.
+            </p>
+        </div>
+        <p>
+            <div class="input-list">
+                <div class="item-input-display">
+                    <span class="sort-number"></span>&nbsp;&nbsp;&nbsp;
+                    <input type="text" size="60" placeholder="url" id="bibo:Website.0.dc:identifier" class="vlocation" />
+                    <span class="delete-item"><a href="#">delete</a></span>
+                </div>
+                <div>
+                    <input type="button" class="button add-another-item" value="Add url" />
+                </div>
+            </div>
+        </p>
+
+        #fieldTitle("vivo:Location.vivo:GeographicLocation.gn:name" "Stored At" false)
+        <div class="help-content" id="help-vivo:Location.vivo:GeographicLocation.gn:name">
+            Record the physical location of the research dataset/collection, registry/repository,
+            catalogue or index, if applicable, ie if there is no electronic address,
+            it is a physical collection or it is necessary to send traditional mail addressed
+            to a person or organisation to access the collection., eg.
+            University of X.
+        </div>
+        <p>
+            <textarea rows="4" cols="40" id="vivo:Location.vivo:GeographicLocation.gn:name" class="vlocation" style="vertical-align: text-top;"
+                    placeholder="e.g. Biology Lab 1 Room 126, Biological Sciences Building 34, James Cook University, Townsville Campus"></textarea>
+            <script type="text/javascript">
+            $(function(){
+                $(".jcu:description").jqEasyCounter({
+                    maxChars: 12000,
+                    maxCharsWarning: 11090,
+                    msgTextAlign: 'left'
+                });
+            });
+            </script>
+        </p>
+
+        #fieldTitle("vivo:Location.vivo:GeographicLocation.skos:note" "Notes" false)
+        <div class="help-content" id="help-vivo:Location.vivo:GeographicLocation.skos:note">
+           Record additional notes regarding the location of the data if applicable.
+        </div>
+        <p><input type="text" size="60" placeholder="additional notes" id="vivo:Location.vivo:GeographicLocation.skos:note" /></p>
+    </div>
+
+    #fieldTitle("redbox:retentionPeriod" "Retention Period" true)
+    <div class="help-content" id="help-redbox:retentionPeriod">
+        Record the period of time that the data must be kept
+        in line with institutional/funding body retention policies.
+    </div>
+    <p>
+        <input type="text" size="60" placeholder="retention period" id="redbox:retentionPeriod" />
+        #requiredValidation("redbox:retentionPeriod" "Retention Period is required!")
+    </p>
+
+    #fieldTitle("dc:extent" "Size of Data/Collection" false)
+    <div class="help-content" id="help-dc:extent">
+        Captures the size of the collection. e.g. number of items, size of 
+        collection as a whole. Measured in weight, bytes, or dimensions, whatever
+        is the most relevant measurement for the data/collection.
+        e.g. 100 MB, 10000 files, 10 kgs.
+    </div>
+    <p>
+        <input type="text" size="60" placeholder="quantity" id="dc:extent" />
+    </p>
+
+    #fieldTitle("redbox:disposalDate" "Disposal Date" false)
+    <div class="help-content" id="help-redbox:disposalDate">
+        Indicate disposal date for data.
+    </div>
+    <p><input type="text" size="25" placeholder="disposal date" class="dateYMD" id="redbox:disposalDate" /></p>
+
+    #fieldTitle("locrel:own.foaf:Agent.0.foaf:name" "Data Owner (IP)" false)
+    <div class="help-content" id="help-locrel:own.foaf:Agent.0.foaf:name">
+        Person/institution identified as intellectual property owners of the data.
+    </div>
+    <table class="input-list">
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <input type="text" size="60" placeholder="e.g. James Cook University" id="locrel:own.foaf:Agent.0.foaf:name" />
+                </td>
+                <td class="delete-item"><a href="#">delete</a></td>
+                <td style="width: 100%;"> </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="Add owner" /></td>
+                <td colspan="2"> </td>
+            </tr>
+        </tfoot>
+    </table>
+
+    #fieldTitle("locrel:dtm.foaf:Agent.foaf:name" "Data Custodian" false)
+    <div class="help-content" id="help-locrel:dtm.foaf:Agent.foaf:name">
+        Person/institution identified as custodian of the data.
+    </div>
+    <p><input type="text" size="60" placeholder="person or institution" id="locrel:dtm.foaf:Agent.foaf:name" /></p>
+
+    #fieldTitle("foaf:Organization" "Data Affiliation" false)
+    <div class="help-content" id="help-foaf:Organization">
+        Select appropriate affiliation relevant to the data, eg. Research
+        Centre for Clean Coal Technology, or School of Engineering.
+    </div>
+    <p>
+        #mintSelectField("foaf:Organization.dc:identifier"
+                         "foaf:Organization.skos:prefLabel"
+                         "$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999"
+                         "dc:identifier"
+                         "rdfs:label"
+                         "results"
+                         "")
+    </p>
+
+	
+    #fieldTitle("funding_bodies" "Funding Body/s" false)
+    <div class="help-content" id="help-funding_bodies">
+        Select/enter the name of the research funding body, if applicable.
+    </div>
+    <table class="input-list">
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <input type="text" size="60" placeholder="Funding body"
+                        id="foaf:fundedBy.foaf:Agent.0.skos:prefLabel" class="autocomplete-funding" />
+                    <input type="hidden" id="foaf:fundedBy.foaf:Agent.0.dc:identifier" class="funding-body-id" />
+                </td>
+                <td width="100%">
+                    <span class="funding-body-id-label hidden"></span> <a href="#" class="clear-funding-body-id hidden">clear</a>
+                </td>
+                <td><a class="delete-item" href="#">delete</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="3"><input type="button" class="button add-another-item" value="Add funding body" /></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    #fieldTitle("grants" "Grant Numbers" false)
+    <div class="help-content" id="help-grants">
+        Select/enter the grant number and/or title if applicable.
+    </div>
+    <table class="input-list">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Internal?</th>
+                <th>Grant</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td><input type="checkbox" id="foaf:fundedBy.vivo:Grant.0.redbox:internalGrant" class="internal-grant"/></td>
+                <td style="width:100%">
+                    <table class="inner-table">
+                        <tr>
+                            <td>
+                                <input type="text" size="20" id="foaf:fundedBy.vivo:Grant.0.redbox:grantNumber"
+                                    placeholder="grant number" class="autocomplete-grant" />
+                                <input type="hidden" id="foaf:fundedBy.vivo:Grant.0.dc:identifier" />
+                            </td>
+                            <td style="width:100%">
+                                <input type="text" size="60" id="foaf:fundedBy.vivo:Grant.0.skos:prefLabel"
+                                    readonly="readonly" placeholder="grant description"
+                                    class="autocomplete-grant-label label" style="width:100%" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td class="delete-item" style="text-align:right;width:100%;"><a href="#">delete</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td colspan="3"><input type="button" class="button add-another-item" value="Add grant" /></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    #fieldTitle("swrc:ResearchProject.dc:title" "Project Title" false)
+    <div class="help-content" id="help-swrc:ResearchProject.dc:title">
+        Enter title of the Research Project, if applicable. Note project titles
+        will usually differ from the title of the associated Grant.
+    </div>
+    <p><input type="text" size="60" placeholder="title" id="swrc:ResearchProject.dc:title" /></p>
+
+    #fieldTitle("locrel:dpt.foaf:Person.foaf:name" "Depositor" false)
+    <div class="help-content" id="help-locrel:dpt.foaf:Person.foaf:name">
+        Record the name of the depositor.
+    </div>
+    <p><input type="text" size="60" placeholder="depositor" id="locrel:dpt.foaf:Person.foaf:name" /></p>
+
+    #fieldTitle("dc:SizeOrDuration" "Data Size" false)
+    <div class="help-content" id="help-dc:SizeOrDuration">
+        Record the size of the data in KB, MB, GB, TB etc.
+    </div>
+    <p><input type="text" size="60" placeholder="size" id="dc:SizeOrDuration" readonly="true"/></p>
+
+    #fieldTitle("dc:Policy" "Institutional Data Management Policy" false)
+    <div class="help-content" id="help-dc:Policy">
+        Include the title, version number and date of an associated
+        Institutional Policy, where a policy is available.
+    </div>
+    <p><input type="text" size="60" placeholder="title, version number and date of policy" id="dc:Policy" /></p>
+
+    <div class="group">
+        #fieldTitle("redbox:ManagementPlan" "Data Management Plan" false)
+        <div class="help-content" id="help-redbox:ManagementPlan">
+            Indicates existence of a data management plan.
+        </div>
+        <p>
+            <input type="radio" id="redbox:ManagementPlan.yes" name="redbox:ManagementPlan.redbox:hasPlan" value="yes" />
+            <label for="redbox:ManagementPlan.yes">Yes</label>
+            <input type="radio" id="redbox:ManagementPlan.no" name="redbox:ManagementPlan.redbox:hasPlan" value="no" />
+            <label for="redbox:ManagementPlan.no">No</label>
+        </p>
+        #fieldTitle("redbox:ManagementPlan.skos:note" "Notes" false)
+        <div class="help-content" id="help-redbox:ManagementPlan.skos:note">
+            Record optional notes about the data management plan.
+        </div>
+        <p><input type="text" size="60" placeholder="notes" id="redbox:ManagementPlan.skos:note" /></p>
+    </div>
+</div>
+<script type="text/javascript">
+$(function() {
+    function splitGrantData(row) {
+        var items = row[0].split("::");
+        var id = items[0];
+        var uri = items[3];
+        var label = items[1];
+        var source = items[2];
+        return {
+            id: id,
+            uri: uri,
+            label: label,
+            source: source,
+            display: "[" + id + "] (" + source + ") " + label
+        };
+    }
+
+    function addAutocompleteGrant(elem) {
+        elem.autocomplete(
+            "$portalPath/proxyGet.script?ns=Activities&autocomplete=true&fields=grant_number,dc:title,repository_name,dc:identifier",
+            {
+                extraParams: {
+                    qs: function() { return "count=2500&searchTerms=" + escape(elem.val().toLowerCase()); }
+                },
+                formatItem: function(row) { return splitGrantData(row).display; },
+                formatResult: function(row) { return splitGrantData(row).id; },
+                mustMatch: true,
+                width: "40em",
+				max:2500
+            }).result(function(event, row) {
+                var uri = $(this).next();
+                var label = $(this).parent().next().find(".autocomplete-grant-label")
+                if (row) {
+                    var data = splitGrantData(row);
+                    label.val("(" + data.source + ") " + data.label);
+                    uri.val(data.uri);
+                }
+            });
+    }
+
+    $(".internal-grant").live("click", function() {
+        var checked = $(this).is(":checked");
+        var baseId = $(this).attr("id").replace(".redbox:internalGrant", "");
+        var idElem = $("input[id=" + baseId + ".redbox:grantNumber]");
+        var labelElem = $("input[id=" + baseId + ".skos:prefLabel]");
+        var uriElem = $("input[id=" + baseId + ".dc:identifier]");
+        var uri = uriElem.val();
+        if (uri == INTERNAL_GRANT_ID) {
+            if (labelElem.val() == "" ||
+                    confirm("The selected grant will be cleared.\nAre you sure you want to change it to an external grant?")) {
+                idElem.val("");
+                addAutocompleteGrant(idElem);
+                labelElem
+                    .addClass("label")
+                    .attr("readonly", "readonly")
+                    .val("");
+                uriElem.val("");
+                return true;
+            }
+        } else {
+            if (uri == "" ||
+                    confirm("The selected grant will be cleared.\nAre you sure you want to change it to an internal grant?")) {
+                idElem.unautocomplete().val("");
+                labelElem
+                    .removeClass("label")
+                    .removeAttr("readonly")
+                    .val("");
+                uriElem.val(INTERNAL_GRANT_ID);
+                return true;
+            }
+        }
+        return false;
+    });
+
+
+    $(".autocomplete-grant").live("focus", function() {
+        var baseId = $(this).attr("id").replace(".redbox:grantNumber", "");
+        if (!$("input[id=" + baseId + ".redbox:internalGrant]").is(":checked")) {
+            $(this).unautocomplete();
+            addAutocompleteGrant($(this));
+        }
+    });
+
+    function splitFundingData(row) {
+        var items = row[0].split("::");
+        return {
+            uri: items[0],
+            label: items[1]
+        };
+    }
+
+    $(".autocomplete-funding").live("focus", function() {
+        var elem = $(this);
+        $(this).unautocomplete();
+        $(this).autocomplete(
+            "$portalPath/proxyGet.script?ns=Funding_Bodies&autocomplete=true&fields=dc:identifier,dc:title",
+            {
+                extraParams: {
+                    qs: function() { return "count=25&searchTerms=" + escape(elem.val().toLowerCase()); }
+                },
+                formatItem: function(row) { return splitFundingData(row).label; },
+                formatResult: function(row) { return splitFundingData(row).label; },
+                width: "40em"
+            }).result(function(event, row) {
+                if(!hideFundingBodyLabel) {
+                var trElem = $(this).parent().parent();
+                var uriElem = trElem.find(".funding-body-id");
+                var labelElem = trElem.find(".funding-body-id-label");
+                
+                if (row) {
+                    var uri = splitFundingData(row).uri;
+                    uriElem.val(uri);
+                    labelElem.html("ID: '"+uri+"'");
+                } else {
+                    uriElem.val("urn:uon:internal");
+                    labelElem.html("ID: 'urn:uon:internal'");
+                }
+                labelElem.show();
+                var clearElem = trElem.find(".clear-funding-body-id");
+                clearElem.show();
+                }
+            })
+        }).live("blur", function() {
+            $(this).search();
+        });
+    $(".funding-body-id").live("onDataChanged", function() {
+            var elem = $(this);
+            var value = elem.val();
+            if (value != null && value != "") {
+                var trElem = $(this).parent().parent();
+                var linkElem = trElem.find(".clear-funding-body-id");
+                var labelElem = trElem.find(".funding-body-id-label");
+                if(!hideFundingBodyLabel) {
+                	linkElem.show();
+                	labelElem.html("ID: '"+value+"'");
+                	labelElem.show();
+                }
+            }
+        });
+    $(".clear-funding-body-id").live("click", function() {
+        var elem = $(this);
+        elem.hide();
+        var trElem = $(this).parent().parent();
+        var uriElem = trElem.find(".funding-body-id");
+        uriElem.val("");
+        var nameElem = trElem.find(".autocomplete-funding");
+        nameElem.val("");
+        var labelElem = trElem.find(".funding-body-id-label");
+        labelElem.html("");
+        labelElem.hide();
+        return false;
+    });
+
+    function styleIdentifier(isChecked, idInput, originInput) {
+        if (isChecked) {
+            idInput.attr("readonly", "readonly");
+            idInput.addClass("strike");
+            originInput.val("internal");
+        } else {
+            idInput.removeAttr("readonly");
+            idInput.removeClass("strike");
+            originInput.val("external");
+        }
+    }
+
+    $("input[id=dc:identifier.checkbox]").change(function() {
+        styleIdentifier(
+            $(this).is(":checked"),
+            $("input[id=dc:identifier.rdf:PlainLiteral]"),
+            $("input[id=dc:identifier.redbox:origin]"));
+    });
+
+    $("input[id=dc:identifier.redbox:origin]").live("onDataChanged", function() {
+        var value = $(this).val();
+        var checked = true;
+        if (value == "internal" || value == "") {
+            $("input[id=dc:identifier.checkbox]").attr('checked','checked');
+        } else {
+            $("input[id=dc:identifier.checkbox]").removeAttr('checked');
+            checked = false;
+        }
+        styleIdentifier(checked, $("input[id=dc:identifier.rdf:PlainLiteral]"), $(this));
+    });
+});
+</script>
+<script type="text/javascript">
+    function isAdditionalIdentifiersComplete(id) {
+        return ($(escapeId(id)).val() == "");
+    }
+
+    function showFirstAdditionalIdentifierDelete() {
+        $(escapeId('dc:additionalidentifier.1.rdf:PlainLiteral')).parents('.data-source-drop-down').find('.deleteAdditionalIdentifier').css('display', 'inline');
+    }
+
+    function updateIsAdditionalIdentifiersComplete() {
+        var isAdditionalIdentifiersComplete = true;
+        $171('.additionalidentifiers').find('.data-source-drop-down').each( function(index, e) {
+            if (index > 0) {
+                if ($(this).find('.additionalidentifier').val() == "" || $(this).find('.additionalidentifier-type').val() == "") {
+                   isAdditionalIdentifiersComplete = false;
+                }
+            }
+        });
+        $('.isAdditionalIdentifiersComplete').val("");
+        if (isAdditionalIdentifiersComplete) {
+            $('.isAdditionalIdentifiersComplete').val(isAdditionalIdentifiersComplete);
+            $(escapeId('isAdditionalIdentifiersCompleteErrMsg')).hide();
+        }
+    }
+
+    function clearIdentifierTypeValue(additionalIdentifierParent) {
+        additionalIdentifierParent.find('.selection-added-id').val('');
+        additionalIdentifierParent.find('.selection-added-label').val('');
+        updateIsAdditionalIdentifiersComplete();
+    }
+
+    function toggleAndUpdate() {
+        showFirstAdditionalIdentifierDelete();
+        updateIsAdditionalIdentifiersComplete();
+    }
+
+    function removeFirstIdentifierIfBlank() {
+        var additionalidentifierCount = $171('.additionalidentifiers').find('.count-this .additionalidentifier').length;
+        if (additionalidentifierCount == 1) {
+            $(escapeId('dc:additionalidentifier.1.rdf:PlainLiteral')).each ( function() {
+                var identifierValue = $(this).val();
+                var dropDownValue = $(this).parents('.data-source-drop-down').find('.drop-down-location select').val();
+                var identifierType = $(this).parents('.data-source-drop-down').find('.additionalidentifier-type').val();
+                if ((!identifierValue || identifierValue == '') && (!dropDownValue || dropDownValue == '') && (!identifierType || identifierType == '')) {
+                    $(this).parents('.data-source-drop-down').find('.deleteAdditionalIdentifier').click();
+                }
+            });
+        }
+    }
+
+    function checkRecordAsLocationDefault() {
+        if ($(escapeId('recordAsLocationDefault.checkbox')).attr("checked")) {
+            $('#recordAsLocationDefault').val($(escapeId('recordAsLocationDefault.checkbox')).val());
+        } else {
+            $('#recordAsLocationDefault').val('');
+        }
+    }
+
+    $171(document).ready(function() {
+        checkRecordAsLocationDefault();
+
+        $(escapeId('recordAsLocationDefault.checkbox')).click( function() {
+            checkRecordAsLocationDefault();
+        });
+
+        //resize additional identifier input boxes
+        $171('.additionalidentifiers .data-source-drop-down').find('.selection-added-label').each (function(index, e) {
+            var length = $(this).val().length;
+            if (index > 0 && length > 0) {
+                $(this).attr("size", $(this).val().length);
+            }
+        });
+
+       // update label and id with selected value and toggle drop-down and label
+        $171('.additionalidentifiers').on('click','.selection-add', function() {
+            var parent = $(this).parents('.data-source-drop-down');
+            var selectionId = parent.find('select').val();
+            var selectionLabel = parent.find('select option:selected').html();
+            parent.find('.selection-added-id').val(selectionId);
+            parent.find('.selection-added-label').val(selectionLabel);
+            //resize input
+            var label = parent.find('.selection-added-label');
+            label.attr("size", label.val().length);
+            $(this).parents('.drop-down-location').hide();
+            parent.find('.selection-added').show();
+            updateIsAdditionalIdentifiersComplete();
+        });
+
+        // bind for existing additional identifiers on page
+        $171('.additionalidentifiers').find('.clear-item').on('click', function() {
+            clearIdentifierTypeValue($(this).parents('.data-source-drop-down'));
+        });
+        $171('.additionalidentifiers').find('.selection-add').bind('click', updateIsAdditionalIdentifiersComplete);
+
+        // bind for new identifiers
+        $171('.additionalidentifiers').find('.add-another-item').each(function() {
+            $(this).bind('click', toggleAndUpdate);
+        });
+        $171('.additionalidentifiers').find('.selection-add').bind('click', updateIsAdditionalIdentifiersComplete);
+
+        // bind for all additional identifiers
+        $171('.additionalidentifiers').on('keyup', '.additionalidentifier', function() {
+            updateIsAdditionalIdentifiersComplete();
+        });
+        $171('.additionalidentifiers').on('hover', '.deleteAdditionalIdentifier', function() {
+            $(this).bind('click', toggleAndUpdate);
+        });
+
+        // for new identifiers: toggle label and drop-down when cleared
+        $171('.additionalidentifiers').on('click','.clear-item', function() {
+            $(this).parents('.data-source-drop-down').find('.drop-down-location').show();
+            $(this).parents('.selection-added').hide();
+            clearIdentifierTypeValue($(this).parents('.data-source-drop-down'));
+            // prevent link scrolling
+            return false;
+        });
+
+        // disable drop-down select button if no value selected, otherwise enable
+        $171('.additionalidentifiers').on('change','.drop-down-location select', function() {
+            var parent = $(this).parents('.drop-down-location');
+            if ($(this).val() != '') {
+                parent.find('.selection-add').attr("disabled", '');
+            } else {
+                parent.find('.selection-add').attr("disabled", 'true');
+            }
+        });
+        removeFirstIdentifierIfBlank();
+        updateIsAdditionalIdentifiersComplete();
+});
+
+</script>

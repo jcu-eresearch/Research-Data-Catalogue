@@ -1,8 +1,9 @@
 {
     "presentation-settings": {
-        "hide-funding-body-label": "false",
-        "use-embargoes": "true",
-        "use-technical-metadata": "true"
+       "hide-funding-body-label" : "false",
+       "use-embargoes" : "true",
+       "use-technical-metadata" : "true",
+       "use-ands-doi": "true"
     },
     "harvester": {
         "type": "workflow-harvester",
@@ -37,7 +38,7 @@
     },
     "transformerOverrides": {
         "local": {
-            "template": "${server.url.base}published/detail/[[OID]]"
+            "template": "[[OID]]"
         }
     },
     "indexer": {

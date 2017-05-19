@@ -1,0 +1,5 @@
+REDBOX_HOME="${project.home}"
+REDBOX_HOSTNAME="${redbox.hostname}"
+REDBOX_CONTEXT="${redbox.context}"
+LOCAL_PORT="${server.port}"
+USER=""

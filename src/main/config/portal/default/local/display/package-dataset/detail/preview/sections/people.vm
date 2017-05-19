@@ -1,0 +1,88 @@
+#sectionHeading("People")
+<div class="meta">
+    <dl>
+        #######################################
+        <dt>Creators</dt>
+        #set($creatorList = $self.getList("dc:creator.foaf:Person"))
+        #if ($creatorList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else
+        <dd>
+            <ol>
+            #foreach($key in $creatorList.keySet())
+                #set($dcCreator = $creatorList.get($key))
+                #set($dcFoafEmail = $dcCreator.get("foaf:email"))
+                #set($dcCreatorAssociation = $dcCreator.get("foaf:Organization.skos:prefLabel"))
+                #set($dcCreatorAssociationB = $dcCreator.get("foaf:Organization.B.skos:prefLabel"))
+                #set($dcCreatorAssociationC = $dcCreator.get("foaf:Organization.C.skos:prefLabel"))
+                <li>
+                    <b>#displayOptionalKey($dcCreator "jcu:relationshipLabel")</b>
+                    <em>#displayOptionalKey($dcCreator "foaf:title") #displayRequiredKey($dcCreator "foaf:givenName") #displayRequiredKey($dcCreator "foaf:familyName")#if("$!dcFoafEmail"!=""), $self.escapeHtml($dcFoafEmail)#end #if("$!dcCreatorAssociation" != ""), $self.escapeHtml($dcCreatorAssociation)#end#if("$!dcCreatorAssociationB" != ""), $self.escapeHtml($dcCreatorAssociationB)#end#if("$!dcCreatorAssociationC" != ""), $self.escapeHtml($dcCreatorAssociationC)#end</em>
+                </li>
+            #end
+            </ol>
+        </dd>
+        #end
+
+        #######################################
+        <dt>Primary Contact</dt>
+            #set($title = $self.getFirst("locrel:prc.foaf:Person.foaf:title"))
+            #set($firstName = $self.getFirst("locrel:prc.foaf:Person.foaf:givenName"))
+            #set($familyName = $self.getFirst("locrel:prc.foaf:Person.foaf:familyName"))
+            #set($foafEmail = $self.getFirst("locrel:prc.foaf:Person.foaf:email"))
+        <dd>
+        #if ("$!firstName" != "")
+            $self.escapeHtml($title) $self.escapeHtml($firstName) $self.escapeHtml($familyName)#if("$!foafEmail"!=""), $self.escapeHtml($foafEmail)#end
+        #else
+            #noInformation()
+        #end
+        </dd>
+
+        #######################################
+        <dt>Supervisors</dt>
+        #set($supervisorList = $self.getList("swrc:supervisor.foaf:Person"))
+        #if ($supervisorList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else
+        <dd>
+            <ol>
+            #foreach($key in $supervisorList.keySet())
+                #set($supervisor = $supervisorList.get($key))
+                #set($supEmail = $supervisor.get("foaf:email"))
+                #set($supGivenName = $supervisor.get("foaf:givenName"))
+                #if ("$!supGivenName" != "")
+                <li>
+                    #displayOptionalKey($supervisor "foaf:title") #displayOptionalKey($supervisor "foaf:givenName") #displayOptionalKey($supervisor "foaf:familyName") #if("$!supEmail"!=""), $self.escapeHtml($supEmail)#end
+                </li>
+                #end
+            #end
+            </ol>
+        </dd>
+        #end
+        
+        #######################################
+        <dt>Collaborators</dt>
+        #set($collaboratorList = $self.getList("dc:contributor.locrel:clb"))
+        #if ($collaboratorList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else
+        <dd>
+            <ol>
+            #foreach($key in $collaboratorList.keySet())
+                #set($collaborator = $collaboratorList.get($key))
+                #set($collaboratorDetails = $collaborator.get("foaf:Agent"))
+                <li>
+                    $self.escapeHtml($collaboratorDetails)
+                </li>
+            #end
+            </ol>
+        </dd>
+        #end
+    </dl>
+</div>

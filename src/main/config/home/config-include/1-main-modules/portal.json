@@ -92,6 +92,10 @@
                 "jsonconfig": "self-submission.json",
                 "packages-in-package": false
             },
+            "jcu-self-submission": {
+                "jsonconfig": "jcu-self-submission.json",
+                "packages-in-package": false
+            },
             "simple": {
                 "jsonconfig": "simple.json",
                 "packages-in-package": false
@@ -105,21 +109,27 @@
                 "frequency": "3600",
                 "jobs": [
                     {
-                        "name": "alerts-poll",
+                        "name": "harvestEdgar",
+                        "type": "harvest",
+                        "configFile": "${fascinator.home}/harvest/directoryNames-Edgar.json",
+                        "timing": "0 0 6 * * ?"
+                    },
+                    {
+                        "name": "newalerts-enmasse",
                         "type": "external",
-                        "url": "http://localhost:${jetty.port}/redbox/default/hkjobs/alerts.script",
-                        "timing": "0 0/15 * * * ?"
+                        "url": "http://localhost:${jetty.port}/researchdata/default/hkjobs/newalerts.script",
+                        "timing": "0 0 1 * * ?"
                     },
 					{
 					  "name": "transitionWorkflow",
 					  "type": "external",
-					  "url": "http://localhost:${jetty.port}/redbox/default/hkjobs/transitionWorkflow.ajax",
+					  "url": "http://localhost:${jetty.port}/researchdata/default/hkjobs/transitionWorkflow.ajax",
 					  "timing": "0 0/15 * * * ?"
 					},
                     {
                         "name": "process-set-notifyNewRecords",
                         "type": "external",
-                        "url": "http://localhost:${jetty.port}/redbox/default/process/launch.script?processingSet=notifyNewRecords",
+                        "url": "http://localhost:${jetty.port}/researchdata/default/process/launch.script?processingSet=notifyNewRecords",
                         "timing": "0 0/15 * * * ?"
                     },
                     {

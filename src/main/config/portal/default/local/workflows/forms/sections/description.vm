@@ -1,0 +1,604 @@
+#macro(relatedInfoField $id $placeholder $addLabel)
+    <table class="input-list">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>URL</th>
+                <th>Title</th>
+                <th>Notes</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <input type="text" size="60" placeholder="$placeholder" id="${id}.0.dc:identifier" />
+                </td>
+                <td>
+                    <input type="text" size="60" placeholder="title" id="${id}.0.dc:title" />
+                </td>
+                <td>
+                    <input type="text" size="60" placeholder="notes" id="${id}.0.skos:note" />
+                </td>
+                <td class="delete-item" style="width: 100%;"><a href="#">delete</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="$addLabel" /></td>
+                <td colspan="3"></td>
+            </tr>
+        </tfoot>
+    </table>
+#end
+
+#macro(showTechnicalMetadata $id $addLabel)
+    <table class="input-list">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>#displayMessage("dataset.technicalMetadata.url.label")</th>
+                <th>#displayMessage("dataset.technicalMetadata.title.label")</th>
+                <th>#displayMessage("dataset.technicalMetadata.mediaType.label")</th>
+                <th>#displayMessage("dataset.technicalMetadata.schemaURL.label")</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="item-input-display sortable-item">
+                <td class="sort-number"></td>
+                <td>
+                    <input type="text" size="60" placeholder="#displayMessage("dataset.technicalMetadata.url.placeholder")" id="${id}.0.dc:identifier" />
+                </td>
+                <td>
+                    <input type="text" size="60" placeholder="#displayMessage("dataset.technicalMetadata.title.placeholder")" id="${id}.0.dc:title" />
+                </td>
+                <td>
+                    <input type="text" size="15" placeholder="#displayMessage("dataset.technicalMetadata.mediaType.placeholder")" id="${id}.0.dc:type" />
+                </td>
+                <td>
+                    <input type="text" size="43" placeholder="#displayMessage("dataset.technicalMetadata.schemaURL.placeholder")" id="${id}.0.dc:conformsTo" />
+                </td>
+                <td class="delete-item" style="width: 100%;"><a href="#">delete</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="$addLabel" /></td>
+                <td colspan="4"></td>
+            </tr>
+        </tfoot>
+    </table>
+#end
+
+<h3><a href="#description">Description</a></h3>
+<div id="description" class="inputscreen">
+    #fieldTitle("dc:description" "Description" true)
+    <div class="help-content" id="help-dc:description">
+        <p>
+            Description of the research dataset/collection, registry/repository,
+            catalogue or index.
+        </p>
+        <p>This should include:</p>
+        <ul>
+            <li>
+                information about the research dataset/collection,
+                registry/repository, catalogue or index, including its
+                characteristics and features, eg. This dataset contains
+                observational data, calibration files and catalogue information
+                collected from the Mount Stromlo Observatory Facility.
+            </li>
+            <li>
+                if applicable: the scope; details of entities being studied or
+                recorded; methodologies used.
+            </li>
+        </ul>
+    </div>
+    <p>
+        <table id="description-table" class="input-list clear-table">
+            <tbody>
+            <tr>
+                    <td>
+                        <input type="input" id="hasNoEmptyDescriptions" class="hasNoEmptyDescriptions hidden" />
+                        <label class="validation-err-msg"
+                            id="hasNoEmptyDescriptionsErrMsg"
+                            for="hasNoEmptyDescriptions"
+                            data-validation-rule="test(notEmpty); when(focus,submit);
+                            jsTest(r = hasInvalidDescription(id););liveFor(.hasNoEmptyDescriptions);">
+                            There is at least 1 empty description. Empty descriptions are not allowed!
+                        </label>
+                    </td>
+                    <td colspan="2">
+                    </td>
+            </tr>
+            <tr>
+                <td>
+                        <input type="input" id="isDescriptionRDACompliant" class="isDescriptionRDACompliant hidden"/>
+                        <label class="validation-err-msg"
+                            id="isDescriptionRDACompliantErrMsg"
+                            for="isDescriptionRDACompliant"
+                            data-validation-rule="test(notEmpty); when(focus,submit);
+                            jsTest(r = hasInvalidDescription(id););liveFor(.isDescriptionRDACompliant);">
+                            #displayMessage("dataset.description.rda.compliance.error.message")
+                        </label>
+                </td>
+                </tr>
+                <tr class="item-input-display">
+                <td>
+                   <textarea rows="12" cols="80" id="dc:description.0.text" class="text descriptionInput description wysiwygEditor" style="vertical-align: text-top;"
+                                placeholder="eg. This dataset contains observational data and calibration files."></textarea>
+                        <input type="hidden" id="dc:description.0.shadow" class="wysiwygShadow hidden" />
+                        <div id="descriptionValidation.0.text" class="validation description text">
+                        <label class="validation-err-msg"
+                            id="dc:description.0.textErrMsg"
+                            for="dc:description.0.text"
+                            data-validation-rule="test(notEmpty); when(blur, change, keyup); jsTest(var lid = id + 'ErrMsg';r = hasInvalidDescription(id);label=$('.'+lid);); liveFor(.text);">
+                            Empty descriptions are not allowed!
+                        </label>
+                        </div>
+                </td>
+                    <td style="vertical-align: middle;">
+                       <label for="dc:description.0.type">Type:</label>
+                       <select id="dc:description.0.type" style="left:20em;" class="descriptionSelect">
+                          <option value="full">Full</option>
+                          <option value="brief">Brief</option>
+                          <option value="note">Note</option>
+                       </select>
+                    </td>
+                    <td style="vertical-align: middle;">
+                    <div class="delete-item deleteDescription" id="dc:description.0.delete" ><a href="#">delete</a></div>
+                    </td>
+                    <td style="width: 100%;"> </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                    <td><input type="button" class="button add-another-item" id="add-description" value="Add description" /></td>
+                    <td colspan="2">
+                    </td>
+            </tr>
+        </tfoot>
+    </table>
+    </p>
+    
+    #fieldTitle("dc:relation.swrc:Publication" "Related Publications" false)
+    <div class="help-content" id="help-dc:relation.swrc:Publication">
+        Include URL/s to any publications underpinning the research
+        dataset/collection, registry/repository, catalogue or index.
+    </div>
+    #relatedInfoField("dc:relation.swrc:Publication" "publication url" "Add publication")
+
+    #fieldTitle("dc:relation.bibo:Website" "Related Website" false)
+    <div id="help-dc:relation.bibo:Website" class="help-content">
+        Include URL/s for the relevant website.
+    </div>
+    #relatedInfoField("dc:relation.bibo:Website" "website url" "Add website")
+
+	<div id="technical-metadata-section" style="display:none">
+	#if($languageService)
+	#set($technicalMetadataTitle = $languageService.displayMessage("dataset.technicalMetadata.title"))
+	#set($technicalMetadataAddButtonLabel = $languageService.displayMessage("dataset.technicalMetadata.addButton.label"))
+	#else
+	 #set($technicalMetadataTitle = "Technical Metadata")
+	#set($technicalMetadataAddButtonLabel = "Add Technical Metadata")
+	#end
+	#fieldTitle("dc:relation.redbox:TechnicalMetadata" $technicalMetadataTitle false)
+    <div id="help-dc:relation.redbox:TechnicalMetadata" class="help-content">
+        #displayMessage("dataset.technicalMetadata.help")
+    </div>
+    #showTechnicalMetadata("dc:relation.redbox:TechnicalMetadata" $technicalMetadataAddButtonLabel)
+	</div>
+    #fieldTitle("dc:relation.vivo:Dataset" "Related Data" false)
+    <div class="help-content" id="help-dc:relation.vivo:Dataset">
+        <p>Link to any sources of third party data used/re-used. By default this
+        is a lookup against existing datasets found in this system. If you would
+        like to link to external datasets you should click on 'Advanced Selections'
+        and deselect 'Local related data'.</p>
+        <p>Also under 'Advanced Selections' is an option called 'Publish to RDA'
+        which can be deselected if you do not wish to include this relationship
+        in the RIF-CS sent to RDA.</p>
+    </div>
+    <table class="input-list">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Relationship</th>
+                <th>Title</th>
+                <th>Identifier</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody class="item-input-display sortable-item">
+            <tr>
+                <td class="sort-number" rowspan="2"></td>
+                <td>
+                    <span class="data-source-drop-down"
+                          data-delay="1"
+                          data-json-source-url="$portalPath/workflows/forms/data/collectionRelationTypes.json"
+                          data-id-key="id"
+                          data-label-key="label"
+                          data-list-key="results"
+                          data-default-value="hasAssociationWith">
+                        <span class="selection-added">
+                            <input type="hidden" class="selection-added-id" id="dc:relation.vivo:Dataset.0.vivo:Relationship.rdf:PlainLiteral" />
+                            <input type="text" class="selection-added-label" readonly="readonly" id="dc:relation.vivo:Dataset.0.vivo:Relationship.skos:prefLabel" />
+                            <a href="#" class="clear-item">change</a>
+                        </span>
+                        <span class="drop-down-location">
+                            <button class="selection-add add-unique-only" data-add-on-click="1">
+                                Select
+                            </button>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <input type="text" size="40" placeholder="title" id="dc:relation.vivo:Dataset.0.dc:title" class="collectionTitleLookup" />
+                </td>
+                <td>
+                    <input type="text" size="40" placeholder="data url" id="dc:relation.vivo:Dataset.0.dc:identifier" class="hidden" />
+                </td>
+                <td>
+                    <input type="text" size="40" placeholder="notes" id="dc:relation.vivo:Dataset.0.skos:note" />
+                </td>
+            </tr>
+            <tr id="dc:relation.vivo:Dataset.0.advRow">
+                <td>
+                    <a id="dc:relation.vivo:Dataset.0.advanced" class="advanced">Advanced Selections &raquo;</a>
+                </td>
+                <td>
+                    <span class="advanced hidden">
+                    Local related data: <input type="checkbox" id="dc:relation.vivo:Dataset.0.redbox:origin" class="local-related-data" checked="checked"/>
+                    </span>
+                </td>
+                <td>
+                    <span class="advanced hidden">
+                    Publish to RDA: <input type="checkbox" id="dc:relation.vivo:Dataset.0.redbox:publish" class="publish-to-rda" checked="checked"/>
+                    </span>
+                </td>
+                <td class="delete-item"><a href="#">delete</a></td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="Add Data" /></td>
+                <td colspan="3"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    #fieldTitle("dc:relation.vivo:Service" "Related Services" false)
+    <div class="help-content" id="help-dc:relation.vivo:Service">
+        Indicate any related Services to this Collection. A lookup works against Mint, or you can enter known information about remote Services.
+    </div>
+    <table class="input-list">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Relationship</th>
+                <th>Title</th>
+                <th>Identifier</th>
+                <th>Notes</th>
+            </tr>
+        </thead>
+        <tbody class="item-input-display sortable-item">
+            <tr>
+                <td class="sort-number"></td>
+                <td>
+                    <span class="data-source-drop-down"
+                          data-delay="1"
+                          data-json-source-url="$portalPath/workflows/forms/data/serviceRelationTypes.json"
+                          data-id-key="id"
+                          data-label-key="label"
+                          data-list-key="results"
+                          data-default-value="hasAssociationWith">
+                        <span class="selection-added">
+                            <input type="hidden" class="selection-added-id" id="dc:relation.vivo:Service.0.vivo:Relationship.rdf:PlainLiteral" />
+                            <input type="text" class="selection-added-label" readonly="readonly" id="dc:relation.vivo:Service.0.vivo:Relationship.skos:prefLabel" />
+                            <a href="#" class="clear-item">change</a>
+                        </span>
+                        <span class="drop-down-location">
+                            <button class="selection-add add-unique-only" data-add-on-click="1">
+                                Select
+                            </button>
+                        </span>
+                    </span>
+                </td>
+                <td>
+                    <input type="text" size="40" placeholder="title" id="dc:relation.vivo:Service.0.dc:title" class="serviceTitleLookup" />
+                </td>
+                <td>
+                    <input type="text" size="40" placeholder="service identifier" id="dc:relation.vivo:Service.0.dc:identifier" />
+                </td>
+                <td>
+                    <input type="text" size="40" placeholder="notes" id="dc:relation.vivo:Service.0.skos:note" />
+                    <span class="delete-item"><a href="#">delete</a></span>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td><input type="button" class="button add-another-item" value="Add Service" /></td>
+                <td colspan="3"></td>
+            </tr>
+        </tfoot>
+    </table>
+
+</div>
+<script type="text/javascript">
+$(function() {
+    $("a.advanced").live("click", function() {
+        var baseId = $(this).attr("id").replace(".advanced", "");
+        var row = $("tr[id=" + baseId + ".advRow]");
+        row.find("span.advanced").each(function(c,e){$(e).toggle();});
+        return false;
+    });
+    function relatedDataToggle(element) {
+        var baseId = element.attr("id").replace(".redbox:origin", "");
+        if (element.is(":checked")) {
+            getReDBoxById(baseId+".dc:identifier").hide();
+        } else {
+            getReDBoxById(baseId+".dc:identifier").show();
+        }
+    }
+    $(".local-related-data").live("click", function() {
+        relatedDataToggle($(this));
+        return true;
+    }).live("onDataChanged", function() {
+        var element = $(this);
+        relatedDataToggle(element);
+        var baseId = element.attr("id").replace(".redbox:origin", "");
+        if (!element.is(":checked")) {
+            getReDBoxById(baseId+".advanced").click();
+        }
+    });
+
+    function splitData(row) {
+        var items = row[0].split("::");
+        return {
+            oid: items[0],
+            title: items[1]
+        };
+    }
+
+    $(".collectionTitleLookup").live("focus", function(){
+        var elem = $(this);
+        var baseId = elem.attr("id").replace(".dc:title", "");
+        elem.unautocomplete();
+        if (getReDBoxById(baseId+".redbox:origin").is(":checked")){
+            elem.autocomplete(
+                "$portalPath/actions/datasets.ajax?",
+                {
+                    extraParams: {
+                        qs: function() {
+                            return "$oid";
+                        }
+                    },
+                    formatItem: function(row) {return splitData(row).title;},
+                    formatResult: function(row) {return splitData(row).title;},
+                    width: "40em"
+                }).result(function(event, row) {
+                    if (row) {
+                        var data = splitData(row);
+                        getReDBoxById(baseId+".dc:identifier").val(data.oid);
+                    }
+                })
+        }
+    }).live("blur", function(){
+        $(this).search();
+    });
+
+    function splitService(row) {
+        var items = row[0].split("::");
+        return {
+            title: items[0],
+            id: items[1],
+            curatedPid: items[2]
+
+        };
+    }
+
+    $(".serviceTitleLookup").live("focus", function(){
+        var elem = $(this);
+        var baseId = elem.attr("id").replace(".dc:title", "");
+        elem.unautocomplete();
+        elem.autocomplete(
+            "$portalPath/proxyGet.script?ns=Services&autocomplete=true&fields=dc:title,dc:identifier,pidProperty",
+            {
+                extraParams: {
+                    qs: function() { return "count=25&searchTerms=" + escape(elem.val().toLowerCase()); }
+                },
+                formatItem: function(row) { return splitService(row).title; },
+                formatResult: function(row) { return splitService(row).title; },
+                width: "40em"
+            }).result(function(event, row) {
+                if (row) {
+                    var data = splitService(row);
+                    var id = data.id;
+                    if (data.curatedPid && data.curatedPid != "*") {
+                        id = data.curatedPid;
+                    }
+                    getReDBoxById(baseId+".dc:identifier").val(id);
+                }
+            })
+    }).live("blur", function(){
+        $(this).search();
+    });
+});
+</script>
+<script type="text/javascript" src="$portalPath/js/jquery.1.7.1.min.js"></script>
+<script>var $171 = jQuery.noConflict(true);</script>
+<script type="text/javascript">
+    function escapeId(rawId) {
+        return "#" + rawId.replace( /(:|\.)/g, "\\$1" );
+    }
+    function hasInvalidDescription(id) {
+        return ($(escapeId(id)).val() == "");
+    }
+
+    function hideDescriptionJQEasyCounter() {
+        getDescriptionParent($('.descriptionInput')).find('.jqEasyCounterMsg').hide();
+    }
+
+    function updateDescriptionsRDAComplianceValidation() {
+        var hasCompliance = false;
+        $('.descriptionSelect').each(function(index, e) {
+             if (index > 0) {
+                if ($171.inArray($(this).val(), ['brief','full']) != -1) {
+                    hasCompliance = true;
+}
+             }
+        });
+        $('#isDescriptionRDACompliant').val("");
+        if (hasCompliance) {
+            $('#isDescriptionRDACompliant').val(hasCompliance);
+            $('#isDescriptionRDACompliantErrMsg').hide();
+        }
+    }
+
+    function updateEmptyDescriptionsValidation() {
+        var hasDescription = true;
+        $('.descriptionInput').each(function(index, e) {
+            if (index > 0) {
+                var jQelement = $(escapeId(e.id));
+                if (jQelement.val() == "") {
+                    hasDescription = false;
+                }
+            }
+        });
+        $('#hasNoEmptyDescriptions').val("");
+        if (hasDescription) {
+            $('#hasNoEmptyDescriptions').val(hasDescription);
+            $('#hasNoEmptyDescriptionsErrMsg').hide();
+        }
+    }
+
+    function updateAllDescriptionsValidation() {
+        updateEmptyDescriptionsValidation();
+        updateDescriptionsRDAComplianceValidation();
+    }
+
+    function updateDescription(text, jQElement) {
+        var descriptionInputElementId = escapeId($(jQElement).attr('id'));
+        ## ensure all linebreaks are removed - otherwise this will break views
+        var sanitisedText = text.replace(/(\r\n|\n|\r)/gm,"");
+        ## need to set html to get unescaped text to render correctly in preview.
+        var unescaped = $(descriptionInputElementId).html(sanitisedText).text();
+        $(descriptionInputElementId).val(unescaped);
+        ## need to set text to get escaped html
+        $(descriptionInputElementId).focus();
+        var escaped = $(descriptionInputElementId).text(unescaped).html();
+        getDescriptionParent($(descriptionInputElementId)).find('.wysiwygShadow').val(escaped);
+        updateAllDescriptionsValidation();
+    }
+
+
+    function updateDescriptionFromEditor(text, jqEditorElement) {
+        updateDescription(text, jqEditorElement);
+        $(jqEditorElement).focus();
+    }
+
+
+    function getUnescapedDescription(jQElement) {
+        var descriptionInputElementId = escapeId($(jQElement).attr('id'));
+        var currentDescriptionWithTags = $(descriptionInputElementId).val();
+        ## need to set html to get unescaped text
+        var unescapedDescription = $(descriptionInputElementId).html(currentDescriptionWithTags).text();
+        return unescapedDescription;
+    }
+
+    function deleteDescription(event) {
+        // reset all wysiwyg editors
+        tinymce.remove();
+        $(".wysiwygEditor").each( function(index, e) {
+            $(e.id).show();
+            editorUpdate(index, e);
+        });
+    }
+
+    function editorUpdate(index, e) {
+        if (index > 0) {
+            tinymce.init({
+                width: 800,
+                selector: escapeId(e.id),
+                plugins: ["link","image"],
+                menubar: false,
+                setup : function(ed) {
+                  ed.on('init', function(e) {
+                      var descriptionId = $(this).attr('id');
+                      var deleteId = descriptionId.replace("text", "delete");
+                      // setup delete method for wysiwyg editor
+                      $171(escapeId(deleteId)).one('click', deleteDescription);
+                  });
+                  ed.on('click', function(e) {
+                      updateDescriptionFromEditor(tinymce.activeEditor.getContent(), this);
+                  });
+                  ed.on('change', function(e) {
+                      updateDescriptionFromEditor(tinymce.activeEditor.getContent(), this);
+                  });
+                  ed.on('keyup', function(e) {
+                      updateDescriptionFromEditor(tinymce.activeEditor.getContent(), this);
+                  });
+                  ed.on('blur', function(e) {
+                      updateAllDescriptionsValidation();
+                  });
+
+                }
+            });
+        }
+    }
+
+    function resetDescription(index, e) {
+    // incoming descriptions may have pre-wysiwyg escaped values, reset them before wysiwyg
+       if (index > 0) {
+            var descriptionId = e.id;
+            var text = $(escapeId(descriptionId)).val();
+            var unescaped = $(escapeId(descriptionId)).html(text).text();
+            var escaped = $(escapeId(descriptionId)).text(unescaped).html();
+            //reset
+            $(escapeId(descriptionId)).html('');
+            var shadowId = descriptionId.replace("text", "shadow");
+            $(escapeId(descriptionId)).val(unescaped);
+            $(escapeId(shadowId)).val(escaped);
+       }
+    }
+
+    function getDescriptionParent(jQDescriptionElement) {
+        var jQDescriptionElementId = escapeId(jQDescriptionElement.attr('id'));
+        return $(jQDescriptionElementId).parents(".item-input-display");
+    }
+
+    function addFullEasyCounter(jQElement) {
+        jQElement.jqEasyCounter({
+            maxChars: 12000,
+            maxCharsWarning: 11990,
+            msgTextAlign: 'left'
+        });
+    }
+
+    //171 ready function addresses issues with capturing all dynamic rows
+    $171(document).ready(function() {
+        addFullEasyCounter($('.descriptionInput'));
+
+        $(".wysiwygEditor").each( function(index, e) {
+                resetDescription(index, e);
+                editorUpdate(index, e);
+        });
+        updateAllDescriptionsValidation();
+
+        $171('[id=add-description]').click(function() {
+            var latestDescriptionIndex = $('.descriptionInput').length -1;
+            var descriptionTextElement = 'dc:description.'+latestDescriptionIndex+'.text';
+            addFullEasyCounter($(escapeId(descriptionTextElement)));
+            // only need to update editor for latest description added
+            editorUpdate(latestDescriptionIndex,  $(escapeId(descriptionTextElement))[0]);
+        });
+
+        $171('#description-table').on('change', '.descriptionSelect', updateAllDescriptionsValidation);
+   });
+
+</script>

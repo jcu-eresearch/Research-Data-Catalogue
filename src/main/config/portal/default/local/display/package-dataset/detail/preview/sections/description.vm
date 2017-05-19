@@ -1,0 +1,212 @@
+#macro(relatedURLs $key $name)
+    <dt>$name</dt>
+    #set($urlList = $self.getList($key))
+    #if ($urlList.isEmpty())
+    <dd>
+    #noInformation()
+    </dd>
+    #else
+    <dd>
+        <ol>
+        #foreach($key in $urlList.keySet())
+            #set($url = $urlList.get($key))
+            #set($href = $url.get("dc:identifier"))
+            #if("$!href"!="")
+                #set($label = $url.get("dc:title"))
+                <li>
+                #if("$!label"!="")
+                    <a href="$self.escapeHtml($href)">$self.escapeHtml($label)</a>
+                #else
+                    <a href="$self.escapeHtml($href)">$self.escapeHtml($href)</a>
+                #end
+                #set($notes = $url.get("skos:note"))
+                #if("$!notes"!="")
+                    <br/><em>$self.escapeHtml($notes)</em>
+                #end
+                </li>
+            #end
+        #end
+        </ol>
+    </dd>
+    #end
+#end
+#sectionHeading("Description")
+<div class="meta">
+    <dl>
+        <dt>Descriptions</dt>
+        #set($dataList = $self.getList("dc:description"))
+        #if ($dataList.isEmpty())
+            <dd>
+        #noInformation()
+        </dd>
+        #else
+                <dd id="dcdescriptionList">
+                    <ol>
+                        #foreach($key in $dataList.keySet())
+                            #set($data = $dataList.get($key))
+                        #set($descriptionText = $data.get("text"))
+                        #if ("$!descriptionText" != "")
+                             <li><div id="dcdescription${key}" class="dcdescription">#displayUnescapedRequiredKey($data "text")</div>
+                                 #set($type = $data.get("type"))
+                                 #if("$!type" != "")
+                                    <ul>
+                                        <li><b>Type</b>: $type</li>
+                                    </ul>
+                                 #end
+                            </li>
+                        #end
+                    #end
+                    </ol>
+                </dd>
+        #end
+        #relatedURLs("dc:relation.swrc:Publication" "Related Publications" "value" "title")
+        #relatedURLs("dc:relation.bibo:Website" "Related Websites" "value" "title")
+
+        <dt>Related Data</dt>
+        #set($dataList = $self.getList("dc:relation.vivo:Dataset"))
+        #if ($dataList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else
+            #set($firstData = $dataList.get("1").get("dc:identifier"))
+            #if("$!firstData"!="")
+                <dd>
+                    <ol>
+                    #foreach($key in $dataList.keySet())
+                        #set($data = $dataList.get($key))
+                        #set($origin = $data.get("redbox:origin"))
+                        #if ($origin == "on")
+                            #set($origin = "")
+                        #else
+                            #set($origin = " (EXTERNAL)")
+                        #end
+                        #set($publish = $data.get("redbox:publish"))
+                        #if ($publish == "on")
+                            #set($publish = "")
+                        #else
+                            #set($publish = "<li><b>Publish to RDA</b>: <em>This related object (and relationship) is <b>NOT</b> being published to RDA.</em></li>")
+                        #end
+                        <li>
+                            <b>#displayRequiredKey($data "vivo:Relationship.skos:prefLabel")</b>
+                            &gt;&gt; <em>#displayRequiredKey($data "dc:title")</em>
+                            <ul>
+                                <li><b>ID</b>: #displayRequiredKey($data "dc:identifier")$origin</li>
+                            #set($note = $data.get("skos:note"))
+                            #if("$!note"!="")
+                                <li><b>Note(s)</b>: <em>$self.escapeHtml($note)</em></li>
+                            #end
+                                $publish
+                            </ul>
+                        </li>
+                    #end
+                    </ol>
+                </dd>
+            #else
+                <dd>
+                #noInformation()
+                </dd>
+            #end
+        #end
+
+        <dt>Related Services</dt>
+        #set($serviceList = $self.getList("dc:relation.vivo:Service"))
+        #if ($serviceList.isEmpty())
+        <dd>
+        #noInformation()
+        </dd>
+        #else
+            #set($firstService = $serviceList.get("1").get("dc:identifier"))
+            #if("$!firstService"!="")
+                <dd>
+                    <ol>
+                    #foreach($key in $serviceList.keySet())
+                        #set($service = $serviceList.get($key))
+                        <li>
+                            <b>#displayRequiredKey($service "vivo:Relationship.skos:prefLabel")</b>
+                            &gt;&gt; <em>#displayRequiredKey($service "dc:title")</em>
+                            <ul>
+                                <li><b>ID</b>: #displayRequiredKey($service "dc:identifier")</li>
+                            #set($note = $service.get("skos:note"))
+                            #if("$!note"!="")
+                                <li><b>Note(s)</b>: <em>$self.escapeHtml($note)</em></li>
+                            #end
+                            </ul>
+                        </li>
+                    #end
+                    </ol>
+                </dd>
+            #else
+                <dd>
+                #noInformation()
+                </dd>
+            #end
+        #end
+        
+        <dt>Technical metadata</dt>
+        #set($dataList = $self.getList("dc:relation.redbox:TechnicalMetadata"))
+        #if ($dataList.isEmpty())
+        <dd>
+            #noInformation()
+        </dd>
+        #else
+            #set($firstData = $dataList.get("1").get("dc:identifier"))
+            #if("$!firstData"!="")
+                <dd>
+                    <ol>
+                    #foreach($key in $dataList.keySet())
+                        #set($techmeta = $dataList.get($key))
+                         <li>
+                            <b>#displayRequiredKey($techmeta "dc:title")</b>
+                            <ul>
+                                <li><b>ID</b>: #displayRequiredKey($techmeta "dc:identifier")</li>
+                                #set($format = $techmeta.get("dc:type"))
+                                #if("$!format"!="")
+                                    <li><b>Format</b>: <em>$self.escapeHtml($format)</em></li>
+                                #end
+                                #set($schema = $techmeta.get("dc:conformsTo"))
+                                #if("$!schema"!="")
+                                    <li><b>Schema</b>: <em>$self.escapeHtml($schema)</em></li>
+                                #end
+                            </ul>
+                        </li>
+                    #end
+                    </ol>
+                </dd>
+            #else
+                <dd>
+                #noInformation()
+                </dd>
+            #end
+        #end
+    </dl>
+</div>
+
+<script type="text/javascript">
+$(function() {
+
+     function escapeId(rawId) {
+         return "#" + rawId.replace( /(:|\.)/g, "\\$1" );
+     }
+    function appendIFrameForUnescaped(text, jQId) {
+        ## attach to an element to get unescaped.
+        iFramejQId = $('#dcdescriptionFrame').contents().find(jQId);
+        var unescapedText = iFramejQId.html(text).text();
+        ## reset the element before updating
+        iFramejQId.html('');
+        iFramejQId.html(text);
+    }
+    var originalDescriptions=$('#dcdescriptionList').html();
+    $('#dcdescriptionList').html('');
+    $('<iframe id="dcdescriptionFrame" style="height:200px; border: none;"/>').appendTo('#dcdescriptionList')
+         .contents().find('body').append(originalDescriptions);
+    $('#dcdescriptionFrame').contents().find('.dcdescription').each( function(index, element) {
+        var className = $(this).attr('class');
+        ## ensure that pre-wysiwyg records don't break
+        var text = $(this).html();
+        text = text.trim();
+        var descriptionCount=$(this).attr('id').replace(className, '');
+        appendIFrameForUnescaped(text, escapeId('dcdescription' + descriptionCount));
+    });
+});
+</script>
