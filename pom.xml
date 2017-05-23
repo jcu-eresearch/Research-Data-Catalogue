@@ -13,7 +13,7 @@
 	</parent>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <redbox.version>${project.parent.version}</redbox.version>
+      <redbox.version>${project.parent.version}</redbox.version>
 		<icons.dir>target/aaf_icons</icons.dir>
 	</properties>
 	<dependencies>
@@ -557,28 +557,6 @@
 							</resources>
 						</configuration>
 					</execution>
-                    <!-- Copy Icons -->
-                    <execution>
-                        <id>copy-icons</id>
-                        <phase>process-resources</phase>
-                        <goals>
-                            <goal>copy-resources</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${dir.portal}/default/redbox/images/aaf/</outputDirectory>
-                            <includeEmptyDirs>false</includeEmptyDirs>
-                            <overwrite>true</overwrite>
-                            <resources>
-                                <resource>
-                                    <directory>${icons.dir}/aaf_service_buttons</directory>
-                                    <filtering>false</filtering>
-                                    <includes>
-                                        <include>**/**.png</include>
-                                    </includes>
-                                </resource>
-                            </resources>
-                        </configuration>
-                    </execution>
 					<!-- Server files -->
 					<execution>
 						<id>copy-server</id>
@@ -679,16 +657,15 @@
 			<!-- Set executable attribute for shell scripts -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.8</version>
 				<executions>
 					<execution>
-                        <id>perms</id>
+                        <id>permissions</id>
 						<phase>process-resources</phase>
 						<configuration>
-							<target>
+							<tasks>
                                 <chmod file="${dir.server}/*.sh" perm="754"/>
                                 <chmod dir="${dir.system}" includes="**/init" perm="754"/>
-							</target>
+							</tasks>
 						</configuration>
 						<goals>
 							<goal>run</goal>
@@ -698,7 +675,7 @@
 						<phase>generate-sources</phase>
 						<id>aaf_logos</id>
 						<configuration>
-							<target>
+							<tasks>
 								<mkdir dir="${icons.dir}"/>
 								<copy file="src/main/config/portal/shibboleth/aaf_service_buttons.zip" tofile="target/aaf_service_buttons.zip" />
 								<!-- get verbose="true" skipexisting="true"
@@ -710,7 +687,8 @@
 										<include name="aaf_service_buttons/aaf_200x50.png"/>
 									</patternset>
 								</unzip>
-							</target>
+								<copy file="${icons.dir}/aaf_service_buttons/aaf_200x50.png" todir="${dir.portal}/default/local/images/aaf/" />
+							</tasks>
 						</configuration>
 						<goals>
 							<goal>run</goal>
