@@ -679,16 +679,16 @@
 			<!-- Set executable attribute for shell scripts -->
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.8</version>
 				<executions>
 					<execution>
                         <id>perms</id>
 						<phase>process-resources</phase>
 						<configuration>
-							<tasks>
+							<target>
                                 <chmod file="${dir.server}/*.sh" perm="754"/>
                                 <chmod dir="${dir.system}" includes="**/init" perm="754"/>
-
-							</tasks>
+							</target>
 						</configuration>
 						<goals>
 							<goal>run</goal>
