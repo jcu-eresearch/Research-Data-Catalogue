@@ -1,0 +1,12 @@
+{
+    "results": [
+        {
+            "id": "doi",
+            "label": "Digital Object Identifier"
+        },
+        {
+            "id": "uri",
+            "label": "Uniform Resource Identifier"
+        }
+    ]
+}

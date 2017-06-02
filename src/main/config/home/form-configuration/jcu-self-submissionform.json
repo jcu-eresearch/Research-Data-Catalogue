@@ -1,0 +1,22 @@
+{
+    "stages":{
+        "jcu-self-submission-draft":{
+            "divs":[
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/content.json"},
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/coverage.json"},
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/people.json"},
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/data.json"},
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/associations.json"},
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/keywords.json"},
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/rights.json"},
+                     { "config-file": "form-configuration/jcu-self-submission-tabs/final.json"}
+            ],
+            "buttons":[
+            ],
+            "form-footer":"jcu-self-submissionform-footer",
+            "validation":{
+                "required":"title"
+            }
+        }
+    }
+}

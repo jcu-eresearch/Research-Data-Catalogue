@@ -28,8 +28,8 @@
         </div>
 
         #set($geoSubkeys = ["dc:type", "dc:typeLabel", "dc:identifier", "rdf:PlainLiteral", "redbox:Fid", "redbox:wktRaw", "geo:lat", "geo:long", "coords"])
-        #set($forList = $self.getList("dc:coverage.vivo:GeographicLocation"))
-        #if ($forList.isEmpty())
+        #set($geoList = $self.getList("dc:coverage.vivo:GeographicLocation"))
+        #if ($geoList   .isEmpty())
         <dd>
         #noInformation()
         </dd>

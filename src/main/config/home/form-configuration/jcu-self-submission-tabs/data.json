@@ -1,0 +1,215 @@
+{
+    "heading":"Data Management",
+    "fields":[
+        {
+          "component-type":"text-block",
+          "type":"p",
+          "content":"jcu-self-submission.asterisk"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.question1",
+            "help":"jcu-self-submission.field.help.question1",
+            "additional-class":"jcuSubHeading"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr>"
+        },
+        {
+          "component-type":"text-block",
+          "type":"label",
+          "content":"jcu-self-submission.field.label.jcu-request.doi",
+          "help":"jcu-self-submission.field.help.jcu-request.doi",
+          "additional-class":"jcuFieldLabel"
+        },
+        {
+          "component-type": "checkbox2",
+          "box-for": "",
+          "multiline": true,
+          "boxes": [
+            {
+              "label": "Request a DOI ?",
+              "field-name": "jcu:request.doi",
+              "checkbox-id": "jcu:request.doi",
+              "value": "on",
+              "additional-classes":"clearNotAligned"
+            }]
+        },
+        {
+          "component-type":"text-block",
+          "type":"label",
+          "content":"jcu-self-submission.field.label.dc.additionalidentifier",
+          "help":"jcu-self-submission.field.help.dc.additionalidentifier",
+          "additional-class":"jcuFieldLabel"
+        },
+        {
+          "component-type":"repeatable-container",
+          "containter-for":"dc:additionalidentifier",
+          "sub-elements":{"settings":[
+            {"jaffaText":{"type":"hidden", "class-list":"jaffa-field", "suffix":"type.rdf:PlainLiteral"}},
+            {"jaffaText":{"type":"hidden", "class-list":"jaffa-field", "suffix":"type.rdf.skos:prefLabel"}},
+            {"jaffaDropDown":{"allow-empty": false,"label":"Type","suffix":"type.rdf.skos:PrefLabel","field":"type",
+                              "label-field":"label","label-field-suffix":"type.rdf.PlainLiteral", "label-class-list":"jaffa-field",
+                              "json-data-url":"$portalPath/workflows/forms/data/citationIdTypes.json", "data-id-key":"id","data-label-key":"id",
+                              "data-list-key":"results", "class-list": "jaffa-field", "default-value": "uri"}},
+            {"jaffaText":{"label":"Description", "class-list":"jaffa-field", "suffix":"rdf:PlainLiteral", "size":"60", "placeholder":"url"}},
+            {"jaffaText":{"textarea":{"rows":3, "cols":60}, "label":"Comments", "class-list":"jaffa-field", "suffix":"jcu:comment"}}
+          ]
+          },
+          "add-item-text":"Add identifier",
+          "additional-classes":"containerLayout"
+        },
+        {
+          "component-type":"text-block",
+          "type":"label",
+          "content":"jcu-self-submission.field.label.file",
+          "help":"jcu-self-submission.field.help.file",
+          "additional-class":"jcuFieldLabel"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<div style='color:red;'>Note: only upload a maximum of 50 MB total. For larger data storage please contact us at: <a href='mailto:researchdata@jcu.edu.au?Subject=[ResearchData]'>researchdata@jcu.edu.au</a></div>"
+        },
+        {
+          "component-type": "file-attachments",
+          "widgetname": "storage_attachment",
+          "attachType": "storage-attachments",
+          "accessRights": "public",
+          "enableDescription": "true",
+          "addFunction": "addfileUploadModelRow"
+        },
+        {
+          "component-type": "file-upload-table",
+          "metadataPrefix": "storageFileUpload",
+          "modelName": "fileUploadModel",
+          "tableName": " fileUploadTable",
+          "initialiseFunctionName": "storage_attachment_getUploadedFiles",
+          "removeFunction": "storage_attachment_deleteFile"
+        },
+        {
+          "component-type":"text-block",
+          "type":"label",
+          "content":"jcu-self-submission.field.label.redbox.retentionPeriod",
+          "help":"jcu-self-submission.field.help.redbox.retentionPeriod",
+          "additional-class":"jcuFieldLabel required"
+        },
+        {
+          "component-type":"dropdown-fixedvalue",
+          "field-name":"redbox:retentionPeriod",
+          "label":"",
+          "options":[
+            {
+              "value":"",
+              "label":"Please select one...",
+              "default":"true"
+            },
+            {
+              "value":"12 months (minor project)",
+              "label":"12 months (minor project)"
+            },
+            {
+              "value":"5 years (minimum for projects with publications)",
+              "label":"5 years (minimum for projects with publications)"
+            },
+            {
+              "value":"7 years",
+              "label":"7 years"
+            },
+            {
+              "value":"10 years",
+              "label":"10 years"
+            },
+            {
+              "value":"15 years (all clinical trials)",
+              "label":"15 years (all clinical trials)"
+            },
+            {
+              "value":"Indefinitely",
+              "label":"Indefinitely"
+            }
+          ],
+          "validation": {
+            "save-rules": ["required"],
+            "validation-id": "redbox:retentionPeriod",
+            "focus-id": "redbox:retentionPeriod",
+            "validation-messages":{"required": "Please select the applicable Retention Period"}
+          }
+        },
+        {
+          "component-type":"text-block",
+          "type":"label",
+          "content":"jcu-self-submission.field.label.dc-extent",
+          "help":"jcu-self-submission.field.help.dc-extent",
+          "additional-class":"jcuFieldLabel"
+        },
+        {
+          "component-type":"text-input",
+          "field-name":"dc:extent",
+          "label":"",
+          "size":"60",
+          "placeholder":"quantity"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<br>"
+        },
+        {
+          "component-type":"text-block",
+          "type":"label",
+          "content":"jcu-self-submission.field.label.question2",
+          "additional-class":"jcuSubHeading"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<hr>"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.vivo-Location"
+            "help":"jcu-self-submission.field.help.vivo-Location",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.bibo-Website.dc-identifier",
+            "help":"jcu-self-submission.field.help.bibo-Website.dc-identifier",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"bibo:Website",
+            "sub-elements":{"settings":[
+                                {"jaffaText":{"label":"", "class-list":"jaffa-field", "suffix":"dc:identifier", "size":"60", "placeholder":"url"}}
+                                ]
+                           },
+            "add-item-text":"Add url",                                           
+            "additional-classes":"containerLayout"                                           
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.vivo-Location.vivo-GeographicLocation.gn-name",
+            "help":"jcu-self-submission.field.help.vivo-Location.vivo-GeographicLocation.gn-name",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"textarea",
+            "field-name":"vivo:Location.vivo:GeographicLocation.gn:name",
+            "label":"",
+            "content":"",
+            "placeholder":"e.g. Biology Lab 1 Room 126, Biological Sciences Building 34, James Cook University, Townsville Campus"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+          "component-type":"native-html",
+          "content":"<button class='prevtab'>&lt;&lt; Save and Previous</button> <button transition-name='Save and Exit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button class='nexttab'>Save and Next &gt;&gt;</button>"
+        }
+    ]
+}

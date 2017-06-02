@@ -60,28 +60,19 @@
             #else
                 #### Non - OpenLayers data
                 #if($type != "")
-
-            <rif:coverage>
-                        #set($literal = $literal.replace("POLYGON((", ""))
-                        #set($literal = $literal.replace("))", ""))
-                        #set($literal = $literal.replace(",", " "))
-                        #set($literalArray = $literal.split(" "))
-                        #set($i = 0)
-                        #set($kml = "")
-                        #set($last_loop = $literalArray.size() - 1)
-                        #foreach($literal in $literalArray)
-                            #if($i % 2 != 0)
-                            	#if($i == $last_loop)
-                                #set($kml = $kml + $literal)
-                                #else
-                                #set($kml = $kml + $literal + " ")
+                    #if ($literal.startsWith("POLYGON"))
+                        #set($sanitisedLiteral = $literal.replaceFirst("POLYGON\(\((.*)\)\)", "$1"))
+                        ###the placement of commas is counter to what's required
+                        #set($literalArray = $sanitisedLiteral.split(","))
+                        #foreach($pair in $literalArray)
+                            #set($kmlResult = "$!kmlResult " + $pair.replace(" ", ","))
                                 #end
                             #else
                                 #set($kml = $kml + $literal + ",")
                             #end
                             #set($i = $i + 1)
                         #end
-                        
+
                 <rif:spatial type="kmlPolyCoords" $lang>$util.encodeXml($kml)</rif:spatial>
             </rif:coverage>
                 #end
@@ -177,12 +168,14 @@
         <rif:collection type="$util.get($item, "dc:type.rdf:PlainLiteral")" $dateModified $dateAccessioned>
             <rif:identifier type="$identifierType">$identifier</rif:identifier>
 
-        #set($additionalIds = $util.getList($item, "rif:collection"))
-        #foreach($key in $additionalIds.keySet())
-            #set($additionalId = $util.encodeXml($additionalIds.get($key).get('identifier')))
-            #set($additionalIdType = $util.encodeXml($additionalIds.get($key).get('type')))
-            #if($!additionalId != "")
-            <rif:identifier type="$additionalIdType">$additionalId</rif:identifier>
+        ## Additional identifiers
+        #set($valueMap = $util.getList($item, "dc:additionalidentifier"))
+        #foreach($key in $valueMap.keySet())
+            #set ($row = $valueMap.get($key))
+            #set ($additionalIdentifier = $row.get("rdf:PlainLiteral"))
+            #set ($additionalIdentifierType = $row.get("type.rdf:PlainLiteral"))
+            #if ("$!additionalIdentifier" != "" && "$!additionalIdentifierType" != "")
+            <rif:identifier type="$util.encodeXml($additionalIdentifierType)">$util.encodeXml($additionalIdentifier)</rif:identifier>
             #end
         #end
         #if("$!doi" != "")

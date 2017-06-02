@@ -1,0 +1,114 @@
+{
+    "heading":"People",
+    "fields":[
+        {
+            "component-type":"text-block",
+            "type":"p",
+            "content":"jcu-self-submission.asterisk"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-creator.foaf-person"
+            "help":"jcu-self-submission.field.help.dc-creator.foaf-person",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type": "repeatable-container",
+            "containter-for": "dc:creator.foaf:Person",
+            "sub-elements": {
+                "settings": [
+                    {"jaffaDropDown":{"label":"Relationship Types:", "suffix":"jcu:relationshipType", "field":"jcu:relationshipType", "label-field":"jcu:relationshipLabel",
+                                      "label-field-suffix":"jcu:relationshipLabel", "json-data-url":"$portalPath/workflows/forms/data/relationshipTypes.json", 
+                                      "data-id-key":"id", "data-label-key":"label", "data-list-key":"results"}},
+                    {"jaffaPeople": {"source":"nla,mint", "label":"", "class-list":"jaffa-field", "suffix":"", "lookup-only":"true"}},
+                    {"jaffaDropDown":{"label":"Affiliations:", "suffix":"foaf:Organization.dc:identifier", "field":"foaf:Organization.dc:identifier", "label-field":"foaf:Organization.skos:prefLabel",
+                                      "label-field-suffix":"foaf:Organization.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999%26searchTerms%3DcurrentGroups",
+                                      "data-id-key":"dc:identifier", "data-label-key":"rdfs:label", "data-list-key":"results", "data-sort-field":"rdfs:label"}},
+                    {"jaffaDropDown":{"label":"", "suffix":"foaf:Organization.B.dc:identifier", "field":"foaf:Organization.B.dc:identifier", "label-field":"foaf:Organization.B.skos:prefLabel",
+                                      "label-field-suffix":"foaf:Organization.B.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999%26searchTerms%3DcurrentGroups",
+                                      "data-id-key":"dc:identifier", "data-label-key":"rdfs:label", "data-list-key":"results", "data-sort-field":"rdfs:label"}},
+                    {"jaffaDropDown":{"label":"", "suffix":"foaf:Organization.C.dc:identifier", "field":"foaf:Organization.C.dc:identifier", "label-field":"foaf:Organization.C.skos:prefLabel",
+                                      "label-field-suffix":"foaf:Organization.C.skos:prefLabel", "json-data-url":"$portalPath/proxyGet.script?ns=Parties_Groups&qs=count%3D9999%26searchTerms%3DcurrentGroups",
+                                      "data-id-key":"dc:identifier", "data-label-key":"rdfs:label", "data-list-key":"results", "data-sort-field":"rdfs:label"}}
+                ]
+            }
+        },
+        {
+            "component-type":"native-html",
+            "content":"<script type='text/javascript'>
+                            $(document).ready(function(){
+                                v2.Validator.add({
+                                    name: 'Creator',
+                                    acceptEmpty: false,
+                                    fn: function(field, value, params) {
+                                        // Get the values from Jaffa
+                                        var familyName = jaffa.form.value(params[0]);
+                                        return (familyName >= ' ');
+                                    }
+                                });
+                                jaffa.valid.addNewRule('CreatorRule', 'Creator', ['dc:creator.foaf:Person.1.foaf:familyName']);
+                                jaffa.valid.setSaveRules('dc:creator.foaf:Person.1.foaf:familyName', ['CreatorRule'], null, validationFail);
+                            });                                            
+                            var validation = {};
+                            validationMessages = jQuery.parseJSON('{\"CreatorRule\":\"At least one valid Creator must be added\"}');
+                            validation['validationMessages'] = validationMessages;
+                            validation['focusId'] = 'dc:creator.foaf:Person.1.foaf:familyName';
+                            validationFieldMap['dc:creator.foaf:Person.1.foaf:familyName'] = validation; 
+                       </script>"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.locrel-prc.foaf-person",
+            "help":"jcu-self-submission.field.help.locrel-prc.foaf-person",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type": "person",
+            "lookup-name": "locrel:prc.foaf:Person",
+            "lookup-only": "false"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.swrc-supervisor.foaf-person",
+            "help":"jcu-self-submission.field.help.swrc-supervisor.foaf-person",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type": "repeatable-container",
+            "containter-for": "swrc:supervisor.foaf:Person",
+            "sub-elements": {
+                "settings": [
+                    {"jaffaPeople": {"source":"nla,mint", "label":"", "class-list":"jaffa-field", "suffix":""}},
+                ]
+            }
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-contributor.locrel-clb.foaf-Agent",
+            "help":"jcu-self-submission.field.help.dc-contributor.locrel-clb.foaf-Agent",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"dc:contributor.locrel:clb",
+            "sub-elements":{"settings":[
+                                {"jaffaText":{"label":"", "class-list":"jaffa-field", "suffix":"foaf:Agent", "size":"60", "placeholder":"e.g. CSIRO, University of X, Prof. Jim Bloggs, etc."}}
+                                ]
+                           },
+            "add-item-text":"Add collaborator",
+            "additional-classes":"containerLayout"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<button class='prevtab'>&lt;&lt; Save and Previous</button> <button transition-name='Save and Exit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button class='nexttab'>Save and Next &gt;&gt;</button>"
+        }
+    ]
+}

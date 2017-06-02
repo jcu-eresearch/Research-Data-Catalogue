@@ -35,8 +35,8 @@
         #displayRow("dc:title" "#displayMessage('jcu-self-submission.field.label.dc-title')")
         
         <tr>
-        <td>#displayMessage('jcu-self-submission.field.label.rif-description')<td>
-        #set($descriptionList = $self.getList('rif:description'))
+        <td>#displayMessage('jcu-self-submission.field.label.dc-description')<td>
+        #set($descriptionList = $self.getList('dc:description'))
         #if ($descriptionList.isEmpty())
         <dd>
         #noInformation()

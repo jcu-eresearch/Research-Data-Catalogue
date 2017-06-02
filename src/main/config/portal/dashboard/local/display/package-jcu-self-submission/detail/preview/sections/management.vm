@@ -9,7 +9,7 @@
         <dd>#if("$!requestDoi" == "on")<em>Yes</em>#else<em>No</em>#end</dd>
         
         <dt>Other Known Identifiers</dt>
-        #set($otherIdList = $self.getList("rif:collection"))
+        #set($otherIdList = $self.getList("dc:additionalidentifier"))
         #if ($otherIdList.isEmpty())
         <dd>
         #noInformation()

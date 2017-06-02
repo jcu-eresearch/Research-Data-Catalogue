@@ -1,0 +1,218 @@
+{
+    "heading":"Rights",
+    "fields":[
+        {
+            "component-type":"text-block",
+            "type":"p",
+            "content":"jcu-self-submission.asterisk"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-accessRights.heading",
+            "help":"jcu-self-submission.field.help.dc-accessRights.heading",
+            "additional-class":"jcuFieldLabel required"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-accessRights.skos-prefLabel",
+            "help":"jcu-self-submission.field.help.dc-accessRights.skos-prefLabel",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"dropdown-fixedvalue",
+            "field-name":"accessRight-selection",
+            "label":"",
+            "options":[
+                {
+                    "value":"",
+                    "label":"Please select one...",
+                    "default":"true"
+                },
+                {
+                    "value":"Open access. If the data is not freely accessible via the link provided, please contact the nominated data manager or researchdata@jcu.edu.au for assistance.",
+                    "label":"Open access. If the data is not freely accessible via the link provided, please contact the nominated data manager or researchdata@jcu.edu.au for assistance."
+                },
+                {
+                    "value":"Please contact the data manager or nominated primary contact to negotiate access to this data. If you have difficulty, please contact researchdata@jcu.edu.au for assistance.",
+                    "label":"Please contact the data manager or nominated primary contact to negotiate access to this data. If you have difficulty, please contact researchdata@jcu.edu.au for assistance."
+                },
+                {
+                    "value":"Restricted access. Login authentication is required to access the data - please contact the data manager or nominated primary contact to negotiate access. If you have difficulty, please contact researchdata@jcu.edu.au for assistance.",
+                    "label":"Restricted access. Login authentication is required to access the data - please contact the data manager or nominated primary contact to negotiate access. If you have difficulty, please contact researchdata@jcu.edu.au for assistance."
+                },
+                {
+                    "value":"Dataset contains confidential or sensitive information. No access to data is permitted. Contact data manager for more information.",
+                    "label":"Dataset contains confidential or sensitive information. No access to data is permitted. Contact data manager for more information."
+                }
+                {
+                    "value":"manual",
+                    "label":"Other",
+                },
+            ]
+        },
+        {
+            "component-type":"textarea",
+            "field-name":"dc:accessRights.skos:prefLabel",
+            "label":"",
+            "placeholder":"eg. Contact Chief Investigator to negotiate access to the data."
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-accessRights.dc-identifier",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-input",
+            "field-name":"dc:accessRights.dc:identifier",
+            "label":"",
+            "size":"60",
+            "placeholder":"Access Rights URI"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-accessRights.dc-RightsStatement.skos-prefLabel",
+            "help":"jcu-self-submission.field.help.dc-accessRights.dc-RightsStatement.skos-prefLabel",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-input",
+            "field-name":"dc:accessRights.dc:RightsStatement.skos:prefLabel",
+            "label":"",
+            "size":"60",
+            "placeholder":"eg. This dataset is made available under the Public Domain Dedication and License v1.0"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-accessRights.dc-RightsStatement.dc-identifier",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-input",
+            "field-name":"dc:accessRights.dc:RightsStatement.dc:identifier",
+            "label":"",
+            "size":"60",
+            "placeholder":"Rights Statement URI"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<script type='text/javascript'>
+                            $(document).ready(function(){
+                                v2.Validator.add({
+                                    name: 'accessRightsOr',
+                                    acceptEmpty: false,
+                                    fn: function(field, value, params) {
+                                        // Get the values from Jaffa
+                                        var orField1 = jaffa.form.value(params[0]);
+                                        var orField2 = jaffa.form.value(params[1]);
+                                        return (orField1 || orField2);
+                                    }
+                                });
+                                jaffa.valid.addNewRule('accessRightsOrRule', 'accessRightsOr', ['dc:accessRights.skos:prefLabel', 'dc:accessRights.dc:RightsStatement.skos:prefLabel']);
+                                jaffa.valid.setSaveRules('dc:accessRights.skos:prefLabel', ['accessRightsOrRule'], null, validationFail);
+                            });                                            
+                            var validation = {};
+                            validationMessages = jQuery.parseJSON('{\"accessRightsOrRule\":\"One of these fields must be completed: \'Access Rights\/Conditions\' or \'Rights\'\"}');
+                            validation['validationMessages'] = validationMessages;
+                            validation['focusId'] = 'dc:accessRights.skos:prefLabel';
+                            validationFieldMap['dc:accessRights.skos:prefLabel'] = validation; 
+                       </script>"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-license.skos-prefLabel",
+            "help":"jcu-self-submission.field.help.dc-license.skos-prefLabel",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"data-source-dropdown",
+            "label":"",
+            "field-name":"dc:license.dc:identifier",
+            "field-name-label":"dc:license.skos:prefLabel",
+            "sourceUrl":"workflows/forms/data/licences.json",
+            "idKey":"id",
+            "labelKey":"label",
+            "listKey":"results",
+            "lookup-parser": {
+                "results-path": ["results"],
+                "fields": {
+                    "id": ["id"],
+                    "label": ["label"],
+                    "description": ["description"]
+                },
+                "outputs": {
+                    "label": "${description}",
+                    "value": "${id}",
+                    "#lookupLicenceOutput": "${description}"
+                }
+            }
+        },    
+        {
+            "component-type":"native-html"
+            "content":"<div><blockquote rows='4' cols='100' readonly='readonly' id='lookupLicenceOutput'></blockquote></div>"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-license.rdf-Alt.heading"
+            "help":"jcu-self-submission.field.help.dc-license.rdf-Alt.heading",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-license.rdf-Alt.skos-prefLabel",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-input",
+            "field-name":"dc:license.rdf:Alt.skos:prefLabel",
+            "label":"",
+            "size":"60",
+            "placeholder":"licence name"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.dc-license.rdf-Alt.dc-identifier",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"text-input",
+            "field-name":"dc:license.rdf:Alt.dc:identifier",
+            "label":"",
+            "size":"60",
+            "placeholder":"licence url"
+        },
+        {
+            "component-type":"text-block",
+            "type":"label",
+            "content":"jcu-self-submission.field.label.locrel-own.foaf-Agent.foaf-name",
+            "help":"jcu-self-submission.field.help.locrel-own.foaf-Agent.foaf-name",
+            "additional-class":"jcuFieldLabel"
+        },
+        {
+            "component-type":"repeatable-container",
+            "containter-for":"locrel:own.foaf:Agent",
+            "sub-elements":{"settings":[
+                {"jaffaText":{"label":"", "class-list":"jaffa-field", "suffix":"foaf:name", "size":"60", "default-value":"James Cook University"}}
+            ]
+            },
+            "add-item-text":"Add owner",
+            "additional-classes":"containerLayout"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<hr />"
+        },
+        {
+            "component-type":"native-html",
+            "content":"<button class='prevtab'>&lt;&lt; Save and Previous</button> <button transition-name='Save and Exit' onclick='transition_click(this)' form-action='save' close-transition='$portalPath/detail/$oid'>Save and Exit</button> <button class='nexttab'>Save and Next &gt;&gt;</button>"
+        }
+    ]
+}

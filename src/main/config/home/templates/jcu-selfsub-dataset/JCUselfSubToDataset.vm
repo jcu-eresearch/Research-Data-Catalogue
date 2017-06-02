@@ -64,10 +64,9 @@
 	#mapTo('dc:title', 'title')
 	"viewId": "default",
     "packageType": "dataset",
-    #mapTo('dc:description', 'description')
 	"redbox:newForm": "$util.get($item, 'redbox:newForm')",
 	"redbox:formVersion": "$util.get($item, 'redbox:formVersion')",
-	"dc:title": "#EscapeForJson($util.get($item, 'dc:title'))",
+	#mapTo('dc:title', 'dc:title'),
 	#foreach( $key in ["dc:type.rdf:PlainLiteral","dc:type.skos:prefLabel","dc:created",
 			 "dc:modified","dc:language.dc:identifier","dc:language.skos:prefLabel",
 			 "dc:coverage.vivo:DateTimeInterval.vivo:start","dc:coverage.vivo:DateTimeInterval.vivo:end",
@@ -142,8 +141,8 @@
     	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "redbox:origin" $order)
     	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "redbox:publish" $order)
     	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "dc:identifier" $order)
-     #multiValuedProperty($slot "dc:relation.vivo:Dataset" "vivo:Relationship.rdf:PlainLiteral" $order)
-     #multiValuedProperty($slot "dc:relation.vivo:Dataset" "vivo:Relationship.skos:prefLabel" $order)
+        #multiValuedProperty($slot "dc:relation.vivo:Dataset" "vivo:Relationship.rdf:PlainLiteral" $order)
+        #multiValuedProperty($slot "dc:relation.vivo:Dataset" "vivo:Relationship.skos:prefLabel" $order)
      #set($order = $order + 1)
    #end
 	#end
@@ -242,20 +241,19 @@
     #end
 	#end
 
-    #set($cList = $util.getList($item, "rif:collection"))
+    #set($cList = $util.getList($item, "dc:additionalidentifier"))
     #set($order = 1)
     #if ($cList.size() > 0)
     #foreach($key in $cList.keySet())
         #set($slot = $cList.get($key))
-        #multiValuedProperty($slot "rif:collection" "identifier" $order)
-        #multiValuedProperty($slot "rif:collection" "jcu:comment" $order)
-        #multiValuedProperty($slot "rif:collection" "type" $order)
-        #multiValuedProperty($slot "rif:collection" "label" $order)
+        #multiValuedProperty($slot "dc:additionalidentifier" "rdf:PlainLiteral" $order)
+        #multiValuedProperty($slot "dc:additionalidentifier" "jcu:comment" $order)
+        #multiValuedProperty($slot "dc:additionalidentifier" "type.rdf:PlainLiteral" $order)
+        #multiValuedProperty($slot "dc:additionalidentifier" "type.rdf.skos:preLabel" $order)
         #set($order = $order + 1)
     #end
     #end
-    
-    
+
     #mapTo('redbox:retentionPeriod', 'redbox:retentionPeriod')
 	
     #set($cList = $util.getList($item, "locrel:own.foaf:Agent"))
@@ -314,8 +312,9 @@
     #end
 	#end
 	
-	#foreach( $key in ["dc:description",
-			 "locrel:prc.foaf:Person.foaf:title","locrel:prc.foaf:Person.foaf:givenName","locrel:prc.foaf:Person.foaf:familyName",
+
+
+	#foreach( $key in ["locrel:prc.foaf:Person.foaf:title","locrel:prc.foaf:Person.foaf:givenName","locrel:prc.foaf:Person.foaf:familyName",
              "locrel:prc.foaf:Person.dc:identifier","locrel:prc.foaf:Person.foaf:email", "dc:license.skos:prefLabel" ,"dc:license.dc:identifier",
              "dc:license.rdf:Alt.skos:prefLabel","dc:license.rdf:Alt.dc:identifier","dc:identifier.rdf:PlainLiteral","dc:identifier.dc:type.rdf:PlainLiteral",
              "dc:identifier.dc:type.skos:prefLabel","dc:identifier.redbox:origin", "vivo:Location.vivo:GeographicLocation.gn:name",
@@ -370,10 +369,9 @@
         "dc:coverage.vivo:GeographicLocation.1.geo:long",
         "dc:coverage.vivo:GeographicLocation.1.geo:lat",
         "dc:coverage.vivo:GeographicLocation.1.dc:identifier",
-        "dc:description",
-        "rif:description.1.type",
-        "rif:description.1.value",
-        "rif:description.1.label",
+        "dc:description.0.text",
+        "dc:description.0.type",
+        "dc:description.0.shadow",
         "dc:relation.swrc:Publication.1.dc:identifier",
         "dc:relation.swrc:Publication.1.dc:title",
         "dc:relation.swrc:Publication.1.skos:note",
@@ -437,6 +435,7 @@
         "dc:accessRights.dc:identifier",
         "dc:accessRights.dc:RightsStatement.skos:prefLabel",
         "dc:accessRights.dc:RightsStatement.dc:identifier",
+        "dc:accessRightsType",
         "dc:license.skos:prefLabel",
         "dc:license.dc:identifier",
         "dc:license.rdf:Alt.skos:prefLabel",
@@ -445,10 +444,10 @@
         "dc:identifier.dc:type.rdf:PlainLiteral",
         "dc:identifier.dc:type.skos:prefLabel",
         "dc:identifier.redbox:origin",
-        "rif:collection.1.identifier",
-        "rif:collection.1.jcu:comment",
-        "rif:collection.1.type",
-        "rif:collection.1.label",
+        "dc:additionalidentifier.1.rdf.PlainLiteral",
+        "dc:additionalidentifier.1.jcu:comment",
+        "dc:additionalidentifier.1.type.rdf:PlainLiteral",
+        "dc:additionalidentifier.1.type.rdf.skos:prefLabel",
         "bibo:Website.1.dc:identifier",
         "vivo:Location.vivo:GeographicLocation.gn:name",
         "vivo:Location.vivo:GeographicLocation.skos:note",
