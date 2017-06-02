@@ -82,7 +82,7 @@
                                                   "mandatory":"true",
                                                   "class-list": "descriptionSelect",
                                                   "label-class-list": "descriptionTypeLabel",
-                                                  "default-v  alue": "full"}},
+                                                  "default-value": "full"}},
                                  {"jaffaText":{"textarea": {"rows":6, "cols":80}, "label":"Description", "class-list":"jaffa-field description descriptionInput wysiwygEditor", "suffix":"text", "placeholder":"eg. This dataset contains observational data and calibration files."}},
                                  {"jaffaText":{"class-list": "jaffa-field description hidden wysiwygShadow", "suffix": "shadow" }}
                               ]
