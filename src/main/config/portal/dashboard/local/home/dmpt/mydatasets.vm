@@ -7,7 +7,7 @@
 ## Begin Paged Table - MyDrafts
 #############################
 #if($relatedDatasets)
-    #set($draftsRecUrl = "$portalPath/getRecords.script?packageType=self-submission&relatedOids=")
+    #set($draftsRecUrl = "$portalPath/getRecords.script?packageType=jcu-self-submission&relatedOids=")
     #foreach($relatedDataset in $relatedDatasets)
         #set($draftsRecUrl = $draftsRecUrl+$relatedDataset.get("oid")+",")
     #end
@@ -56,7 +56,7 @@ draftFuncFn['manageAccess'] = function(item) { manage_access(item.id); };
 #insertPagedTable('myDrafts' $draftsRecUrl $draftsTblStruct 'draftsMapFn' 'draftFuncFn')
 
 #############################
-## End Paged Table - Drafts
+    ## End Paged Table - Drafts
 #############################
 #end
 
