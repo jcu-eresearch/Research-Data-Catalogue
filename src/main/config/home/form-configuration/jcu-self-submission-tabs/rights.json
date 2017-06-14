@@ -39,17 +39,17 @@
                     "label":"Please contact the data manager or nominated primary contact to negotiate access to this data. If you have difficulty, please contact researchdata@jcu.edu.au for assistance."
                 },
                 {
-                    "value":"Restricted access. Login authentication is required to access the data - please contact the data manager or nominated primary contact to negotiate access. If you have difficulty, please contact researchdata@jcu.edu.au for assistance.",
-                    "label":"Restricted access. Login authentication is required to access the data - please contact the data manager or nominated primary contact to negotiate access. If you have difficulty, please contact researchdata@jcu.edu.au for assistance."
+                    "value":"Conditional access. Login authentication is required to access the data - please contact the data manager or nominated primary contact to negotiate access. If you have difficulty, please contact researchdata@jcu.edu.au for assistance.",
+                    "label":"Conditional access. Login authentication is required to access the data - please contact the data manager or nominated primary contact to negotiate access. If you have difficulty, please contact researchdata@jcu.edu.au for assistance."
                 },
                 {
                     "value":"Dataset contains confidential or sensitive information. No access to data is permitted. Contact data manager for more information.",
                     "label":"Dataset contains confidential or sensitive information. No access to data is permitted. Contact data manager for more information."
-                }
+                },
                 {
                     "value":"manual",
-                    "label":"Other",
-                },
+                    "label":"Other"
+                }
             ]
         },
         {
@@ -57,6 +57,30 @@
             "field-name":"dc:accessRights.skos:prefLabel",
             "label":"",
             "placeholder":"eg. Contact Chief Investigator to negotiate access to the data."
+        },
+        {
+            "component-type":"dropdown-fixedvalue",
+            "field-name":"dc:accessRightsType",
+            "label":"",
+            "options":[
+                {
+                    "value":"",
+                    "label":"Please select one...",
+                    "default":"true"
+                },
+                {
+                    "value":"open",
+                    "label":"Open"
+                },
+                {
+                    "value":"conditional",
+                    "label":"Conditional"
+                },
+                {
+                    "value":"restricted",
+                    "label":"Restricted"
+                }
+            ]
         },
         {
             "component-type":"text-block",

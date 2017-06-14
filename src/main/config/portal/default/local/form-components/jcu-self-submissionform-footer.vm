@@ -477,12 +477,27 @@ function getDateTime(){
             var comboValue = $(this).val();
             if  (comboValue == 'manual'){
                 $("[id='dc:accessRights.skos:prefLabel']").val("");
-                $("[id='dc:accessRights.skos:prefLabel']").show()                
+                $("[id='dc:accessRights.skos:prefLabel']").show()
+                $("[id='dc:accessRightsType']").val("");
+                $("[id='dc:accessRightsType']").show();
+
             }
             else{
                 $("[id='dc:accessRights.skos:prefLabel']").val(comboValue);
                 $("[id='dc:accessRights.skos:prefLabel']").hide();
+                $("[id='dc:accessRightsType']").hide();
             }
+
+            if (comboValue.startsWith("Open access")){
+                $("[id='dc:accessRightsType']").val("open");
+            }
+            if (comboValue.startsWith("Please contact the data manager") || comboValue.startsWith("Conditional access")){
+                $("[id='dc:accessRightsType']").val("conditional");
+            }
+            if (comboValue.startsWith("Dataset contains confidential")){
+                $("[id='dc:accessRightsType']").val("restricted");
+            }
+
         });
 
         //make the Grants Title field readonly
