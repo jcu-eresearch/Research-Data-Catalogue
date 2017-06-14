@@ -18,7 +18,7 @@
         <dd>
             <ol>
             #foreach($key in $otherIdList)
-                #set($plainLiteral = $key.get("identifier"))
+                #set($plainLiteral = $key.get("rdf:PlainLiteral"))
                 #if("$!plainLiteral"!="")
                     <li><b>Identifier: </b>$page.escapeHtml($plainLiteral) <b>Comment: </b>$page.escapeHtml($key.get("jcu:comment"))</li>
                 #end

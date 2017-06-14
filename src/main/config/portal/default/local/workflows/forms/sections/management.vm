@@ -48,7 +48,7 @@
         </p>
         <p>
             <h2>
-            <label for="dc:identifier.rdf">Additional Identifiers:</label>
+            <label for="dc:additionalidentifier.rdf">Additional Identifiers:</label>
             </h2>
             <div class="input-list additionalidentifiers">
                 <input type="input" id="isAdditionalIdentifiersComplete" class="isAdditionalIdentifiersComplete" style="display:none;"/>
@@ -80,6 +80,8 @@
                         </span>
                     <label for="dc:additionalidentifier.0.rdf:PlainLiteral">Identifier:</label>
                     <input type="text" size="60" placeholder="persistent identifier" id="dc:additionalidentifier.0.rdf:PlainLiteral" class="additionalidentifier"/>
+                    <label for="dc:additionalidentifier.0.jcu:comment.">Comment:</label>
+                    <textarea rows="4" cols="40" id="dc:additionalidentifier.0.jcu:comment" class="" style="vertical-align: text-top;"></textarea>
                     <span class="delete-item deleteAdditionalIdentifier"><a href="#">delete</a></span>
                 </div>
                 <div>

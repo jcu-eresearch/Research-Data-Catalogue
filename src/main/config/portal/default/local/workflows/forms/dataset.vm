@@ -226,6 +226,7 @@
         dc:additionalidentifier.0.rdf:PlainLiteral
         dc:additionalidentifier.0.type.rdf:PlainLiteral,
         dc:additionalidentifier.0.type.rdf.skos:prefLabel,
+        dc:additionalidentifier.0.jcu:comment,
         dc:identifier.redbox:origin,
         bibo:Website.0.dc:identifier,
         vivo:Location.vivo:GeographicLocation.gn:name,
