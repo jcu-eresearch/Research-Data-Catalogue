@@ -2,6 +2,8 @@
 <div id="people" class="inputscreen nameLookup-section">
     <input type="hidden" class="nameLookup-url" value="$portalPath/proxyGet.script?ns=Parties_People&qs=searchTerms%3D{searchTerms}" />
     <input type="hidden" class="nlaLookup-url" value="$portalPath/proxyGet.script?ns=NLA_SRU&qs={searchTerms}" />
+    <input type="hidden" class="orcidLookup-url" value="$portalPath/orcidSearch.script?familyName={familyName}&givenNames={givenNames}&page={page}" />
+
     <input type="hidden" class="nameLookup-value-ns" value="nl" />
 
     #fieldTitle("dc:creator" "Creators" true)
@@ -21,7 +23,7 @@
             </li>
         </ul>
     </div>
-    <table class="input-list sortable">
+    <table class="input-list sortable peopleTable">
         <thead>
             <tr class="header-row">
                 <th></th>
@@ -33,7 +35,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="item-input-display sortable-item">
+            <tr class="item-input-display sortable-item people">
                 <td class="valign-middle">
                     <img class="facets-grip" src="$portalPath/images/icons/grippy.png" />
                 </td>
@@ -208,7 +210,7 @@
                                type="hidden"
                                class="nl nl-rdfs:label nlLabel" readonly="readonly"/>
                         <input type="hidden" id="dc:creator.foaf:Person.0.dc:identifier"
-                               class="nl nl-dc:identifier nlId" />
+                               class="nl nl-dc:identifier nlId nameAuthority creatorValidation" />
                     </span>
                 </td>
                 <td class="valign-middle"><a class="delete-item" href="#">delete</a></td>
@@ -232,14 +234,14 @@
         Enter a given name and/or family name and click 'lookup' to search and
         select the name authority record.
     </div>
-    <table class="lookup">
+    <table class="lookup peopleTable">
         <thead>
             <tr>
                 <th colspan="6">Display Name</th>
                 <th>Name Authority</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="people">
             <tr>
                 <td>
                     <label for="locrel:prc.foaf:Person.foaf:title">Title:</label>
@@ -276,7 +278,7 @@
                                type="hidden"
                                class="nl nl-rdfs:label nlLabel" readonly="readonly"/>
                         <input type="hidden" id="locrel:prc.foaf:Person.dc:identifier"
-                               class="nl nl-dc:identifier nlId" value="" />
+                               class="nl nl-dc:identifier nlId nameAuthority" value="" />
                     </span>
                 </td>
             </tr>
@@ -298,7 +300,7 @@
         applicable. Enter a given name and/or family name and click 'lookup' to
         search and select the name authority record.
     </div>
-    <table class="input-list">
+    <table class="input-list peopleTable">
         <thead>
             <tr>
                 <th>#</th>
@@ -308,7 +310,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr class="item-input-display sortable-item">
+            <tr class="item-input-display sortable-item  people">
                 <td class="sort-number"></td>
                 <td>
                     <table class="lookup">
@@ -361,7 +363,7 @@
                                type="hidden"
                                class="nl nl-rdfs:label nlLabel" readonly="readonly"/>
                         <input type="hidden" id="swrc:supervisor.foaf:Person.0.dc:identifier"
-                               class="nl nl-dc:identifier nlId" value="" />
+                               class="nl nl-dc:identifier nlId nameAuthority" value="" />
                     </span>
                 </td>
                 <td class="valign-middle"><a class="delete-item" href="#">delete</a></td>
@@ -384,7 +386,7 @@
     </div>
     <table class="input-list">
         <tbody>
-            <tr class="item-input-display sortable-item">
+            <tr class="item-input-display sortable-item people">
                 <td class="sort-number"></td>
                 <td>
                     <input type="text" size="60" placeholder="eg. CSIRO, University of X, Prof. Jim Bloggs, etc." id="dc:contributor.locrel:clb.0.foaf:Agent" />
@@ -412,12 +414,22 @@ function lookupDone(target,data){
     // fill in the fields
     // National Library of Australia
     var nlaId = data["nlaId"];
+    var orcId = data["orcid"];
     if (nlaId != null) {
         displayName.append(" (<a href=\""+nlaId+"\" target=\"_blank\">NLA</a>)");
         var baseId = p.find("input[id$=\\.foaf\\:name]").attr("id").replace(".foaf:name", "");
         $("input[id='"+baseId+".foaf:title']").val("");
         $("input[id='"+baseId+".foaf:givenName']").val(data["firstName"]);
         $("input[id='"+baseId+".foaf:familyName']").val(data["surname"]);
+    // ORCID Identity
+    } else if (orcId != null) {
+      var fullName = data["family_name"]+", "+data["given_names"];
+      displayName.append(fullName+"(<a href=\""+data["orcid_uri"]+"\" target=\"_blank\">ORCID</a>)");
+      var baseId = p.find("input[id$=\\.foaf\\:name]").attr("id").replace(".foaf:name", "");
+      $("input[id='"+baseId+".foaf:givenName']").val(data["given_names"]);
+      $("input[id='"+baseId+".foaf:familyName']").val(data["family_name"]);
+      $("input[id='"+baseId+".foaf:name']").val(fullName);
+      $("input[id='"+baseId+".dc:identifier']").val(data["orcid_uri"]);
 
     // Mint Identity
     } else {
@@ -461,6 +473,7 @@ function lookupDone(target,data){
             }
         });
     }
+    clearPeopleText(target.parents('.people').find('.identifierText'));
 }
 
 function lookupCleared(target,data){
@@ -468,6 +481,7 @@ function lookupCleared(target,data){
     target.text("lookup");
     p.find(".identified-as-name").text("");
     p.find("input.nl").val("");
+    target.parents('.people').find('.identifierText').show();
 }
 
 function pcLookupDone(target,data){
@@ -507,4 +521,67 @@ function copyToPrimaryContact(obj){
     $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:familyName").val($(familyNameId).val());
     $("#locrel\\:prc\\.foaf\\:Person\\.foaf\\:email").val($(emailId).val());
 }
+</script>
+
+<script type="text/javascript">
+    function escapeId(rawId) {
+        return "#" + rawId.replace( /(:|\.)/g, "\\$1" );
+    }
+    function hasInvalidPeople(id) {
+        return ($(escapeId(id)).val() == "");
+    }
+
+    function clearPeopleText(jQIdentifierTextElement) {
+        clearPeopleTextIdentifier(jQIdentifierTextElement);
+        jQIdentifierTextElement.hide();
+    }
+
+    function clearPeopleTextIdentifier(jQIdentifierTextElement) {
+        var identifierTextEntry = jQIdentifierTextElement.find('.identifierText-entry');
+        identifierTextEntry.hide();
+        identifierTextEntry.find('.identifierText-input').val('');
+        jQIdentifierTextElement.find('.identifierText-enable').show();
+    }
+
+    $171(document).ready(function() {
+        $171('.identifierText-entry').each( function() {
+            var enableElement = $(this).parents('.identifierText').find('.identifierText-enable');
+            var lookupNameAuthElement = $(this).parents('.people').find('[id$=foaf:name]');
+            // a lookup value is present - hide the text entry
+            var textValue = $(this).find('.identifierText-input').val();
+            if (lookupNameAuthElement.attr('value') && lookupNameAuthElement.val() != '') {
+                clearPeopleText($(this).parents('.identifierText'));
+            } else if (textValue != '') {
+                // text entry has a value so show this, update foaf identifier, and hide the label
+                $(this).show();
+                $(this).parents('.people').find('.nameAuthority').val(textValue);
+                enableElement.hide();
+            } else {
+                // no lookup value and no text value so show text entry label
+                $(this).hide();
+                enableElement.show();
+            }
+        });
+
+        $171('.peopleTable').on('click', '.identifierText-enable', function() {
+            $(this).parents('.identifierText').find('.identifierText-entry').show();
+            $(this).hide();
+            //prevent link scrolling
+            return false;
+        });
+
+
+        $171('.peopleTable').on('click', '.identifierText-clear', function() {
+            clearPeopleTextIdentifier($(this).parents('.identifierText'));
+            //clear foaf value
+            $(this).parents('.people').find('.nameAuthority').val('');
+            //prevent link scrolling
+            return false;
+        });
+
+        $171('.peopleTable').on('keyup', '.identifierText-input', function() {
+            $(this).parents('.people').find('.nameAuthority').val($(this).val());
+        });
+    });
+
 </script>
