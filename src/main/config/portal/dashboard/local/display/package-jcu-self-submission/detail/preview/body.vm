@@ -214,6 +214,7 @@ function manage_access(e) {
     <span id="toggle-accordion-text">Show all sections</span>
 </div>
 <div class="accordion">
+    #parseDisplayTemplate("detail/preview/sections/description.vm")
     #parseDisplayTemplate("detail/preview/sections/coverage.vm")
     #parseDisplayTemplate("detail/preview/sections/people.vm")
     #parseDisplayTemplate("detail/preview/sections/management.vm")

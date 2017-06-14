@@ -97,10 +97,7 @@ $(function() {
                 ajax: 1,
                 func: "create-new",
                 packageType: "jcu-self-submission",
-                metaList: ["title", "dc:description", "redbox:newForm", "redbox:formVersion","project.name"],
-                title: "[Untitled]",
-                description: "",
-                "project.name": "New Project",
+                metaList: ["redbox:newForm", "redbox:formVersion"],
                 "redbox:newForm": "true",
                 "redbox:formVersion": "$systemConfig.getString("", "redbox.version.string")",
                 "access_plugin":"derby"

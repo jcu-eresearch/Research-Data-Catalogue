@@ -145,6 +145,7 @@
                        <select id="dc:description.0.type" style="left:20em;" class="descriptionSelect">
                           <option value="full">Full</option>
                           <option value="brief">Brief</option>
+                          <option value="logo">Logo</option>
                           <option value="note">Note</option>
                        </select>
                     </td>

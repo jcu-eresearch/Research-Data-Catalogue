@@ -145,7 +145,7 @@ $(function(){
 <h1 style="margin-top:1.5em">Data Sets</h1>
 #parseTemplate("home/dmpt/mydatasets.vm")
 <p style="margin-bottom: 0px;">
-<a id='create-selfsubmission' href='#'>Create a dataset record based on this plan<img style="margin-left:0.5em;" src="$portalPath/images/icons/package_add.png" alt="Create a dataset record based on this plan"/></a>
+<a id='create-jcu-selfsubmission' href='#'>Create a dataset record based on this plan<img style="margin-left:0.5em;" src="$portalPath/images/icons/package_add.png" alt="Create a dataset record based on this plan"/></a>
 </p>
 
 </div>
@@ -166,10 +166,7 @@ $(function(){
                 	ajax: 1,
                 	func: "create-new",
                 	packageType: "jcu-self-submission",
-                    metaList: ["title", "dc:description", "redbox:newForm", "redbox:formVersion","project.name"],
-                    title: "[Untitled]",
-                    description: "",
-                    "project.name": "New Project",
+                    metaList: ["redbox:newForm", "redbox:formVersion"],
                     "redbox:newForm": "true",
                     "redbox:formVersion": "$systemConfig.getString("Unknown", "redbox.version.string")",
                     "access_plugin":"derby"
