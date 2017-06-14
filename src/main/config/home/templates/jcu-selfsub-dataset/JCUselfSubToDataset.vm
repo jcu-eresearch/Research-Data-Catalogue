@@ -97,7 +97,7 @@
 	#foreach($key in $cList.keySet())
     	#set($slot = $cList.get($key))
     	#multiValuedProperty($slot "dc:coverage.vivo:GeographicLocation" "dc:type" $order)
-     #multiValuedProperty($slot "dc:coverage.vivo:GeographicLocation" "dc:typeLabel" $order)
+        #multiValuedProperty($slot "dc:coverage.vivo:GeographicLocation" "dc:typeLabel" $order)
     	#multiValuedProperty($slot "dc:coverage.vivo:GeographicLocation" "redbox:wktRaw" $order)
     	#multiValuedProperty($slot "dc:coverage.vivo:GeographicLocation" "rdf:PlainLiteral" $order)
     	#multiValuedProperty($slot "dc:coverage.vivo:GeographicLocation" "geo:long" $order)

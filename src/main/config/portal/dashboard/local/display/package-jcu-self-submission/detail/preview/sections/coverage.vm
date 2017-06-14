@@ -29,18 +29,18 @@
             #foreach($key in $forList.keySet())
                 #set($item = $forList.get($key))
                 #set($checkValue = $item.get("rdf:PlainLiteral"))
-                #if($!checkValue.contains("POLYGON"))
+                #if($!checkValue.contains("POLYGON") or $!checkValue.contains("POINT") or $!checkValue.contains("LINESTRING"))
                 <li class="redboxGeoData" style="visibility: hidden; height: 0px">
                 #else
                 <li class="redboxGeoData">
                 #end
                 #foreach($subKey in $geoSubkeys)
                 #set($subv = $item.get("$subKey"))
-                #if ($subKey == "dc:typeLabel")<br>Location Type: <input type="text" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" readonly="readonly" value="$!subv" size="25" />
+                #if ($subKey == "dc:typeLabel")<input type="hidden" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" readonly="readonly" value="$!subv" size="25" />
                 #elseif ($subKey == "dc:type")<input type="hidden" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" />
                 #elseif ($subKey == "redbox:Fid")<input type="hidden" class="redboxGeoDataFid" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" />
                 #elseif ($subKey == "redbox:wktRaw")<input type="hidden" class="redboxGeoDataWkt" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" />
-                #elseif ($subKey == "rdf:PlainLiteral")Value: <input type="text" class="redboxGeoDataOutput" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" size="60" readonly="readonly"/>
+                #elseif ($subKey == "rdf:PlainLiteral")<input type="text" class="redboxGeoDataOutput" id="dc:coverage.vivo:GeographicLocation.$key.$subKey" value="$!subv" size="60" readonly="readonly"/>
                 #elseif ($subKey == "coords")
                 <div class='hidden coords' id='dc:coverage.vivo:GeographicLocation.$key.$subKey'>
                     <a target='_blank' href=''>map</a>

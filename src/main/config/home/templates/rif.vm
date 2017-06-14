@@ -66,20 +66,20 @@
                         #set($literalArray = $sanitisedLiteral.split(","))
                         #foreach($pair in $literalArray)
                             #set($kmlResult = "$!kmlResult " + $pair.replace(" ", ","))
-                                #end
-                            #else
-                                #set($kml = $kml + $literal + ",")
-                            #end
-                            #set($i = $i + 1)
                         #end
-
+                        #set($kml = $kmlResult.trim())
+            <rif:coverage>
                 <rif:spatial type="kmlPolyCoords" $lang>$util.encodeXml($kml)</rif:spatial>
             </rif:coverage>
+                    #else
+            <rif:coverage>
+                <rif:spatial type="$type" $lang>$util.encodeXml($literal)</rif:spatial>
+            </rif:coverage>
+                    #end
                 #end
             #end
         #end
     #end
-#end
 #end
 
 #set($quote='"')

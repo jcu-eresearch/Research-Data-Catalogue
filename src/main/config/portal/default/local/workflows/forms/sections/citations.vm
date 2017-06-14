@@ -425,18 +425,18 @@
             }
 
             ### Date of creation
-            ##var created = getReDBoxById("dc:created");
-            ##if (created.size() != 0) {
-            ##    created = created.val();
-            ##    if (created != null && created != "") {
-            ##        getReDBoxById("${citePart}.dc:date.2.rdf:PlainLiteral").val(created);
-            ##        var dateDropDown = getReDBoxById("${citePart}.dc:date.2.dc:type.rdf:PlainLiteral").parent().parent();
-            ##        var select = dateDropDown.find("select");
-            ##        select.val("created"); // Change the drop-down
-            ##        select.change(); // Change the widget state (enables button)
-            ##        dateDropDown.find("button").click(); // Click the button
-            ##    }
-            ##}
+            var created = getReDBoxById("dc:created");
+            if (created.size() != 0) {
+                created = created.val();
+                if (created != null && created != "") {
+                    getReDBoxById("${citePart}.dc:date.2.rdf:PlainLiteral").val(created);
+                    var dateDropDown = getReDBoxById("${citePart}.dc:date.2.dc:type.rdf:PlainLiteral").parent().parent();
+                    var select = dateDropDown.find("select");
+                    select.val("created"); // Change the drop-down
+                    select.change(); // Change the widget state (enables button)
+                    dateDropDown.find("button").click(); // Click the button
+                }
+            }
 
             ### URL
             var url = getReDBoxById("bibo:Website.1.dc:identifier");

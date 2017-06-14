@@ -29,14 +29,14 @@
 
         #set($geoSubkeys = ["dc:type", "dc:typeLabel", "dc:identifier", "rdf:PlainLiteral", "redbox:Fid", "redbox:wktRaw", "geo:lat", "geo:long", "coords"])
         #set($geoList = $self.getList("dc:coverage.vivo:GeographicLocation"))
-        #if ($geoList   .isEmpty())
+        #if ($geoList.isEmpty())
         <dd>
         #noInformation()
         </dd>
         #else       
             <ul>
-            #foreach($key in $forList.keySet())
-                #set($item = $forList.get($key))
+            #foreach($key in $geoList.keySet())
+                #set($item = $geoList.get($key))
                 #set($checkValue = $item.get("rdf:PlainLiteral"))
                 #if($!checkValue.contains("POLYGON") or $!checkValue.contains("POINT") or $!checkValue.contains("LINESTRING"))
                 <li class="redboxGeoData" style="visibility: hidden; height: 0px">
