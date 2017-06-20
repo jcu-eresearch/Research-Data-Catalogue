@@ -48,10 +48,8 @@
           "component-type":"repeatable-container",
           "containter-for":"dc:additionalidentifier",
           "sub-elements":{"settings":[
-            {"jaffaText":{"type":"hidden", "class-list":"jaffa-field", "suffix":"type.rdf:PlainLiteral"}},
-            {"jaffaText":{"type":"hidden", "class-list":"jaffa-field", "suffix":"type.rdf.skos:prefLabel"}},
-            {"jaffaDropDown":{"allow-empty": false,"label":"Type","suffix":"type.rdf.skos:PrefLabel","field":"type",
-                              "label-field":"label","label-field-suffix":"type.rdf.PlainLiteral", "label-class-list":"jaffa-field",
+            {"jaffaDropDown":{"allow-empty": false,"label":"Type","suffix":"type.rdf.skos:prefLabel","field":"type",
+                              "label-field":"label","label-field-suffix":"type.rdf:PlainLiteral", "label-class-list":"jaffa-field",
                               "json-data-url":"$portalPath/workflows/forms/data/citationIdTypes.json", "data-id-key":"id","data-label-key":"id",
                               "data-list-key":"results", "class-list": "jaffa-field", "default-value": "uri"}},
             {"jaffaText":{"label":"Description", "class-list":"jaffa-field", "suffix":"rdf:PlainLiteral", "size":"60", "placeholder":"url"}},

@@ -473,6 +473,7 @@ function getDateTime(){
         $('#dc\\:accessRights\\.dc\\:RightsStatement\\.dc\\:identifier-container').parent().addClass('rights');
 
         //Rights
+        $("[id='dc:accessRightsType']").hide();
         $("#accessRight-selection").change(function(){
             var comboValue = $(this).val();
             if  (comboValue == 'manual'){

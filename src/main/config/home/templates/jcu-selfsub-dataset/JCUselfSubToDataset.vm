@@ -249,7 +249,7 @@
         #multiValuedProperty($slot "dc:additionalidentifier" "rdf:PlainLiteral" $order)
         #multiValuedProperty($slot "dc:additionalidentifier" "jcu:comment" $order)
         #multiValuedProperty($slot "dc:additionalidentifier" "type.rdf:PlainLiteral" $order)
-        #multiValuedProperty($slot "dc:additionalidentifier" "type.rdf.skos:preLabel" $order)
+        #multiValuedProperty($slot "dc:additionalidentifier" "type.rdf.skos:prefLabel" $order)
         #set($order = $order + 1)
     #end
     #end
@@ -321,7 +321,7 @@
              "dc:extent","redbox:disposalDate","locrel:dtm.foaf:Agent.foaf:name","foaf:Organization.dc:identifier",
              "foaf:Organization.skos:prefLabel","swrc:ResearchProject.dc:title","locrel:dpt.foaf:Person.foaf:name","dc:SizeOrDuration",
              "dc:Policy","dc:accessRights.dc:RightsStatement.skos:prefLabel","dc:accessRights.dc:RightsStatement.dc:identifier","dc:accessRights.skos:prefLabel","dc:accessRights.dc:identifier",
-             "dc:subject.anzsrc:toa.rdf:resource","dc:subject.anzsrc:toa.skos:prefLabel", "redbox:embargo.dc:date", "redbox:embargo.skos:note",
+             "dc:accessRightsType","dc:subject.anzsrc:toa.rdf:resource","dc:subject.anzsrc:toa.skos:prefLabel", "redbox:embargo.dc:date", "redbox:embargo.skos:note",
              "jcu:data.depositedBy.text", "jcu:data.depositedBy.userId", "jcu:data.depositedBy.name", "jcu:data.depositedBy.userSource"
              ])
     #set($v = $util.get($item, $key))
