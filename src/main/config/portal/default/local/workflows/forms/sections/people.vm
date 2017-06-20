@@ -29,7 +29,6 @@
                 <th></th>
                 <th>Relationship Types</th>
                 <th>Display Name</th>
-                <th>Primary Contact</th>
                 <th>Name Authority</th>
                 <th></th>
             </tr>
@@ -126,7 +125,7 @@
                                 <td>
                                     <label for="dc:creator.foaf:Person.0.foaf:Organization.dc:identifier">Affiliation:</label>
                                 </td>
-                                <td colspan="3">
+                                <td colspan="5">
                                     <div>
                                     <span class="data-source-drop-down"
                                           data-delay="1"
@@ -191,12 +190,13 @@
                                     </span>
                                     </div>
                                 </td>
+                                <td></td>
+                                <td>
+                                    <input type="button" value="Make Primary Contact" onClick="copyToPrimaryContact(this)" />
+                                </td>
                             </tr>
                         </tbody>
                     </table>
-                </td>
-                <td>
-                    <input type="button" value="Make Primary Contact" onClick="copyToPrimaryContact(this)" />
                 </td>
                 <td>
                     <span class="lookup-show">
@@ -212,6 +212,14 @@
                         <input type="hidden" id="dc:creator.foaf:Person.0.dc:identifier"
                                class="nl nl-dc:identifier nlId nameAuthority creatorValidation" />
                     </span>
+                    <span class="identifierText creatorNameText">
+                            <div>or</div>
+                            <a href="#" class="identifierText-enable">enter text</a>
+                            <div class="identifierText-entry">
+                                <input type="text" class="identifierText-input" size="20" id="identifierText.0.creatorName.input" value="" />
+                                <a href="#" class="identifierText-clear">clear</a>
+                            </div>
+                        </span>
                 </td>
                 <td class="valign-middle"><a class="delete-item" href="#">delete</a></td>
             </tr>
@@ -267,6 +275,10 @@
                            id="locrel:prc.foaf:Person.foaf:familyName" />
                 </td>
                 <td>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
                     <span class="lookup-show">
                         <span class="identified-as-name"></span>
                         <a href="#" class="nameLookup-lookup" data-selected-func="pcLookupDone"
@@ -280,6 +292,22 @@
                         <input type="hidden" id="locrel:prc.foaf:Person.dc:identifier"
                                class="nl nl-dc:identifier nlId nameAuthority" value="" />
                     </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                                    <span class="identifierText pcName">
+                                        <div>or</div>
+                                        <a href="#" class="identifierText-enable">enter text</a>
+                                        <div class="identifierText-entry">
+                                            <input type="text" class="identifierText-input" size="20" id="pcName.identifierText" value="" />
+                                            <a href="#" class="identifierText-clear">clear</a>
+                                        </div>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </td>
             </tr>
             <tr>
@@ -352,6 +380,9 @@
                     </table>
                 </td>
                 <td>
+                    <table>
+                        <tr>
+                            <td>
                     <span class="lookup-show">
                         <span class="identified-as-name"></span>
                         <a href="#" class="nameLookup-lookup" data-selected-func="lookupDone"
@@ -365,6 +396,21 @@
                         <input type="hidden" id="swrc:supervisor.foaf:Person.0.dc:identifier"
                                class="nl nl-dc:identifier nlId nameAuthority" value="" />
                     </span>
+                </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="identifierText supName">
+                                    <div>or</div>
+                                    <a href="#" class="identifierText-enable">enter text</a>
+                                    <div class="identifierText-entry">
+                                        <input type="text" class="identifierText-input" size="20" id="identifierText.0.supName.input" value="" />
+                                        <a href="#" class="identifierText-clear">clear</a>
+                                    </div>
+                                </span>
+                            </td>
+                        </tr>
+                    </table>
                 </td>
                 <td class="valign-middle"><a class="delete-item" href="#">delete</a></td>
             </tr>
@@ -384,12 +430,29 @@
         Names of other collaborators in the research project, if applicable,
         eg. CSIRO, University of X, Prof. Jim Bloggs, etc.
     </div>
-    <table class="input-list">
+    <table class="input-list peopleTable">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Display Name</th>
+                <th>Name Authority</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
         <tbody>
             <tr class="item-input-display sortable-item people">
                 <td class="sort-number"></td>
                 <td>
                     <input type="text" size="60" placeholder="eg. CSIRO, University of X, Prof. Jim Bloggs, etc." id="dc:contributor.locrel:clb.0.foaf:Agent" />
+                </td>
+                <td>
+                    <span class="identifierText collaboratorName">
+                        <a href="#" class="identifierText-enable">enter text</a>
+                        <div class="identifierText-entry">
+                            <input type="text" class="identifierText-input" size="20" id="identifierText.0.collaboratorName.input" value="" />
+                            <a href="#" class="identifierText-clear">clear</a>
+                        </div>
+                    </span>
                 </td>
                 <td class="delete-item"><a href="#">delete</a></td>
                 <td style="width: 100%;"> </td>
