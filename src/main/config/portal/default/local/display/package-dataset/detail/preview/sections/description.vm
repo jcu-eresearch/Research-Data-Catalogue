@@ -44,15 +44,13 @@
                     <ol>
                         #foreach($key in $dataList.keySet())
                             #set($data = $dataList.get($key))
-                        #set($descriptionText = $data.get("text"))
+                            #set($type = $data.get("type"))
+                            #set($descriptionText = $data.get("text"))
                         #if ("$!descriptionText" != "")
-                             <li><div id="dcdescription${key}" class="dcdescription">#displayUnescapedRequiredKey($data "text")</div>
-                                 #set($type = $data.get("type"))
-                                 #if("$!type" != "")
-                                    <ul>
-                                        <li><b>Type</b>: $type</li>
-                                    </ul>
+                             <li>#if("$!type" != "")
+                                 <b>Type</b>: $type
                                  #end
+                                 <div id="dcdescription${key}" class="dcdescription">#displayUnescapedRequiredKey($data "text")</div>
                             </li>
                         #end
                     #end
@@ -198,7 +196,7 @@ $(function() {
     }
     var originalDescriptions=$('#dcdescriptionList').html();
     $('#dcdescriptionList').html('');
-    $('<iframe id="dcdescriptionFrame" style="height:200px; border: none;"/>').appendTo('#dcdescriptionList')
+    $('<iframe id="dcdescriptionFrame" style="border: none;"/>').appendTo('#dcdescriptionList')
          .contents().find('body').append(originalDescriptions);
     $('#dcdescriptionFrame').contents().find('.dcdescription').each( function(index, element) {
         var className = $(this).attr('class');
