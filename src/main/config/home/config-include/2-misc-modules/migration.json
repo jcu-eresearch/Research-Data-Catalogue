@@ -1,7 +1,7 @@
 {
 	"restoreTool": {
         "harvestRemap": {
-            "enabled": false,
+            "enabled": true,
             "allowOlder": false,
             "failOnMissing": false
         },
