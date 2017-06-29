@@ -73,26 +73,31 @@ class MigrateData:
         if createdDateTime is None:
             self.log.debug("Updating created time...")
             propMetadata.setProperty("date_object_created", now)
-        elif createdDateTime.endswith("Z"):
+        #elif createdDateTime.endswith("Z"):
             ## TODO : remove this temporary workaround to strip any UTC and replace with local timezone (for solr)
-            createdDateTimeAsLocal = re.sub("Z+$", "", createdDateTime) + localTimeZoneHrs
-            self.log.debug("updated created date time to: %s" % createdDateTimeAsLocal)
-            propMetadata.setProperty("date_object_created", createdDateTimeAsLocal)
-        else:
-            self.log.debug("existing created time does not end in 'Z', so remains untouched.")
+            #createdDateTimeAsLocal = re.sub("Z+$", "", createdDateTime) + "\\" + localTimeZoneHrs
+            #self.log.debug("updated created date time to: %s" % createdDateTimeAsLocal)
+            #propMetadata.setProperty("date_object_created", createdDateTimeAsLocal)
+            #self.log.info("JJJ 1: objectId:               " + propMetadata.getProperty("objectId"))
+            #self.log.info("JJJ 1: createdDateTime:        " + createdDateTime)
+            #self.log.info("JJJ 1: createdDateTimeAsLocal: " + createdDateTimeAsLocal)
+        #else:
+            #self.log.debug("existing created time does not end in 'Z', so remains untouched.")
         modifiedDateTime = str(propMetadata.getProperty("date_object_modified"))
         self.log.debug("modified date time was: %s" % modifiedDateTime)
         if modifiedDateTime is None:
             self.log.debug("Updating modified time...")
             propMetadata.setProperty("date_object_modified", now)
-        elif modifiedDateTime.endswith("Z"):
+        #elif modifiedDateTime.endswith("Z"):
             ## TODO : remove this temporary workaround to strip any UTC and replace with local timezone (for solr)
-            modifiedDateTimeAsLocal = re.sub("Z+$", "", modifiedDateTime) + localTimeZoneHrs
-            self.log.debug("updated modified date time to: %s" % modifiedDateTimeAsLocal)
-            propMetadata.setProperty("date_object_modified", modifiedDateTimeAsLocal)
-        else:
-            self.log.debug("existing modified time does not end in 'Z', so remains untouched.")
-
+            #modifiedDateTimeAsLocal = re.sub("Z+$", "", modifiedDateTime) + localTimeZoneHrs
+            #self.log.debug("updated modified date time to: %s" % modifiedDateTimeAsLocal)
+            #propMetadata.setProperty("date_object_modified", modifiedDateTimeAsLocal)
+            #self.log.info("JJJ 2: objectId:               " + propMetadata.getProperty("objectId"))
+            #self.log.info("JJJ 2: modifiedDateTime:        " + modifiedDateTime)
+            #self.log.info("JJJ 2: modifiedDateTimeAsLocal: " + modifiedDateTimeAsLocal)
+        #else:
+        #    self.log.debug("existing modified time does not end in 'Z', so remains untouched.")
 
     def updateVersion(self):
         if self.redboxVersion is None:
@@ -104,8 +109,6 @@ class MigrateData:
 
     # get a list of metadata using basekey. Used by repeatable elements like FOR code or people
     def getList(self, baseKey):
-
-        self.log.info("Jay: inside getList")
 
         if baseKey[-1:] != ".":
             baseKey = baseKey + "."
@@ -123,16 +126,13 @@ class MigrateData:
             else:
                 valueMapIndex = index
                 dataIndex = field[field.find(".")+1:]
-            self.log.info("Jay: %s. '%s'='%s' ('%s','%s')" % (index, key, value, valueMapIndex, dataIndex))
+            #self.log.info("%s. '%s'='%s' ('%s','%s')" % (index, key, value, valueMapIndex, dataIndex))
             data = valueMap.get(valueMapIndex)
             if not data:
                 data = TreeMap()
                 valueMap.put(valueMapIndex, data)
-            if len(value) == 1:
-                value = value.get(0)
             data.put(dataIndex, value)
 
-        self.log.info("Jay: valueMap: " + valueMap.toString() )
         return valueMap
 
     def formatDescription(self, description):
@@ -169,30 +169,20 @@ class MigrateData:
 
             deprecatedDescMatch = False
 
-            self.log.info("Jay: before getList")
             descriptionList = self.getList('rif:description')
-            self.log.info("Jay: after getList")
-            self.log.info("Jay: descriptionList: " + descriptionList.toString())
 
-            if  (descriptionList):
-                self.log.info("Jay: before for loop")
-                #for idx, description in self.enumerate(descriptionList):
-                idx = 1
+            idx = 1
+            if  (descriptionList is not None and not descriptionList.isEmpty()):
                 for description in descriptionList.keySet():
-                    self.log.info("Jay: inside for loop")
                     temp = descriptionList.get(description)
                     descType = temp.get('type')
                     descValue = temp.get('value')
                     descLabel = temp.get('label')
 
-                    self.log.info("Jay: descType: " + descType + " descValue: " + descValue + " descLabel: " + descLabel)
-
                     if  (deprecated_description ==  descValue):
                         deprecatedDescMatch = True
 
-                    self.log.info("Jay: inside for loop, before desc format")
                     unescapedDescription, escapedDescription= self.formatDescription(descValue)
-                    self.log.info("Jay: inside for loop, after desc format")
                     #adding new
                     self.log.info("Adding 'dc:description.x.' key: idx: " + str(idx) )
                     self.getPackageJson().put("dc:description."+str(idx)+".text", unescapedDescription)
@@ -210,14 +200,14 @@ class MigrateData:
                 self.getPackageJson().put("dc:description."+str(idx)+".shadow", escapedDesc)
                 self.getPackageJson().put("dc:description."+str(idx)+".type", "full")
 
-            self.log.debug("Removing deprecated 'dc:description' key...")
+            self.log.debug  ("Removing deprecated 'dc:description' key...")
             self.getPackageJson().remove("dc:description")
             self.log.debug(
                 "Completed migrating 'dc:description' %s to dc:description.1.text|shadow" % deprecated_description)
 
     def updateAdditionalIdentifier(self):
         additionalIdList = self.getList('rif:collection')
-        if  (additionalIdList):
+        if  (additionalIdList is not None and not additionalIdList.isEmpty()):
             idx = 1
             for additionalId in additionalIdList.keySet():
                 temp = additionalIdList.get(additionalId)
