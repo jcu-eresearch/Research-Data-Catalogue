@@ -15,9 +15,8 @@
         },
         "/rif:registryObjects/rif:registryObject/rif:collection/rif:name[@type='primary']/rif:namePart":["title", "dc:title", "redbox:submissionProcess.dc:title"],
         "/rif:registryObjects/rif:registryObject/rif:collection/rif:description[@type='full' or @type='brief' or @type='note' or @type='logo']":{
-            ".":["description.0.value", "dc:description.0.value", "redbox:submissionProcess.dc:description.0.value", "rif:description.0.value"],
-            "@type":["description.0.type", "dc:description.0.type", "redbox:submissionProcess.dc:description.0.type", "rif:description.0.type"],
-            "@label":"rif:description.0.label"
+            ".":["description.0.value", "dc:description.0.text", "dc:description.0.shadow", "redbox:submissionProcess.dc:description.0.value"],
+            "@type":["description.0.type", "dc:description.0.type", "redbox:submissionProcess.dc:description.0.type"]
         },
         "/rif:registryObjects/rif:registryObject/rif:collection/rif:description[@type='rights']":{
             ".":["dc:accessRights.dc:RightsStatement.skos:prefLabel"]
