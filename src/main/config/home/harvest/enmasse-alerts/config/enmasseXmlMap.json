@@ -14,15 +14,12 @@
                 "note": "",
                 "type": ""
             },
-            "brief_desc": [
-                "description",
-                "dc:description"
-            ],
-            "descriptions/*": {
-                "description": "rif:description.0.value"
-                "type" : "rif:description.0.type",
-                "label" : "rif:description.0.label"
-            }
+            "full_desc": "dc:description.1.text",
+            "full_desc_type": "dc:description.1.type",
+            "brief_desc": "dc:description.2.text",
+            "brief_desc_type": "dc:description.2.type",
+            "note_desc": "dc:description.3.text",
+            "note_desc_type": "dc:description.3.type",
             "ccdam_identifier": "bibo:Website.0.dc:identifier",
             "citation_context": "dc:biblioGraphicCitation.dc:hasPart.skos:scopeNote",
             "citation_creators/*": {
