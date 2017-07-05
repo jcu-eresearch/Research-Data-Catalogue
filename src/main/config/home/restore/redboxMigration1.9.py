@@ -75,12 +75,9 @@ class MigrateData:
             propMetadata.setProperty("date_object_created", now)
         #elif createdDateTime.endswith("Z"):
             ## TODO : remove this temporary workaround to strip any UTC and replace with local timezone (for solr)
-            #createdDateTimeAsLocal = re.sub("Z+$", "", createdDateTime) + "\\" + localTimeZoneHrs
+            #createdDateTimeAsLocal = re.sub("Z+$", "", createdDateTime) + localTimeZoneHrs
             #self.log.debug("updated created date time to: %s" % createdDateTimeAsLocal)
             #propMetadata.setProperty("date_object_created", createdDateTimeAsLocal)
-            #self.log.info("JJJ 1: objectId:               " + propMetadata.getProperty("objectId"))
-            #self.log.info("JJJ 1: createdDateTime:        " + createdDateTime)
-            #self.log.info("JJJ 1: createdDateTimeAsLocal: " + createdDateTimeAsLocal)
         #else:
             #self.log.debug("existing created time does not end in 'Z', so remains untouched.")
         modifiedDateTime = str(propMetadata.getProperty("date_object_modified"))
@@ -93,11 +90,8 @@ class MigrateData:
             #modifiedDateTimeAsLocal = re.sub("Z+$", "", modifiedDateTime) + localTimeZoneHrs
             #self.log.debug("updated modified date time to: %s" % modifiedDateTimeAsLocal)
             #propMetadata.setProperty("date_object_modified", modifiedDateTimeAsLocal)
-            #self.log.info("JJJ 2: objectId:               " + propMetadata.getProperty("objectId"))
-            #self.log.info("JJJ 2: modifiedDateTime:        " + modifiedDateTime)
-            #self.log.info("JJJ 2: modifiedDateTimeAsLocal: " + modifiedDateTimeAsLocal)
         #else:
-        #    self.log.debug("existing modified time does not end in 'Z', so remains untouched.")
+            #self.log.debug("existing modified time does not end in 'Z', so remains untouched.")
 
     def updateVersion(self):
         if self.redboxVersion is None:
