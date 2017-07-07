@@ -36,6 +36,8 @@
 #set ($value = $map.get($queryKey))
 #if ("$!value" == "on")
 "${prefix}.${order}.${key}": "#EscapeForJson($!value)",
+#else
+"${prefix}.${order}.${key}": "",
 #end
 #end
 
@@ -138,13 +140,13 @@
     	#set($slot = $cList.get($key))
     	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "dc:title" $order)
     	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "skos:note" $order)
-    	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "redbox:origin" $order)
-    	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "redbox:publish" $order)
+    	#multiValuedPropertyCheckbox($slot "dc:relation.vivo:Dataset" "redbox:origin" $order)
+    	#multiValuedPropertyCheckbox($slot "dc:relation.vivo:Dataset" "redbox:publish" $order)
     	#multiValuedProperty($slot "dc:relation.vivo:Dataset" "dc:identifier" $order)
         #multiValuedProperty($slot "dc:relation.vivo:Dataset" "vivo:Relationship.rdf:PlainLiteral" $order)
         #multiValuedProperty($slot "dc:relation.vivo:Dataset" "vivo:Relationship.skos:prefLabel" $order)
-     #set($order = $order + 1)
-   #end
+        #set($order = $order + 1)
+      #end
 	#end
 	
 	#set($cList = $util.getList($item, "dc:relation.vivo:Service"))
