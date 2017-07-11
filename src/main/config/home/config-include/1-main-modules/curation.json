@@ -52,6 +52,12 @@
                 "identifier": [
                     "dc:identifier"
                 ],
+                "excludeCondition": {
+                    "path": [
+                        "dc:identifier"
+                    ],
+                    "doesntStartWith" : "jcu.edu.au/"
+                },
                 "relationship": [
                     "vivo:Relationship",
                     "rdf:PlainLiteral"
