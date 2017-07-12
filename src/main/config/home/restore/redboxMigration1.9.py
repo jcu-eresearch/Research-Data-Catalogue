@@ -245,20 +245,32 @@ class MigrateData:
 
     def updateRightsType(self):
         accessRightsType = self.getPackageJson().get("dc:accessRightsType")
-        self.log.debug("access rights: %s" % accessRightsType)
+        self.log.debug("access rights type: %s" % accessRightsType)
+        accessRightsText = self.getPackageJson().get("dc:accessRights.skos:prefLabel")
+        self.log.info("Access rights text is: %s " % accessRightsText)
         ## because a user can deliberately change access rights type to "", ensure only change for null access rights types
-        if accessRightsType is None:
-            license = StringUtils.defaultString(self.getPackageJson().get("dc:license.skos:prefLabel"))
-            self.log.info("License rights is: %s " % license)
-            if re.search("CC|ODC|PDDL", str(license), re.IGNORECASE):
+        if (accessRightsType is None and accessRightsText is not None and len(accessRightsText) > 0):
+            self.log.debug("access rights type: %s" % accessRightsType)
+            if (accessRightsText.startswith("Open Access") or accessRightsText.startswith("Open access") or accessRightsText.startswith("Access to the catalogue is open")):
+                self.log.debug("Jay: open")
                 self.getPackageJson().put("dc:accessRightsType", "open")
                 self.log.debug("Added access rights type.")
+            elif (accessRightsText.startswith("Please contact the data manager") or accessRightsText.startswith("Conditional access") or accessRightsText.startswith("Contact owner for access") or accessRightsText.startswith("Contact the data manager") or accessRightsText.startswith("Contact dataset manager")):
+                self.log.debug("Jay: conditional")
+                self.getPackageJson().put("dc:accessRightsType", "conditional")
+                self.log.debug("Added access rights type.")
+            #elif (accessRightsText.startswith("Dataset contains confidential") or accessRightsText.startswith("Restricted access") or accessRightsText.startswith("Restricted Access") or accessRightsText.startswith("Access to this collection is restricted")):
+            elif (accessRightsText.startswith("Dataset contains confidential") or "restricted" in accessRightsText or "Restricted" in accessRightsText):
+                self.log.debug("Jay: restricted")
+                self.getPackageJson().put("dc:accessRightsType", "restricted")
+                self.log.debug("Added access rights type.")
             else:
+                self.log.debug("Jay: blank")
                 self.getPackageJson().put("dc:accessRightsType", "")
-                self.log.debug("Added empty access rights type, because licence is: %s" % license)
+                self.log.debug("Added empty access rights type, because Access Rights text is: %s" % accessRightsText)
         else:
             self.log.info(
-                "Record already has access rights type key, with value: %s, so skipping update rights type migration." % accessRightsType)
+                "Record already has no access rights type or text, so skipping update rights type migration.")
 
     def injectFreshKeys(self):
         for freshKey in ["identifierText.1.creatorName.input", "pcName.identifierText",
