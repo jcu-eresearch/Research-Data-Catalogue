@@ -112,6 +112,13 @@ ul.main li ul li.selected-view a {
     margin-bottom: 0;
 }
 
+.content-preview iframe {
+    width: 99%;
+    height: 400px;
+    border: 1px solid black;
+}
+
+
 table.meta, table.meta tbody {
     margin-top: 0;
     width: 100%;
