@@ -12,7 +12,10 @@
 
     "transformer": {
         "curation": ["local"],
-        "metadata": ["jsonVelocity"]
+        "metadata": [
+            "rifcs",
+            "jsonVelocity"]
+
     },
     "transformerOverrides": {
     	"local": {

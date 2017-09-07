@@ -22,7 +22,9 @@
     },
     "transformer": {
         "curation": [],
-        "metadata": ["jsonVelocity"]
+        "metadata": [
+            "rifcs",
+            "jsonVelocity"]
     },  
     "curation": {
         "neverPublish": false,
