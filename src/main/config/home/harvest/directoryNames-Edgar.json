@@ -23,7 +23,6 @@
     "transformer": {
         "curation": [],
         "metadata": [
-            "rifcs",
             "jsonVelocity"]
     },  
     "curation": {

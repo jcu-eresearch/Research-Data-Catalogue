@@ -12,8 +12,7 @@
         "jsonVelocity": {
             "id": "jsonVelocity",
             "sourcePayload": ".tfpackage",
-            "templatesPath": "${fascinator.home}/templates",
-            "templatesPathExclusions": ["rif.vm"]
+            "templatesPath": "${fascinator.home}/templates"
         },
         "jsonVelocityPDF": {
             "id": "jsonVelocityPDF",

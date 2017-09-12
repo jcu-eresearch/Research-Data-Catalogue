@@ -13,7 +13,6 @@
     "transformer": {
         "curation": ["local"],
         "metadata": [
-            "rifcs",
             "jsonVelocity"]
 
     },
