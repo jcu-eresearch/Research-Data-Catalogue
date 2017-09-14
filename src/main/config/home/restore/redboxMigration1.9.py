@@ -2,6 +2,7 @@ import re
 import traceback
 from com.googlecode.fascinator.api.storage import StorageException
 from com.googlecode.fascinator.common import JsonSimple
+from com.googlecode.fascinator.api import PluginManager
 from java.io import ByteArrayInputStream
 from java.lang import Exception
 from java.lang import String
@@ -15,6 +16,7 @@ class MigrateData:
     def __init__(self):
         self.packagePidSuffix = ".tfpackage"
         self.redboxVersion = None
+        self.indexer = PluginManager.getIndexer("solr")
 
     def __activate__(self, bindings):
         # Prepare variables
@@ -23,6 +25,7 @@ class MigrateData:
         self.log = bindings["log"]
         self.audit = bindings["auditMessages"]
         self.pidList = None
+        self.indexer.init(self.systemConfig.toString())
 
         # Look at some data
         self.oid = self.object.getId()
@@ -30,9 +33,10 @@ class MigrateData:
         try:
             # # check if object creation and modification dates...
             self.insertCreateAndModifiedDate()
-            #
+
             # # load the package data..
             self.__getPackageData()
+
             if self.packageData is not None:
                 self.log.info(self.packageData.toString(True))
                 # update the redbox version...
@@ -55,6 +59,10 @@ class MigrateData:
 
                 # # save the package data...
                 self.__savePackageData()
+            else:
+                #ensures attachments are also indexed during restore.
+                self.indexer.index(self.oid)
+                self.indexer.commit()
 
             self.object.close()
         except Exception, e:
