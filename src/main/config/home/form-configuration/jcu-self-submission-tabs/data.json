@@ -71,6 +71,10 @@
           "content":"<div style='color:red;'>Note: only upload a maximum of 50 MB total. For larger data storage please contact us at: <a href='mailto:researchdata@jcu.edu.au?Subject=[ResearchData]'>researchdata@jcu.edu.au</a></div>"
         },
         {
+          "component-type":"native-html",
+          "content":"<div class='jcuFileError'>ERROR: Unable to upload files containing 'spaces' in their name. Please rename.</div>"
+        },
+        {
           "component-type": "file-attachments",
           "widgetname": "storage_attachment",
           "attachType": "storage-attachments",

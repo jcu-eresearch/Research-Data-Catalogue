@@ -60,6 +60,12 @@ input:focus, textarea:focus, select:focus {
     font-size: 120%;
 }
 
+.jcuFileError {
+    font-weight: bold;
+    font-size: large;
+    color: red;
+    display: none;
+}
 
 </style>
 
