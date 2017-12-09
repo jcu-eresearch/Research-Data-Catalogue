@@ -1,4 +1,5 @@
 <h3><a href="#attachments">Attachments</a></h3>
+<h3><a href="#attachments">Attachments</a></h3>
 <div id="attachments" class="inputscreen">
     #fieldTitle("attachments" "Attached Files" false)
     <div class="help-content" id="help-attachments">
@@ -121,7 +122,8 @@ function updateAttachedFiles(attachedFiles) {
     jQ.each(attachedFiles, function(_, attachment) {
         tr = jQ("<tr/>");
         // A link to the attachment
-        fileLink = "$portalPath/detail/" + attachment.oid + "/" + attachment.filename + "?preview=true";
+        var encodedFileName = attachment.filename.split(" ").join("$0020")
+        fileLink = "$portalPath/detail/" + attachment.oid + "/" + encodedFileName + "?preview=true";
         tr.append("<td><a href='" + fileLink + "' target='_blank'>" + attachment.filename + "</a></td>");
         // Details onscreen (after some cleaning)
         tr.append("<td>" + format(attachment.attachment_type) + "</td>");

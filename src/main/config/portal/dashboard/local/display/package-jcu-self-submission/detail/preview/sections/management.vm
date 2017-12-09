@@ -35,9 +35,10 @@
                 <ol>
                 #foreach($file in $attachedFiles)
                     #set($filename = $file.get("filename"))
+                    #set($encodedFileName = $filename.replaceAll("\s", "\$0020"))
                     <li>
                         <!--Removed '?preview=true' as this is stopping the file from being downloaded-->
-                        <a href="$portalPath/detail/$file.get('oid')/$filename" target="_blank">$filename</a>
+                        <a href="$portalPath/detail/$file.get('oid')/$encodedFileName?preview=true" target="_blank">$filename</a>
                         ($file.get("fileDescription"))
                     </li>
                 #end

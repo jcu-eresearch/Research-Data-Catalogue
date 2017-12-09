@@ -50,7 +50,7 @@ class IndexData:
         self.pid = self.payload.getId()
         metadataPid = self.params.getProperty("metaPid", "DC")
 
-        self.__index("storage_id", self.oid)
+        self.utils.add(self.index, "storage_id", self.oid)
         if self.pid == metadataPid:
             self.itemType = "object"
         else:
@@ -77,7 +77,7 @@ class IndexData:
               if formData is not None:
                   for key in formData.keySet():
                       if key != "owner":
-                          self.__index(key, formData.get(key))
+                         self.__index(key, formData.get(key))
                   filename = wfMeta.getString(None, ["formData", "filename"])
                   if filename is None:
                       self.log.warn("No filename for attachment!")

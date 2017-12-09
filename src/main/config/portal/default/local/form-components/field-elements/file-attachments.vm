@@ -73,20 +73,12 @@ var ${widgetname}_initUploader = function() {
         },
         add: function (e, data) {            
             data.formData = jQ.extend({}, ${widgetname}_formData);
-            if (data.files[0].name.indexOf(' ') >= 0)
-            {
-                jQ('.jcuFileError').show();
-                ${widgetname}_clearUploader();
-            }
-            else {
-                jQ('.jcuFileError').hide();
-                data.formData.uploadFile = data.files[0].name;
-                data.formData.json = JSON.stringify(data.formData);
-                    ${widgetname}_uploadData = data;
-                jQ('#${widgetname}_startupload').attr("disabled", false);
-                jQ('#${widgetname}_filename').text(data.formData.uploadFile);
-            }
-        },        
+            data.formData.uploadFile = data.files[0].name;
+            data.formData.json = JSON.stringify(data.formData);
+            ${widgetname}_uploadData = data;
+            jQ('#${widgetname}_startupload').attr("disabled", false);
+            jQ('#${widgetname}_filename').text(data.formData.uploadFile);
+        },
         progress: function(e, data) {
             var uploaded = parseInt(data.loaded / data.total * 100, 10);
             jQ(".fileupload-progressbar div").width(uploaded + "%");
