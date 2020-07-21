@@ -1,2 +1,2 @@
-TDH-Research-Data-Catalogue
+Research-Data-JCU-Catalogue
 ===========================

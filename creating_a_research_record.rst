@@ -1,7 +1,11 @@
 Adding a new Research Data Record
 =================================
 
-To add a new research record to Research Data, you need to access 'My Research Data'. You can access 'My Research Data' from the home page by clicking on 'My Research Data' in the menu bar or by going directly to http://research.jcu.edu.au/researchdata/dashboard. If you are not already logged into the site, the login box will appear at this point.
+To add a new research record to Research Data, you need to access 'My Research
+Data'. You can access 'My Research Data' from the home page by clicking on 'My
+Research Data' in the menu bar or by going directly to
+http://research.jcu.edu.au/researchdata/dashboard. If you are not already
+logged into the site, the login box will appear at this point.
 
 Logging In
 ----------
@@ -378,7 +382,7 @@ Attachments
 
 Use to attach your datasets up to a total size of 50 MB. Click on the 'Select file...' button, browse for you file and click 'Start Upload'. Multiple files can be uploaded.
 
-.. note:: This assumes your data will be made public. After submitting your record, it will be reviewed. If you indicate on the 'Rights' tab that access is restricted or private, the attached files will be stored in a private section of the 'Tropical Data Hub' where there is no public access. They will then be removed from this record. You will be contacted by a Digital Librarian to discuss this.
+.. note:: This assumes your data will be made public. After submitting your record, it will be reviewed. If you indicate on the 'Rights' tab that access is restricted or private, the attached files will be stored in a private section of Research Data JCU where there is no public access. They will then be removed from this record. You will be contacted by a Digital Librarian to discuss this.
 
 Retention Period
 ````````````````

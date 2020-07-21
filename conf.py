@@ -43,8 +43,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'TDH Research Data - User Guide'
-copyright = u'CC-BY-NC 2013, eResearch Centre, James Cook University'
+project = u'Research Data JCU - User Guide'
+copyright = u'CC-BY-NC 2013-2020, eResearch Centre, James Cook University'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -196,7 +196,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'TDH-ResearchData-UserGuide.tex', u'TDH Research Data - User Guide',
+  ('index', 'ResearchDataJCU-UserGuide.tex', u'Research Data JCU - User Guide',
    u'eResearch Centre, JCU', 'manual'),
 ]
 
@@ -226,7 +226,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'tdh-researchdata-userguide', u'TDH Research Data - User Guide',
+    ('index', 'researchdatajcu-userguide', u'Research Data JCU - User Guide',
      [u'eResearch Centre, JCU'], 1)
 ]
 
@@ -240,8 +240,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'TDH-ResearchData-UserGuide', u'TDH Research Data - User Guide',
-   u'eResearch Centre, JCU', 'TDH-ResearchData-UserGuide', 'One line description of project.',
+  ('index', 'ResearchDataJCU-UserGuide', u'Research Data JCU - User Guide',
+   u'eResearch Centre, JCU', 'ResearchDataJCU-UserGuide', 'One line description of project.',
    'Miscellaneous'),
 ]
 
@@ -261,13 +261,13 @@ texinfo_documents = [
 # -- Options for Epub output ----------------------------------------------
 
 # Bibliographic Dublin Core info.
-epub_title = u'TDH Research Data - User Guide'
+epub_title = u'Research Data JCU - User Guide'
 epub_author = u'eResearch Centre'
 epub_publisher = u'James Cook University'
 epub_copyright = u'This work is licensed under the Creative Commons Attribution-NonCommercial 3.0 Australia License. To view a copy of this license, visit http://creativecommons.org/licenses/by-nc/3.0/au/.'
 
 # The basename for the epub file. It defaults to the project name.
-#epub_basename = u'TDH Research Data - User Guide'
+#epub_basename = u'Research Data JCU - User Guide'
 
 # The HTML theme for the epub output. Since the default themes are not optimized
 # for small screen space, using the same theme for HTML and epub output is

@@ -1,13 +1,13 @@
-Accessing TDH Research Data
+Accessing Research Data JCU
 ===========================
 
-TDH Research Data is publicly accessible and can be found at http://research.jcu.edu.au/researchdata.
+Research Data JCU is publicly accessible and can be found at https://research.jcu.edu.au/data.
 
 When you first go to the site, you are able to search/browse the published contents of the site.
 
 .. image:: _static/Main-site-HomePage.png
    :width: 100%
-   :alt: Home page for the Research Data site
+   :alt: Home page for the Research Data JCU site
 
 Browsing records
 ----------------
